@@ -1,0 +1,46 @@
+<!--
+  ~ Copyright (c) 2011. KloudTek Ltd
+  -->
+
+<project name="KTUtils" xmlns:ivy="antlib:org.apache.ivy.ant">
+    <property name="build.dir" value="${basedir}/_build"/>
+    <property name="deps.dir" value="${basedir}/_deps"/>
+    <property name="artifacts.dir" value="${build.dir}/artifacts"/>
+
+    <path id="deps.all">
+        <fileset dir="${deps.dir}" includes="**/*.jar"/>
+    </path>
+
+    <target name="init-ivy">
+        <ivy:settings url="http://home.yannickm.com/ktivyrep/ivysettings.xml"/>
+    </target>
+
+    <target name="deps" depends="init-ivy">
+        <ivy:resolve/>
+        <ivy:retrieve pattern="${deps.dir}/[conf]-[type]/[artifact].[ext]"/>
+    </target>
+
+    <target name="classes">
+        <mkdir dir="${build.dir}/classes"/>
+        <javac destdir="${build.dir}/classes" srcdir="${basedir}/src/java" debug="true" classpathref='deps.all'/>
+    </target>
+
+    <target name="jar" depends="classes">
+        <mkdir dir="${artifacts.dir}"/>
+        <jar basedir="${build.dir}/classes" destfile="${artifacts.dir}/ktutils.jar">
+            <fileset dir="src/java" excludes="**/*.xml;**/*.properties"/>
+        </jar>
+        <jar basedir="src/java" destfile="${artifacts.dir}/ktutils-sources.jar"/>
+    </target>
+
+    <target name='artifacts' depends='jar'>
+    </target>
+
+    <target name="publish" depends="init-ivy,artifacts">
+        <fail unless='version'/>
+        <fail unless='reltype'/>
+        <ivy:resolve/>
+        <ivy:publish resolver="kloudtek-direct" pubrevision="${version}" status="${reltype}"
+                     artifactspattern="${build.dir}/artifacts/[artifact].[ext]"/>
+    </target>
+</project>

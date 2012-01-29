@@ -1,0 +1,14 @@
+<!--
+  ~ Copyright (c) 2010. KloudTek Ltd
+  -->
+
+<blob xmlns:b="dummy1" xmlns='dummy2'>
+    <cow/>
+    <cow bird='whale'>
+        river
+        <moo/>
+        cat
+    </cow>
+    <b:goo/>
+    <b:goo/>
+</blob>

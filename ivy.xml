@@ -1,0 +1,23 @@
+<!--
+  ~ Copyright (c) 2011. KloudTek Ltd
+  -->
+
+<ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+    <info organisation="com.kloudtek" module="ktutils"/>
+    <configurations>
+        <conf name="default"/>
+        <conf name="build" visibility="private"/>
+    </configurations>
+    <publications>
+        <artifact name="ktutils" conf="default"/>
+        <artifact name="ktutils-sources" ext="jar" type="sources" conf="default"/>
+    </publications>
+    <dependencies>
+        <dependency org="com.jetbrains" name="annotations" rev="latest.integration" conf="build->default"/>
+        <dependency org="org.testng" name="testng" rev="5.10" conf="build->default"/>
+        <dependency org="org.bouncycastle" name="bouncycastle" rev="1.44" conf="build->default"/>
+        <dependency org="com.sun" name="javaee" rev="6.0" conf="build->default"/>
+        <dependency org="org.apache" name="commons-codec" rev="latest.release" conf="build->default"/>
+    </dependencies>
+</ivy-module>
