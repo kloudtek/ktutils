@@ -5,6 +5,6 @@
 <project name="KTUtils">
     <property name="bmpath" value="/usr/share/buildmagic"/>
     <import file="${bmpath}/simple.xml"/>
-    <property name="projectname" value="buildmagic"/>
+    <property name="projectname" value="ktutils"/>
     <property name="publishresolver" value="kloudtek"/>
 </project>
