@@ -122,7 +122,11 @@ public abstract class JMSApplication implements Runnable {
         if (isClosed()) {
             return;
         }
-        new MessageHandler().run();
+        try {
+            new MessageHandler().run();
+        } catch (Throwable e) {
+            logger.log(Level.SEVERE, e.getMessage(), e );
+        }
     }
 
     class MessageHandler implements Runnable {
