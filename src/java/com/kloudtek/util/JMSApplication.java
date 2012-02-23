@@ -93,9 +93,9 @@ public abstract class JMSApplication implements Runnable {
         }
     }
 
-    private synchronized void connect() throws JMSException {
+    private synchronized boolean connect() throws JMSException {
         if (state == State.CONNECTED) {
-            return;
+            return false;
         }
         state = State.CONNECTING;
         try {
@@ -106,9 +106,10 @@ public abstract class JMSApplication implements Runnable {
             connection.start();
             logger.info("Connected to message broker");
             state = State.CONNECTED;
+            return true;
         } catch (JMSException e) {
             if (isClosed()) {
-                return;
+                return false;
             }
             state = State.UNCONNECTED;
             throw e;
@@ -134,10 +135,11 @@ public abstract class JMSApplication implements Runnable {
         }
 
         private void init() throws JMSException {
-            connect();
-            session = connection.createSession(sessionType == SessionType.TRANSACTED, sessionType.acknowledgeMode);
-            destination = createDestination(session);
-            consumer = createConsumer(session, destination);
+            if( connect() ) {
+                session = connection.createSession(sessionType == SessionType.TRANSACTED, sessionType.acknowledgeMode);
+                destination = createDestination(session);
+                consumer = createConsumer(session, destination);
+            }
         }
 
         @SuppressWarnings({"ConstantConditions"})
@@ -148,7 +150,7 @@ public abstract class JMSApplication implements Runnable {
                 }
                 try {
                     init();
-                    for (; ; ) {
+                    for (;;) {
                         if (isClosed()) {
                             return;
                         }
