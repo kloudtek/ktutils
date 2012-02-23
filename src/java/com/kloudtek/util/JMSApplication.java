@@ -157,8 +157,11 @@ public abstract class JMSApplication implements Runnable {
                             if (isClosed()) {
                                 return;
                             }
+                            logger.log(Level.FINER, "Handling JMS message {0}",message.getJMSMessageID());
                             handleMessage(session, message);
+                            logger.log(Level.FINER, "Finished handling JMS message {0}",message.getJMSMessageID());
                             if (sessionType == SessionType.TRANSACTED) {
+                                logger.finer("Committing JMS session");
                                 session.commit();
                             }
                         }
