@@ -43,7 +43,6 @@ public class LDAPUtils {
         ctx.modifyAttributes(dn, mods);
     }
 
-
     public static void delete(DirContext ctx, String dn) throws NamingException {
         Stack<String> toDelete = new Stack<String>();
         toDelete.push(dn);
