@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-public class TempDir extends File implements Closeable {
+public class TempDir extends File implements AutoCloseable {
     public TempDir(String name) throws IOException {
         super(genPath(name));
     }
@@ -31,7 +31,7 @@ public class TempDir extends File implements Closeable {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() throws Exception {
         del(this);
     }
 

@@ -1,13 +1,12 @@
 package com.kloudtek.util;
 
-import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 
 /**
  * Used to create a temporary file with owner-only r/w permission
  */
-public class TempFile extends File implements Closeable {
+public class TempFile extends File implements AutoCloseable {
     public TempFile(String name) throws IOException {
         super(create(name));
     }
@@ -26,7 +25,7 @@ public class TempFile extends File implements Closeable {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() throws Exception {
         if( ! delete() ) {
             deleteOnExit();
         }
