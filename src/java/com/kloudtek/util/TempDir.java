@@ -31,7 +31,7 @@ public class TempDir extends File implements AutoCloseable {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() throws IOException {
         del(this);
     }
 

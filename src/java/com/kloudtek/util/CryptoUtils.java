@@ -4,6 +4,8 @@
 
 package com.kloudtek.util;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -11,37 +13,10 @@ import java.util.Arrays;
 
 public class CryptoUtils {
     private static final SecureRandom random = new SecureRandom();
-    private static final String SHA1 = "SHA-1";
-    private static final int SHA_DIGEST_SIZE = 20;
 
-    public static byte[] createSSHADigest(String base64Data) {
-        return createSaltedDigest(base64Data, SHA1);
-    }
-
-    public static byte[] createSSHADigest(byte[] data) {
-        return createSaltedDigest(data, SHA1);
-    }
-
-    public static String createSSHAStrDigest(String text) {
-        return Base64.encode(createSaltedDigest(text, SHA1));
-    }
-
-    public static String createSSHAStrDigest(byte[] data) {
-        return Base64.encode(createSaltedDigest(data, SHA1));
-    }
-
-    public static byte[] createSaltedDigest(String data, String alg) {
-        return createSaltedDigest(data.getBytes(), alg);
-    }
-
-    public static byte[] createSaltedDigest(byte[] data, String alg) {
-        byte[] salt = generateSalt();
-        return createSaltedDigest(salt, data, alg);
-    }
-
-    public static byte[] createDigest(byte[] data, String alg) {
+    public static byte[] createDigest(byte[] data, Algorithm alg) {
         try {
-            MessageDigest sha = MessageDigest.getInstance(alg);
+            MessageDigest sha = MessageDigest.getInstance(alg.id);
             sha.update(data);
             return sha.digest();
         } catch (NoSuchAlgorithmException e) {
@@ -49,13 +24,30 @@ public class CryptoUtils {
         }
     }
 
-    public static byte[] createSaltedDigest(byte[] salt, byte[] data, String alg) {
+    public static byte[] createDigest(InputStream inputStream, Algorithm alg) throws IOException {
         try {
-            MessageDigest sha = MessageDigest.getInstance(alg);
+            byte[] buffer = new byte[8192];
+            MessageDigest digest = MessageDigest.getInstance(alg.id);
+            for ( int i = inputStream.read() ; i != -1 ; i = inputStream.read()) {
+                digest.update(buffer,0,i);
+            }
+            return digest.digest();
+        } catch (NoSuchAlgorithmException e) {
+            throw new UnexpectedException("Algorithm not supported: "+alg,e);
+        }
+    }
+
+    public static byte[] createSaltedDigest(byte[] data, Algorithm alg) {
+        return createSaltedDigest(generateSalt(), data, alg);
+    }
+
+    public static byte[] createSaltedDigest(byte[] salt, byte[] data, Algorithm alg) {
+        try {
+            MessageDigest sha = MessageDigest.getInstance(alg.id);
             sha.update(data);
             sha.update(salt);
             byte[] digest = sha.digest();
-            byte[] digestWithSalt = new byte[SHA_DIGEST_SIZE + salt.length];
+            byte[] digestWithSalt = new byte[alg.hashLen + salt.length];
             System.arraycopy(digest, 0, digestWithSalt, 0, digest.length);
             System.arraycopy(salt, 0, digestWithSalt, digest.length, salt.length);
             return digestWithSalt;
@@ -64,23 +56,11 @@ public class CryptoUtils {
         }
     }
 
-    public static boolean compareSSHADigest(byte[] digest, byte[] data) {
-        return compareSaltedDigest(SHA_DIGEST_SIZE, digest, data, SHA1);
-    }
-
-    public static boolean compareSSHADigest(byte[] digest, String base64Data) {
-        return compareSaltedDigest(SHA_DIGEST_SIZE, digest, Base64.decode(base64Data), SHA1);
-    }
-
-    public static boolean compareSSHADigest(String base64Digest, String data) {
-        return compareSaltedDigest(SHA_DIGEST_SIZE, Base64.decode(base64Digest), data.getBytes(), SHA1);
-    }
-
-    public static boolean compareSaltedDigest(int digestSize, byte[] digest, byte[] data, String alg) {
+    public static boolean compareSaltedDigest(byte[] digest, byte[] data, Algorithm alg) {
         try {
-            MessageDigest sha = MessageDigest.getInstance(alg);
-            byte[] digestData = Arrays.copyOfRange(digest, 0, digestSize);
-            byte[] salt = Arrays.copyOfRange(digest, digestSize, digest.length);
+            MessageDigest sha = MessageDigest.getInstance(alg.id);
+            byte[] digestData = Arrays.copyOfRange(digest, 0, alg.hashLen);
+            byte[] salt = Arrays.copyOfRange(digest, alg.hashLen, digest.length);
             sha.update(data);
             sha.update(salt);
             byte[] encoded = sha.digest();
@@ -88,6 +68,10 @@ public class CryptoUtils {
         } catch (NoSuchAlgorithmException e) {
             throw new UnexpectedException(e);
         }
+    }
+
+    public static boolean compareSaltedDigest(String b64Digest, String data, Algorithm alg) {
+        return compareSaltedDigest(Base64.decode(b64Digest),data.getBytes(),alg);
     }
 
     private static byte[] generateSalt() {
@@ -98,6 +82,29 @@ public class CryptoUtils {
             return salt;
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public static byte[] createSaltedDigest(String text, Algorithm alg) {
+        return createSaltedDigest(text.getBytes(), alg);
+    }
+
+    public static String createB64SaltedDigest(String text, Algorithm alg) {
+        return Base64.encode(createSaltedDigest(text, alg));
+    }
+
+    public static String createB64SaltedDigest(byte[] data, Algorithm alg) {
+        return Base64.encode(createSaltedDigest(data, alg));
+    }
+
+    public enum Algorithm {
+        MD5(16,"MD5"), SHA1(20, "SHA-1"), SHA256(32, "SHA-256"), SHA512(64, "SHA-512");
+        private int hashLen;
+        private String id;
+
+        private Algorithm(int hashLen, String id) {
+            this.hashLen = hashLen;
+            this.id = id;
         }
     }
 }
