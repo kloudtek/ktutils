@@ -39,6 +39,16 @@ public class CryptoUtils {
         return createSaltedDigest(salt, data, alg);
     }
 
+    public static byte[] createDigest(byte[] data, String alg) {
+        try {
+            MessageDigest sha = MessageDigest.getInstance(alg);
+            sha.update(data);
+            return sha.digest();
+        } catch (NoSuchAlgorithmException e) {
+            throw new UnexpectedException(e);
+        }
+    }
+
     public static byte[] createSaltedDigest(byte[] salt, byte[] data, String alg) {
         try {
             MessageDigest sha = MessageDigest.getInstance(alg);
