@@ -26,4 +26,11 @@ public class CryptoUtilsTest {
         assertTrue(CryptoUtils.compareSaltedDigest(digest, data, SHA1));
         assertFalse(CryptoUtils.compareSaltedDigest(digest, "sfaiofdsadjiofsadjiosafjasfdo", SHA1));
     }
+
+    @Test
+    public void testCompareGeneratedBase64() {
+        String value = "ASfdasfdfsdafsdajfsdaljfdslakjfsadkjf";
+        String cryptedSaltedValue = CryptoUtils.createB64SaltedDigest(value, SHA1);
+        assertTrue( CryptoUtils.compareSaltedDigest(cryptedSaltedValue,value,SHA1));
+    }
 }
