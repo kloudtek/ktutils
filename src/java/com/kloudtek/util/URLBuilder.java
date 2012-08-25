@@ -5,6 +5,7 @@
 package com.kloudtek.util;
 
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,6 +90,10 @@ public class URLBuilder {
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public URI toUri() {
+        return URI.create(toString());
     }
 
     @Override
