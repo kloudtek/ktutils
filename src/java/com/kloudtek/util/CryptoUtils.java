@@ -14,6 +14,14 @@ import java.util.Arrays;
 public class CryptoUtils {
     private static final SecureRandom random = new SecureRandom();
 
+    public static MessageDigest createDigest( Algorithm alg ) {
+        try {
+            return MessageDigest.getInstance(alg.id);
+        } catch (NoSuchAlgorithmException e) {
+            throw new UnexpectedException(e);
+        }
+    }
+
     public static byte[] createDigest(byte[] data, Algorithm alg) {
         try {
             MessageDigest sha = MessageDigest.getInstance(alg.id);
