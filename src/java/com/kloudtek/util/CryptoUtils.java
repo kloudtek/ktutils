@@ -4,6 +4,8 @@
 
 package com.kloudtek.util;
 
+import sun.misc.IOUtils;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
@@ -36,7 +38,7 @@ public class CryptoUtils {
         try {
             byte[] buffer = new byte[8192];
             MessageDigest digest = MessageDigest.getInstance(alg.id);
-            for ( int i = inputStream.read() ; i != -1 ; i = inputStream.read()) {
+            for ( int i = inputStream.read(buffer) ; i != -1 ; i = inputStream.read()) {
                 digest.update(buffer,0,i);
             }
             return digest.digest();
