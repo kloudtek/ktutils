@@ -4,15 +4,19 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Used to create a temporary file with owner-only r/w permission
+ * Used to create a temporary file with restricted permissions (only owner can read/write/execute)
  */
 public class TempFile extends File implements AutoCloseable {
-    public TempFile(String name) throws IOException {
-        super(create(name));
+    public TempFile(String prefix, String suffix) throws IOException {
+        super(genPath(prefix, suffix));
     }
 
-    private static String create(String name) throws IOException {
-        final File tmp = File.createTempFile(name, "tmp");
+    public TempFile(String prefix) throws IOException {
+        super(genPath(prefix, "tmp"));
+    }
+
+    private static String genPath(String prefix, String suffix) throws IOException {
+        final File tmp = File.createTempFile(prefix, suffix);
         boolean permChange = tmp.setReadable(false,false);
         permChange = permChange && tmp.setWritable(false, false);
         permChange = permChange && tmp.setExecutable(false, false);
@@ -24,8 +28,12 @@ public class TempFile extends File implements AutoCloseable {
         return tmp.getPath();
     }
 
+    /**
+     * Deletes the files, or should it fail to, schedule it for deletion using {@link java.io.File#deleteOnExit()}
+     * @throws IOException If an error occurs while deleting the file.
+     */
     @Override
-    public void close() throws Exception {
+    public void close() throws IOException {
         if( ! delete() ) {
             deleteOnExit();
         }

@@ -5,13 +5,20 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+/**
+ * Used to create a temporary directory with restricted permissions (only owner can read/write/execute).
+ */
 public class TempDir extends File implements AutoCloseable {
-    public TempDir(String name) throws IOException {
-        super(genPath(name));
+    public TempDir(String prefix, String suffix) throws IOException {
+        super(genPath(prefix, suffix));
     }
 
-    private static String genPath( String name ) throws IOException {
-        final File tmp = File.createTempFile(name, "tmp");
+    public TempDir(String prefix) throws IOException {
+        super(genPath(prefix, "tmp"));
+    }
+
+    private static String genPath( String prefix, String suffix ) throws IOException {
+        final File tmp = File.createTempFile(prefix, suffix);
         if( ! tmp.delete() ) {
             throw new IOException("Unable to delete temp file: "+tmp.getPath());
         }
@@ -30,6 +37,10 @@ public class TempDir extends File implements AutoCloseable {
         return tmp.getPath();
     }
 
+    /**
+     * Deletes the directory and all files inside it. If any file delete fails, they will be scheduled for deletion using {@link java.io.File#deleteOnExit()}
+     * @throws IOException If an error occurs while deleting the directory.
+     */
     @Override
     public void close() throws IOException {
         del(this);
