@@ -122,6 +122,22 @@ public class XPathUtils {
         return XmlUtils.toElementList((NodeList) newXPath(xpath).evaluate(source, XPathConstants.NODESET));
     }
 
+    public static List<String> evalXPathTextElements(String xpath, InputSource source) throws XPathExpressionException {
+        return toTextContent(evalXPathNodes(xpath, source));
+    }
+
+    public static List<String> evalXPathTextElements(String xpath, Node source) throws XPathExpressionException {
+        return toTextContent(evalXPathNodes(xpath, source));
+    }
+
+    public static List<String> toTextContent(List<Node> nodes) {
+        ArrayList<String> list = new ArrayList<String>(nodes.size());
+        for (Node node : nodes) {
+            list.add(node.getTextContent());
+        }
+        return list;
+    }
+
     private <X> X getFromCache(WeakHashMap<Thread, SoftReference<X>> cache) {
         final Thread t = Thread.currentThread();
         final SoftReference<X> ref = cache.get(t);
