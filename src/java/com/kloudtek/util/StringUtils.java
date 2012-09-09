@@ -44,4 +44,15 @@ public class StringUtils {
             throw new RuntimeException(e);
         }
     }
+
+    public static String capitalize(String txt) {
+        int len;
+        if (txt == null || (len = txt.length()) == 0) {
+            return txt;
+        }
+        final StringBuilder tmp = new StringBuilder(len);
+        tmp.append(Character.toTitleCase(txt.charAt(0)));
+        tmp.append(txt.substring(1));
+        return tmp.toString();
+    }
 }
