@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. KloudTek Ltd
+ * Copyright (c) Kloudtek Ltd 2012.
  */
 
 package com.kloudtek.util;
@@ -52,6 +52,7 @@ public class UserDisplayableException extends RuntimeException {
 
     /**
      * Return specified error code.
+     *
      * @return Error Code or null is none is available.
      */
     public String getErrorCode() {

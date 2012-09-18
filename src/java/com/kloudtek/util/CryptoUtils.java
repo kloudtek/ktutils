@@ -1,10 +1,8 @@
 /*
- * Copyright (c) 2011. KloudTek Ltd
+ * Copyright (c) Kloudtek Ltd 2012.
  */
 
 package com.kloudtek.util;
-
-import sun.misc.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +14,7 @@ import java.util.Arrays;
 public class CryptoUtils {
     private static final SecureRandom random = new SecureRandom();
 
-    public static MessageDigest createDigest( Algorithm alg ) {
+    public static MessageDigest createDigest(Algorithm alg) {
         try {
             return MessageDigest.getInstance(alg.id);
         } catch (NoSuchAlgorithmException e) {
@@ -38,12 +36,12 @@ public class CryptoUtils {
         try {
             byte[] buffer = new byte[8192];
             MessageDigest digest = MessageDigest.getInstance(alg.id);
-            for ( int i = inputStream.read(buffer) ; i != -1 ; i = inputStream.read()) {
-                digest.update(buffer,0,i);
+            for (int i = inputStream.read(buffer); i != -1; i = inputStream.read()) {
+                digest.update(buffer, 0, i);
             }
             return digest.digest();
         } catch (NoSuchAlgorithmException e) {
-            throw new UnexpectedException("Algorithm not supported: "+alg,e);
+            throw new UnexpectedException("Algorithm not supported: " + alg, e);
         }
     }
 
@@ -81,7 +79,7 @@ public class CryptoUtils {
     }
 
     public static boolean compareSaltedDigest(String b64Digest, String data, Algorithm alg) {
-        return compareSaltedDigest(Base64.decode(b64Digest),data.getBytes(),alg);
+        return compareSaltedDigest(Base64.decode(b64Digest), data.getBytes(), alg);
     }
 
     private static byte[] generateSalt() {
@@ -108,7 +106,7 @@ public class CryptoUtils {
     }
 
     public enum Algorithm {
-        MD5(16,"MD5"), SHA1(20, "SHA-1"), SHA256(32, "SHA-256"), SHA512(64, "SHA-512");
+        MD5(16, "MD5"), SHA1(20, "SHA-1"), SHA256(32, "SHA-256"), SHA512(64, "SHA-512");
         private int hashLen;
         private String id;
 

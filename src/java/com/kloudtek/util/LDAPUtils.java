@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. KloudTek Ltd
+ * Copyright (c) Kloudtek Ltd 2012.
  */
 
 package com.kloudtek.util;
@@ -46,10 +46,10 @@ public class LDAPUtils {
     public static void delete(DirContext ctx, String dn) throws NamingException {
         Stack<String> toDelete = new Stack<String>();
         toDelete.push(dn);
-        while( ! toDelete.empty() ) {
+        while (!toDelete.empty()) {
             String delDn = toDelete.pop();
             final NamingEnumeration<NameClassPair> childrens = ctx.list(delDn);
-            if( childrens.hasMoreElements() ) {
+            if (childrens.hasMoreElements()) {
                 toDelete.push(delDn);
                 while (childrens.hasMoreElements()) {
                     toDelete.push(childrens.nextElement().getNameInNamespace());

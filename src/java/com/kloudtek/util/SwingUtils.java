@@ -1,5 +1,5 @@
 /*
- * Copyright (c) $today.year.jGuild International Ltd
+ * Copyright (c) Kloudtek Ltd 2012.
  */
 
 package com.kloudtek.util;

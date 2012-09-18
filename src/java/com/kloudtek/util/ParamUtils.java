@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. KloudTek Ltd
+ * Copyright (c) Kloudtek Ltd 2012.
  */
 
 package com.kloudtek.util;
@@ -11,8 +11,8 @@ public class ParamUtils {
         }
     }
 
-    public static void notEmpty( String name, String value ) {
-        if(StringUtils.isEmpty(value) ) {
+    public static void notEmpty(String name, String value) {
+        if (StringUtils.isEmpty(value)) {
             throw new IllegalArgumentException(name + " should not be null or an empty string");
         }
     }

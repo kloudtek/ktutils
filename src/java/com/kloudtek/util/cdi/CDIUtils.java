@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010. KloudTek Ltd
+ * Copyright (c) Kloudtek Ltd 2012.
  */
 
 package com.kloudtek.util.cdi;

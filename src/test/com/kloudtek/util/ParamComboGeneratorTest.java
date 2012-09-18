@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. KloudTek Ltd
+ * Copyright (c) Kloudtek Ltd 2012.
  */
 
 package com.kloudtek.util;
@@ -15,7 +15,7 @@ public class ParamComboGeneratorTest {
         final ParamComboGenerator paramComboGenerator = new ParamComboGenerator(TestEnum.values())
                 .add(new Object[]{"111", "222", "333"}).add(new Object[]{"xxx", "yyy", "zzz"})
                 .add(Arrays.asList("OO", "UU", "II", "**", "@@")).addBoolean()
-                .addAll(55,88,11).addBoolean().add(TestEnum.values());
+                .addAll(55, 88, 11).addBoolean().add(TestEnum.values());
         final Object[][] r = paramComboGenerator.toArray();
         System.out.println(Arrays.deepToString(r));
         for (int i = 0; i < r.length; i++) {

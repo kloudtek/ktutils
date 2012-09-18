@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. KloudTek Ltd
+ * Copyright (c) Kloudtek Ltd 2012.
  */
 
 package com.kloudtek.util;
@@ -58,7 +58,7 @@ public class ParamComboGenerator {
                 int oy = 0;
                 for (int y = 0; y < newSize; y++) {
                     if (y >= size) {
-                        assert r[y][0] == null && r[y][processed-1] == null;
+                        assert r[y][0] == null && r[y][processed - 1] == null;
                         System.arraycopy(r[oy], 0, r[y], 0, processed);
                     }
                     r[y][processed] = param[oc];

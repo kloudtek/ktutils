@@ -1,10 +1,9 @@
 /*
- * Copyright (c) 2011. KloudTek Ltd
+ * Copyright (c) Kloudtek Ltd 2012.
  */
 
 package com.kloudtek.util;
 
-import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.testng.annotations.Test;
 
 import java.io.ByteArrayInputStream;
@@ -13,9 +12,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import static com.kloudtek.util.CryptoUtils.Algorithm.SHA1;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.*;
 
 public class CryptoUtilsTest {
     @Test
@@ -38,13 +35,13 @@ public class CryptoUtilsTest {
     public void testCompareGeneratedBase64() {
         String value = "ASfdasfdfsdafsdajfsdaljfdslakjfsadkjf";
         String cryptedSaltedValue = CryptoUtils.createB64SaltedDigest(value, SHA1);
-        assertTrue( CryptoUtils.compareSaltedDigest(cryptedSaltedValue,value,SHA1));
+        assertTrue(CryptoUtils.compareSaltedDigest(cryptedSaltedValue, value, SHA1));
     }
 
     @Test
     public void createSHADigestFromStream() throws NoSuchAlgorithmException, IOException {
         byte[] value = "afdsfsdafasdafdsasfdsa".getBytes();
         byte[] digest = MessageDigest.getInstance("SHA-1").digest(value);
-        assertEquals(CryptoUtils.createDigest(new ByteArrayInputStream(value),SHA1),digest);
+        assertEquals(CryptoUtils.createDigest(new ByteArrayInputStream(value), SHA1), digest);
     }
 }

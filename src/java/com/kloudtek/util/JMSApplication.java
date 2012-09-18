@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. KloudTek Ltd
+ * Copyright (c) Kloudtek Ltd 2012.
  */
 
 package com.kloudtek.util;
@@ -125,7 +125,7 @@ public abstract class JMSApplication implements Runnable {
         try {
             new MessageHandler().run();
         } catch (Throwable e) {
-            logger.log(Level.SEVERE, e.getMessage(), e );
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -139,7 +139,7 @@ public abstract class JMSApplication implements Runnable {
         }
 
         private void init() throws JMSException {
-            if( connect() ) {
+            if (connect()) {
                 session = connection.createSession(sessionType == SessionType.TRANSACTED, sessionType.acknowledgeMode);
                 destination = createDestination(session);
                 consumer = createConsumer(session, destination);
@@ -154,7 +154,7 @@ public abstract class JMSApplication implements Runnable {
                 }
                 try {
                     init();
-                    for (;;) {
+                    for (; ; ) {
                         if (isClosed()) {
                             return;
                         }
@@ -163,9 +163,9 @@ public abstract class JMSApplication implements Runnable {
                             if (isClosed()) {
                                 return;
                             }
-                            logger.log(Level.FINER, "Handling JMS message {0}",message.getJMSMessageID());
+                            logger.log(Level.FINER, "Handling JMS message {0}", message.getJMSMessageID());
                             handleMessage(session, message);
-                            logger.log(Level.FINER, "Finished handling JMS message {0}",message.getJMSMessageID());
+                            logger.log(Level.FINER, "Finished handling JMS message {0}", message.getJMSMessageID());
                             if (sessionType == SessionType.TRANSACTED) {
                                 logger.finer("Committing JMS session");
                                 session.commit();

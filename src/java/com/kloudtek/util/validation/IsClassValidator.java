@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Kloudtek Ltd 2012.
+ */
+
 package com.kloudtek.util.validation;
 
 import javax.validation.ConstraintValidator;

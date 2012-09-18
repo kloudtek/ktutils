@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Kloudtek Ltd 2012.
+ */
+
 package com.kloudtek.util;
 
 import java.io.File;
@@ -17,24 +21,25 @@ public class TempFile extends File implements AutoCloseable {
 
     private static String genPath(String prefix, String suffix) throws IOException {
         final File tmp = File.createTempFile(prefix, suffix);
-        boolean permChange = tmp.setReadable(false,false);
+        boolean permChange = tmp.setReadable(false, false);
         permChange = permChange && tmp.setWritable(false, false);
         permChange = permChange && tmp.setExecutable(false, false);
         permChange = permChange && tmp.setReadable(true, true);
         permChange = permChange && tmp.setWritable(true, true);
-        if( ! permChange ) {
-            throw new IOException("Unable to change permissions on temp dir: "+tmp.getPath());
+        if (!permChange) {
+            throw new IOException("Unable to change permissions on temp dir: " + tmp.getPath());
         }
         return tmp.getPath();
     }
 
     /**
      * Deletes the files, or should it fail to, schedule it for deletion using {@link java.io.File#deleteOnExit()}
+     *
      * @throws IOException If an error occurs while deleting the file.
      */
     @Override
     public void close() throws IOException {
-        if( ! delete() ) {
+        if (!delete()) {
             deleteOnExit();
         }
     }
