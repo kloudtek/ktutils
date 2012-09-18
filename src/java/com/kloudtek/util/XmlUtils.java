@@ -151,6 +151,16 @@ public class XmlUtils {
         doSerialize(node, writer, xmlDeclaration, prettyPrint);
     }
 
+    public static String toString(Node node) {
+        return toString(node, node instanceof Document, true);
+    }
+
+    public static String toString(Node node, boolean xmlDeclaration, boolean prettyPrint) {
+        StringWriter xml = new StringWriter();
+        doSerialize(node, xml, xmlDeclaration, prettyPrint);
+        return xml.toString();
+    }
+
     private static void doSerialize(Node node, Object writer, boolean xmlDeclaration, boolean prettyPrint) {
         DOMImplementationRegistry registry = getDomImplRegistry();
         final DOMImplementationLS impl = (DOMImplementationLS) registry.getDOMImplementation("LS");
