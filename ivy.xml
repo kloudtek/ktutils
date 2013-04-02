@@ -13,7 +13,6 @@
     </configurations>
     <publications>
         <artifact name="ktutils" conf="default"/>
-        <artifact name="ktutils-sources" ext="jar" type="sources" conf="default"/>
     </publications>
     <dependencies>
         <dependency org="com.jetbrains" name="annotations" rev="10eap1052" conf="build->default"/>
