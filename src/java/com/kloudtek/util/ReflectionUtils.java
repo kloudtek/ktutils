@@ -1,48 +1,64 @@
 /*
- * Copyright (c) Kloudtek Ltd 2012.
+ * Copyright (c) Kloudtek Ltd 2013.
  */
 
 package com.kloudtek.util;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * Reflection helper methods.
  */
 public class ReflectionUtils {
-    /**
-     * Set the specified value object into the object, using setAccessible() to have access to protected/private fields.
-     *
-     * @param obj   Object containing field to set.
-     * @param name  Field name.
-     * @param value Field value.
-     */
-    public static void forceSet(Object obj, String name, Object value) {
+    public static String toString(Method method) {
+        return "Method " + method.getDeclaringClass().getName() + "#" + method.getName();
+    }
+
+    public static String toString(Field field) {
+        return field.getDeclaringClass().getName() + "#" + field.getName();
+    }
+
+    public static Object invoke(Method method, Object obj) throws Throwable {
         try {
-            Field field = obj.getClass().getDeclaredField(name);
-            field.setAccessible(true);
-            field.set(obj, value);
-        } catch (NoSuchFieldException e) {
-            throw new IllegalArgumentException(e.getMessage(), e);
+            return method.invoke(obj);
+        } catch (IllegalAccessException e) {
+            throw new IllegalAccessException("Method " + toString(method) + " cannot be invoked: " + e.getMessage());
+        } catch (InvocationTargetException e) {
+            throw e.getCause() != null ? e.getCause() : e;
+        }
+    }
+
+    public static void set(Object obj, String name, Object value) {
+        try {
+            findField(obj, name).set(obj, value);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
     }
 
-    /**
-     * Set the specified value object into the object, field must be accessible.
-     *
-     * @param obj   Object containing field to set.
-     * @param name  Field name.
-     * @param value Field value.
-     */
-    public static void set(Object obj, String name, Object value) {
+    public static Object get(Object obj, String name) {
         try {
-            obj.getClass().getDeclaredField(name).set(obj, value);
-        } catch (NoSuchFieldException e) {
-            throw new IllegalArgumentException(e.getMessage(), e);
+            return findField(obj, name).get(obj);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static Field findField(Object obj, String name) {
+        Class<?> cl = obj.getClass();
+        while (cl != null) {
+            try {
+                Field field = cl.getDeclaredField(name);
+                if (!field.isAccessible()) {
+                    field.setAccessible(true);
+                }
+                return field;
+            } catch (NoSuchFieldException e) {
+                cl = cl.getSuperclass();
+            }
+        }
+        throw new IllegalArgumentException("Field " + name + " not found in " + obj.getClass().getName());
     }
 }

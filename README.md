@@ -1,4 +1,4 @@
 ktutils
 =======
 
-Various helper classes to perform common java operations
+Various helper classes to perform common java operations.

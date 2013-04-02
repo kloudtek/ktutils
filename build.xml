@@ -1,11 +1,12 @@
 <!--
-  ~ Copyright (c) 2011. KloudTek Ltd
+  ~ Copyright (c) Kloudtek Ltd 2013.
   -->
 
-<project name="KTUtils">
-    <property name="bmpath" value="/usr/share/buildmagic"/>
-    <import file="${bmpath}/ivy.xml"/>
-    <import file="${bmpath}/simple.xml"/>
-    <property name="projectname" value="ktutils"/>
-    <property name="publishresolver" value="kloudtek"/>
+<project name="KTUtils" xmlns:bm="antlib:com.kloudtek.buildmagic">
+    <property name="ivysettings.url" value="http://s3.amazonaws.com/ivy.kloudtek.com/ivysettings.xml"/>
+    <bm:template name="ivy"/>
+    <bm:template name="simple-java"/>
+
+    <target name="_deps" depends="deps"/>
+    <target name="_artifacts" depends="artifacts"/>
 </project>
