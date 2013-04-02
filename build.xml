@@ -2,7 +2,7 @@
   ~ Copyright (c) Kloudtek Ltd 2013.
   -->
 
-<project name="KTUtils" xmlns:bm="antlib:com.kloudtek.buildmagic">
+<project name="ktutils" xmlns:bm="antlib:com.kloudtek.buildmagic">
     <property name="ivysettings.url" value="http://s3.amazonaws.com/ivy.kloudtek.com/ivysettings.xml"/>
     <bm:template name="ivy"/>
     <bm:template name="simple-java"/>
