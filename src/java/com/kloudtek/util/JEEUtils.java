@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Kloudtek Ltd 2012.
+ * Copyright (c) Kloudtek Ltd 2013.
  */
 
 package com.kloudtek.util;
