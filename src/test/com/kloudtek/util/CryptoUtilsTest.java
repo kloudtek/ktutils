@@ -18,7 +18,7 @@ public class CryptoUtilsTest {
     @Test
     public void testSSHA() {
         byte[] data = "HelloWorldThisIsADigestToEncode@#$gfms8i23o5m*T)6y891'".getBytes();
-        byte[] digest = CryptoUtils.createDigest(data, SHA1);
+        byte[] digest = CryptoUtils.digest(data, SHA1);
         assertTrue(CryptoUtils.compareSaltedDigest(digest, data, SHA1));
         assertFalse(CryptoUtils.compareSaltedDigest(digest, "sfaiofdsadjiofsadjiosafjasfdo".getBytes(), SHA1));
     }
@@ -26,7 +26,7 @@ public class CryptoUtilsTest {
     @Test
     public void testSSHABase64() {
         String data = "HelloWorldThisIsADigestToEncode@#$gfms8i23o5m*T)6y891'";
-        String digest = CryptoUtils.createB64SaltedDigest(data, SHA1);
+        String digest = CryptoUtils.saltedB64Digest(data, SHA1);
         assertTrue(CryptoUtils.compareSaltedDigest(digest, data, SHA1));
         assertFalse(CryptoUtils.compareSaltedDigest(digest, "sfaiofdsadjiofsadjiosafjasfdo", SHA1));
     }
@@ -34,7 +34,7 @@ public class CryptoUtilsTest {
     @Test
     public void testCompareGeneratedBase64() {
         String value = "ASfdasfdfsdafsdajfsdaljfdslakjfsadkjf";
-        String cryptedSaltedValue = CryptoUtils.createB64SaltedDigest(value, SHA1);
+        String cryptedSaltedValue = CryptoUtils.saltedB64Digest(value, SHA1);
         assertTrue(CryptoUtils.compareSaltedDigest(cryptedSaltedValue, value, SHA1));
     }
 
@@ -42,6 +42,6 @@ public class CryptoUtilsTest {
     public void createSHADigestFromStream() throws NoSuchAlgorithmException, IOException {
         byte[] value = "afdsfsdafasdafdsasfdsa".getBytes();
         byte[] digest = MessageDigest.getInstance("SHA-1").digest(value);
-        assertEquals(CryptoUtils.createDigest(new ByteArrayInputStream(value), SHA1), digest);
+        assertEquals(CryptoUtils.digest(new ByteArrayInputStream(value), SHA1), digest);
     }
 }
