@@ -9,15 +9,16 @@
     </info>
     <configurations>
         <conf name="default"/>
+        <conf name="java6"/>
         <conf name="build" visibility="private"/>
     </configurations>
     <publications>
         <artifact name="ktutils" conf="default"/>
+        <artifact name="ktutils-java6" conf="java6"/>
     </publications>
     <dependencies>
         <dependency org="com.jetbrains" name="annotations" rev="10eap1052" conf="build->default"/>
         <dependency org="org.testng" name="testng" rev="6.0.1" conf="build->default"/>
-        <dependency org="org.bouncycastle" name="bouncycastle" rev="1.44" conf="build->default"/>
         <dependency org="com.sun" name="javaee" rev="6.0" conf="build->default"/>
         <dependency org="org.apache" name="commons-codec" rev="1.4" conf="build->default"/>
     </dependencies>

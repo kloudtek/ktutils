@@ -2,10 +2,43 @@
   ~ Copyright (c) Kloudtek Ltd 2013.
   -->
 
-<project name="ktutils" xmlns:bm="antlib:com.kloudtek.buildmagic">
+<project name="ktutils" xmlns:bm="antlib:com.kloudtek.buildmagic"
+        >
     <property name="ivysettings.url" value="http://s3.amazonaws.com/ivy.kloudtek.com/ivysettings.xml"/>
     <bm:template name="ivy"/>
-    <bm:template name="simple-java"/>
+
+    <target name="classes" extensionOf="compile">
+        <mkdir dir="${build.dir}/classes"/>
+        <javac destdir="${build.dir}/classes"
+               srcdir="${basedir}/src/java"
+               classpathref="buildmagic.classpath.compile"/>
+        <mkdir dir="${build.dir}/java6"/>
+        <copy todir="${build.dir}/java6">
+            <fileset dir="src/java"/>
+        </copy>
+        <replace file="${build.dir}/java6/com/kloudtek/util/TempDir.java">
+            <replacefilter token="implements AutoCloseable" value=""/>
+            <replacefilter token="@Override" value=""/>
+        </replace>
+        <replace file="${build.dir}/java6/com/kloudtek/util/TempFile.java">
+            <replacefilter token="implements AutoCloseable" value=""/>
+            <replacefilter token="@Override" value=""/>
+        </replace>
+        <mkdir dir="${build.dir}/classes-java6"/>
+        <javac destdir="${build.dir}/classes-java6"
+               srcdir="${build.dir}/java6"
+               target="1.6" source="1.6"
+               classpathref="buildmagic.classpath.compile"/>
+    </target>
+
+    <target name="jar" extensionOf="artifacts">
+        <jar destfile="${artifacts.dir}/ktutils.jar" basedir="${build.dir}/classes">
+            <fileset dir="${basedir}/src/java" excludes="**/*.java"/>
+        </jar>
+        <jar destfile="${artifacts.dir}/ktutils-java6.jar" basedir="${build.dir}/classes-java6">
+            <fileset dir="${basedir}/src/java" excludes="**/*.java"/>
+        </jar>
+    </target>
 
     <target name="_deps" depends="deps"/>
     <target name="_artifacts" depends="artifacts"/>
