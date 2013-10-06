@@ -52,7 +52,7 @@ public class SimpleLogFormatter extends Formatter {
                 txt.append(dateFormat.format(date)).append(separator);
             }
         }
-        txt.append(formatMessage(record));
+        txt.append(formatMessage(record)).append('\n');
         return txt.toString();
     }
 }
