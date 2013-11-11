@@ -2,7 +2,10 @@
  * Copyright (c) 2013 KloudTek Ltd
  */
 
-package com.kloudtek.util;
+package com.kloudtek.util.crypto;
+
+import com.kloudtek.util.SystemUtils;
+import com.kloudtek.util.UnexpectedException;
 
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
@@ -11,11 +14,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.*;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.kloudtek.util.StringUtils.base64Decode;
 import static com.kloudtek.util.StringUtils.base64Encode;
+import static com.kloudtek.util.crypto.DigestAlgorithm.*;
 
 /**
  * <p>Provide easy to use cryptographic methods, and automatically implement workarounds for known security
@@ -29,12 +36,15 @@ import static com.kloudtek.util.StringUtils.base64Encode;
  * </ul>
  */
 public class CryptoUtils {
+    public static final int BUFSZ = 8192;
+    public static final String S_AES = "AES";
+    public static final String S_RSA = "RSA";
     private static final SecureRandom random = new SecureRandom();
     private static final AtomicBoolean bouncyInstalled = new AtomicBoolean();
     private static final boolean limitedJce;
-    public static final int BUFSZ = 8192;
     private static final Class<Provider> spongyProvider;
     private static final Class<Provider> bouncyProvider;
+    private static String bestAesAlg = "AES";
 
     static {
         if (SystemUtils.isAndroid()) {
@@ -64,14 +74,20 @@ public class CryptoUtils {
         }
     }
 
-    public static final String S_AES = "AES";
-
     /**
      * Invokes {@link #useBouncycastle()} with the first parameter as false unless running on android with spongycastle
      * available (in which case it will be true).
      */
     public static void useBouncycastle() {
         useBouncycastle(SystemUtils.isAndroid() && spongyProvider != null);
+        findBestAlgs();
+    }
+
+    /**
+     * Find best available cryptographic algorithms
+     */
+    private static void findBestAlgs() {
+        // todo
     }
 
     /**
@@ -110,19 +126,17 @@ public class CryptoUtils {
         }
     }
 
-    public static MessageDigest digest(Algorithm alg) {
+    public static MessageDigest digest(DigestAlgorithm alg) {
         try {
-            alg.checkIsDigest();
-            return MessageDigest.getInstance(alg.jceId);
+            return MessageDigest.getInstance(alg.getJceId());
         } catch (NoSuchAlgorithmException e) {
             throw new UnexpectedException(e);
         }
     }
 
-    public static byte[] digest(byte[] data, Algorithm alg) {
+    public static byte[] digest(byte[] data, DigestAlgorithm alg) {
         try {
-            alg.checkIsDigest();
-            MessageDigest sha = MessageDigest.getInstance(alg.jceId);
+            MessageDigest sha = MessageDigest.getInstance(alg.getJceId());
             sha.update(data);
             return sha.digest();
         } catch (NoSuchAlgorithmException e) {
@@ -130,7 +144,7 @@ public class CryptoUtils {
         }
     }
 
-    public static byte[] digest(File file, Algorithm alg) throws IOException {
+    public static byte[] digest(File file, DigestAlgorithm alg) throws IOException {
         FileInputStream is = new FileInputStream(file);
         try {
             return digest(is, alg);
@@ -143,9 +157,8 @@ public class CryptoUtils {
         }
     }
 
-    public static byte[] digest(InputStream inputStream, Algorithm alg) throws IOException {
-        alg.checkIsDigest();
-        return digest(inputStream, alg.jceId);
+    public static byte[] digest(InputStream inputStream, DigestAlgorithm alg) throws IOException {
+        return digest(inputStream, alg.getJceId());
     }
 
     public static byte[] digest(InputStream inputStream, String alg) throws IOException {
@@ -161,13 +174,12 @@ public class CryptoUtils {
         }
     }
 
-    public static byte[] saltedDigest(byte[] data, Algorithm alg) {
+    public static byte[] saltedDigest(byte[] data, DigestAlgorithm alg) {
         return saltedDigest(generateSalt(), data, alg);
     }
 
-    public static byte[] saltedDigest(byte[] salt, byte[] data, Algorithm alg) {
-        alg.checkIsDigest();
-        return saltedDigest(salt, data, alg.jceId, alg.hashLen);
+    public static byte[] saltedDigest(byte[] salt, byte[] data, DigestAlgorithm alg) {
+        return saltedDigest(salt, data, alg.getJceId(), alg.getHashLen());
     }
 
     public static byte[] saltedDigest(byte[] salt, byte[] data, String alg, int hashLen) {
@@ -186,12 +198,11 @@ public class CryptoUtils {
     }
 
 
-    public static boolean compareSaltedDigest(byte[] digest, byte[] data, Algorithm alg) {
+    public static boolean compareSaltedDigest(byte[] digest, byte[] data, DigestAlgorithm alg) {
         try {
-            alg.checkIsDigest();
-            MessageDigest sha = MessageDigest.getInstance(alg.jceId);
-            byte[] digestData = Arrays.copyOfRange(digest, 0, alg.hashLen);
-            byte[] salt = Arrays.copyOfRange(digest, alg.hashLen, digest.length);
+            MessageDigest sha = MessageDigest.getInstance(alg.getJceId());
+            byte[] digestData = Arrays.copyOfRange(digest, 0, alg.getHashLen());
+            byte[] salt = Arrays.copyOfRange(digest, alg.getHashLen(), digest.length);
             sha.update(data);
             sha.update(salt);
             byte[] encoded = sha.digest();
@@ -201,7 +212,7 @@ public class CryptoUtils {
         }
     }
 
-    public static boolean compareSaltedDigest(String b64Digest, String data, Algorithm alg) {
+    public static boolean compareSaltedDigest(String b64Digest, String data, DigestAlgorithm alg) {
         return compareSaltedDigest(base64Decode(b64Digest), data.getBytes(), alg);
     }
 
@@ -211,88 +222,128 @@ public class CryptoUtils {
         return salt;
     }
 
-    public static byte[] saltedDigest(String text, Algorithm alg) {
+    public static byte[] saltedDigest(String text, DigestAlgorithm alg) {
         return saltedDigest(text.getBytes(), alg);
     }
 
-    public static String saltedB64Digest(String text, Algorithm alg) {
+    public static String saltedB64Digest(String text, DigestAlgorithm alg) {
         return base64Encode(saltedDigest(text, alg));
     }
 
-    public static String saltedB64Digest(byte[] data, Algorithm alg) {
+    public static String saltedB64Digest(byte[] data, DigestAlgorithm alg) {
         return base64Encode(saltedDigest(data, alg));
     }
 
     public static byte[] sha1(byte[] data) {
-        return digest(data, Algorithm.SHA1);
+        return digest(data, SHA1);
     }
 
     public static byte[] sha1(InputStream data) throws IOException {
-        return digest(data, Algorithm.SHA1);
+        return digest(data, SHA1);
     }
 
     public static byte[] sha1(File file) throws IOException {
-        return digest(file, Algorithm.SHA1);
+        return digest(file, SHA1);
     }
 
     public static byte[] sha256(byte[] data) {
-        return digest(data, Algorithm.SHA256);
+        return digest(data, SHA256);
     }
 
     public static byte[] sha256(InputStream data) throws IOException {
-        return digest(data, Algorithm.SHA256);
+        return digest(data, SHA256);
     }
 
     public static byte[] sha256(File file) throws IOException {
-        return digest(file, Algorithm.SHA256);
+        return digest(file, SHA256);
     }
 
     public static byte[] sha512(byte[] data) {
-        return digest(data, Algorithm.SHA512);
+        return digest(data, SHA512);
     }
 
     public static byte[] sha512(InputStream data) throws IOException {
-        return digest(data, Algorithm.SHA512);
+        return digest(data, SHA512);
     }
 
     public static byte[] sha512(File file) throws IOException {
-        return digest(file, Algorithm.SHA512);
+        return digest(file, SHA512);
     }
 
     public static byte[] md5(byte[] data) {
-        return digest(data, Algorithm.MD5);
+        return digest(data, MD5);
     }
 
     public static byte[] md5(InputStream data) throws IOException {
-        return digest(data, Algorithm.MD5);
+        return digest(data, MD5);
     }
 
     public static byte[] md5(File file) throws IOException {
-        return digest(file, Algorithm.MD5);
+        return digest(file, MD5);
     }
 
-    public static SecretKey generateKey(Algorithm alg) {
+    // Key management methods
+
+    public static SecretKey generateKey(SymmetricAlgorithm alg, int keysize) {
         try {
-            KeyGenerator kg = KeyGenerator.getInstance(alg.jceId);
-            if (alg.keySize > 0) {
-                kg.init(alg.keySize);
-            }
+            KeyGenerator kg = KeyGenerator.getInstance(alg.getJceId());
+            kg.init(keysize);
             return kg.generateKey();
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static byte[] aesEncrypt(byte[] key, Algorithm alg, byte[] data) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-        return aesEncrypt(new SecretKeySpec(key, 0, key.length, alg.jceId), data);
+    public static KeyPair generateKeyPair(AsymmetricAlgorithm alg, int keysize) {
+        try {
+            KeyPairGenerator kg = KeyPairGenerator.getInstance(alg.getJceId());
+            kg.initialize(keysize);
+            return kg.generateKeyPair();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Read an X509 Encoded public key
+     *
+     * @param key X509 encoded key
+     * @return Public key object
+     * @throws InvalidKeySpecException If the key is invalid
+     */
+    public static PublicKey readPublicKey(String algorithm, byte[] key) throws InvalidKeySpecException {
+        try {
+            KeyFactory keyFactory = KeyFactory.getInstance(algorithm);
+            X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(key);
+            return keyFactory.generatePublic(publicKeySpec);
+        } catch (NoSuchAlgorithmException e) {
+            throw new UnexpectedException(e);
+        }
+    }
+
+    /**
+     * Read an X509 Encoded RSA public key
+     *
+     * @param key X509 encoded rsa key
+     * @return Public key object
+     * @throws InvalidKeySpecException If the key is invalid
+     */
+    public static RSAPublicKey readRSAPublicKey(byte[] key) throws InvalidKeySpecException {
+        return (RSAPublicKey) readPublicKey(S_RSA, key);
+    }
+
+    // AES encryption
+
+    public static byte[] aesEncrypt(byte[] key, byte[] data) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        return aesEncrypt(new SecretKeySpec(key, 0, key.length, S_AES), data);
     }
 
     public static byte[] aesEncrypt(SecretKey key, byte[] data) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         return crypt(key, data, "AES", Cipher.ENCRYPT_MODE);
     }
 
-    public static byte[] aesDecrypt(byte[] key, Algorithm alg, byte[] data) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-        return aesDecrypt(new SecretKeySpec(key, 0, key.length, alg.jceId), data);
+    public static byte[] aesDecrypt(byte[] key, byte[] data) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        return aesDecrypt(new SecretKeySpec(key, 0, key.length, S_AES), data);
     }
 
     public static byte[] aesDecrypt(SecretKey key, byte[] data) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
@@ -311,23 +362,4 @@ public class CryptoUtils {
         }
     }
 
-    public enum Algorithm {
-        MD5(16, "MD5", 0), SHA1(20, "SHA-1", 0), SHA256(32, "SHA-256", 0), SHA512(64, "SHA-512", 0),
-        AES128(0, S_AES, 128), AES192(0, S_AES, 192), AES256(0, S_AES, 256);
-        private int hashLen;
-        private String jceId;
-        private int keySize;
-
-        private Algorithm(int hashLen, String jceId, int keySize) {
-            this.hashLen = hashLen;
-            this.jceId = jceId;
-            this.keySize = keySize;
-        }
-
-        private void checkIsDigest() {
-            if (hashLen == 0) {
-                throw new IllegalArgumentException("Not a digest algorithm: " + name());
-            }
-        }
-    }
 }
