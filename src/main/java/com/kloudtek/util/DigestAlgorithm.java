@@ -2,7 +2,7 @@
  * Copyright (c) 2013 KloudTek Ltd
  */
 
-package com.kloudtek.util.crypto;
+package com.kloudtek.util;
 
 /**
  * Created by yannick on 09/11/13.
