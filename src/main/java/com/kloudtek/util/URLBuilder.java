@@ -46,8 +46,15 @@ public class URLBuilder {
      */
     public URLBuilder addPath(String path) {
         StringBuilder url = new StringBuilder(baseUrl);
-        if (!baseUrl.endsWith("/") && !path.startsWith("/")) {
+        boolean urlSlash = baseUrl.endsWith("/");
+        boolean pathSlash = path.startsWith("/");
+        if (!urlSlash && !pathSlash) {
             url.append("/");
+        } else if (urlSlash && pathSlash) {
+            if (path.length() == 1) {
+                return this;
+            }
+            path = path.substring(1);
         }
         url.append(extractParams(path));
         baseUrl = url.toString();
