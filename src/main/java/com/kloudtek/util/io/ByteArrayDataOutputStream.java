@@ -5,7 +5,6 @@
 package com.kloudtek.util.io;
 
 import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 
 /**
  * Created by yannick on 13/11/13.
