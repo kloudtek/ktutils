@@ -9,6 +9,7 @@ import java.lang.reflect.Array;
 /**
  * Created by yannick on 13/11/13.
  */
+@SuppressWarnings("unchecked")
 public class ArrayUtils {
     public static <X extends Object> X[] concat(X[] array1, X... array2) {
         X[] result = (X[]) Array.newInstance(array1.getClass().getComponentType(), array1.length + array2.length);
