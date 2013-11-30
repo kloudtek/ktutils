@@ -16,23 +16,10 @@ public class DataInputStream extends java.io.DataInputStream {
     }
 
     public String readString() throws IOException {
-        if (readBoolean()) {
-            return readUTF();
-        } else {
-            return null;
-        }
+        return IOUtils.readString(this);
     }
 
     public byte[] readData() throws IOException {
-        int len = readInt();
-        if (len > 0) {
-            byte[] data = new byte[len];
-            readFully(data);
-            return data;
-        } else if (len == 0) {
-            return new byte[0];
-        } else {
-            return null;
-        }
+        return IOUtils.readData(this);
     }
 }

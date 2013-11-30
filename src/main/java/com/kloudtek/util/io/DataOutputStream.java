@@ -22,11 +22,7 @@ public class DataOutputStream extends java.io.DataOutputStream {
      * @throws IOException
      */
     public void writeString(String str) throws IOException {
-        boolean nonNull = str != null;
-        writeBoolean(nonNull);
-        if (nonNull) {
-            writeUTF(str);
-        }
+        IOUtils.writeString(this, str);
     }
 
     /**
@@ -36,10 +32,6 @@ public class DataOutputStream extends java.io.DataOutputStream {
      * @throws IOException
      */
     public void writeData(byte[] data) throws IOException {
-        int len = data != null ? data.length : -1;
-        writeInt(len);
-        if (len > -1) {
-            write(data);
-        }
+        IOUtils.writeData(this, data);
     }
 }
