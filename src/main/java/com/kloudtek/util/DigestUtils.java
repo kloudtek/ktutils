@@ -121,7 +121,7 @@ public class DigestUtils {
     }
 
     public static byte[] saltedDigest(String text, DigestAlgorithm alg) {
-        return saltedDigest(text.getBytes(), alg);
+        return saltedDigest(StringUtils.toUTF8(text), alg);
     }
 
     public static String saltedB64Digest(String text, DigestAlgorithm alg) {
