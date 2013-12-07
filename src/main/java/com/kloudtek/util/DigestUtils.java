@@ -95,7 +95,6 @@ public class DigestUtils {
         }
     }
 
-
     public static boolean compareSaltedDigest(byte[] digest, byte[] data, DigestAlgorithm alg) {
         try {
             MessageDigest sha = MessageDigest.getInstance(alg.getJceId());

@@ -77,6 +77,22 @@ public class StringUtils {
         return new Base64(urlSafe).decode(data);
     }
 
+    public static String base32Encode(byte[] data) {
+        return new Base32().encodeToString(data);
+    }
+
+    public static byte[] base32Decode(String data) {
+        return new Base32().decode(data);
+    }
+
+    public static String base32Encode(byte[] data, boolean urlSafe) {
+        return new Base32(urlSafe).encodeToString(data);
+    }
+
+    public static byte[] base32Decode(String data, boolean urlSafe) {
+        return new Base32(urlSafe).decode(data);
+    }
+
     /**
      * Convert string to an UTF-8 encoded byte array
      *
