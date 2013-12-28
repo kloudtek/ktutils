@@ -6,9 +6,10 @@ rsync -a java/ _java
 rsync -a ../src/main/java/ _java
 KU=com/kloudtek/util
 
-j2objc -use-arc --no-package-directories --prefix com.kloudtek.util=KTUtils -sourcepath _java -d KTUtils \
-    java/net/URLDecoder.java ${KU}/StringUtils.java ${KU}/BaseNCodec.java ${KU}/Base64.java ${KU}/Base32.java \
-    ${KU}/UnexpectedException.java
+j2objc -use-arc --no-package-directories --prefix com.kloudtek.util=KTUtils --prefix com.kloudtek.util.io=KTUtils \
+    -sourcepath _java -d KTUtils java/net/URLDecoder.java ${KU}/StringUtils.java ${KU}/BaseNCodec.java ${KU}/Base64.java ${KU}/Base32.java \
+    ${KU}/UnexpectedException.java ${KU}/io/IOUtils.java ${KU}/io/DataInputStream.java ${KU}/io/DataOutputStream.java  \
+    ${KU}/io/ByteArrayDataInputStream.java ${KU}/io/ByteArrayDataOutputStream.java
 
 find KTUtils -type f -name '*' -exec sed -i '' s/java\\/net\\/URLDecoder/URLDecoder/g {} +
 

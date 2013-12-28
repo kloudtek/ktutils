@@ -40,7 +40,7 @@ static NSString * JavaNetURLDecoder_dfltEncName_ = nil;
 + (NSString *)decodeWithNSString:(NSString *)s
                     withNSString:(NSString *)enc {
   BOOL needToChange = NO;
-  int numChars = [((NSString *) nil_chk(s)) length];
+  int numChars = (int)[((NSString *) nil_chk(s)) length];
   JavaLangStringBuffer *sb = [[JavaLangStringBuffer alloc] initWithInt:numChars > 500 ? numChars / 2 : numChars];
   int i = 0;
   if ([((NSString *) nil_chk(enc)) length] == 0) {

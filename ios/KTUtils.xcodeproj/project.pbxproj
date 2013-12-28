@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC6A1EA4186F18D300B54C9C /* ByteArrayDataInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = AC6A1E9F186F18D300B54C9C /* ByteArrayDataInputStream.m */; };
+		AC6A1EA5186F18D300B54C9C /* ByteArrayDataOutputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = AC6A1EA1186F18D300B54C9C /* ByteArrayDataOutputStream.m */; };
+		AC6A1EA6186F18D300B54C9C /* DataOutputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = AC6A1EA3186F18D300B54C9C /* DataOutputStream.m */; };
+		AC6A1EA9186F193C00B54C9C /* DataInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = AC6A1EA8186F193C00B54C9C /* DataInputStream.m */; };
+		AC6A1EAC186F197200B54C9C /* IOUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = AC6A1EAB186F197200B54C9C /* IOUtils.m */; };
 		ACC3D9C8186EDEBA00A95AFC /* Base32.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC3D9BD186EDEBA00A95AFC /* Base32.m */; };
 		ACC3D9C9186EDEBA00A95AFC /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC3D9BF186EDEBA00A95AFC /* Base64.m */; };
 		ACC3D9CA186EDEBA00A95AFC /* BaseNCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC3D9C1186EDEBA00A95AFC /* BaseNCodec.m */; };
@@ -45,6 +50,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AC6A1E9E186F18D300B54C9C /* ByteArrayDataInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ByteArrayDataInputStream.h; sourceTree = "<group>"; };
+		AC6A1E9F186F18D300B54C9C /* ByteArrayDataInputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ByteArrayDataInputStream.m; sourceTree = "<group>"; };
+		AC6A1EA0186F18D300B54C9C /* ByteArrayDataOutputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ByteArrayDataOutputStream.h; sourceTree = "<group>"; };
+		AC6A1EA1186F18D300B54C9C /* ByteArrayDataOutputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ByteArrayDataOutputStream.m; sourceTree = "<group>"; };
+		AC6A1EA2186F18D300B54C9C /* DataOutputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataOutputStream.h; sourceTree = "<group>"; };
+		AC6A1EA3186F18D300B54C9C /* DataOutputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataOutputStream.m; sourceTree = "<group>"; };
+		AC6A1EA7186F193C00B54C9C /* DataInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataInputStream.h; sourceTree = "<group>"; };
+		AC6A1EA8186F193C00B54C9C /* DataInputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataInputStream.m; sourceTree = "<group>"; };
+		AC6A1EAA186F197200B54C9C /* IOUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOUtils.h; sourceTree = "<group>"; };
+		AC6A1EAB186F197200B54C9C /* IOUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IOUtils.m; sourceTree = "<group>"; };
 		ACC3D9BC186EDEBA00A95AFC /* Base32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base32.h; sourceTree = "<group>"; };
 		ACC3D9BD186EDEBA00A95AFC /* Base32.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base32.m; sourceTree = "<group>"; };
 		ACC3D9BE186EDEBA00A95AFC /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
@@ -94,6 +109,16 @@
 		ACC3D9BB186EDEBA00A95AFC /* KTUtils */ = {
 			isa = PBXGroup;
 			children = (
+				AC6A1EAA186F197200B54C9C /* IOUtils.h */,
+				AC6A1EAB186F197200B54C9C /* IOUtils.m */,
+				AC6A1EA7186F193C00B54C9C /* DataInputStream.h */,
+				AC6A1EA8186F193C00B54C9C /* DataInputStream.m */,
+				AC6A1E9E186F18D300B54C9C /* ByteArrayDataInputStream.h */,
+				AC6A1E9F186F18D300B54C9C /* ByteArrayDataInputStream.m */,
+				AC6A1EA0186F18D300B54C9C /* ByteArrayDataOutputStream.h */,
+				AC6A1EA1186F18D300B54C9C /* ByteArrayDataOutputStream.m */,
+				AC6A1EA2186F18D300B54C9C /* DataOutputStream.h */,
+				AC6A1EA3186F18D300B54C9C /* DataOutputStream.m */,
 				ACC3D9BC186EDEBA00A95AFC /* Base32.h */,
 				ACC3D9BD186EDEBA00A95AFC /* Base32.m */,
 				ACC3D9BE186EDEBA00A95AFC /* Base64.h */,
@@ -239,11 +264,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC6A1EA5186F18D300B54C9C /* ByteArrayDataOutputStream.m in Sources */,
 				ACC3D9CB186EDEBA00A95AFC /* StringUtils.m in Sources */,
+				AC6A1EA9186F193C00B54C9C /* DataInputStream.m in Sources */,
 				ACC3D9C9186EDEBA00A95AFC /* Base64.m in Sources */,
+				AC6A1EA4186F18D300B54C9C /* ByteArrayDataInputStream.m in Sources */,
 				ACC3D9CD186EDEBA00A95AFC /* URLDecoder.m in Sources */,
 				ACC3D9CC186EDEBA00A95AFC /* UnexpectedException.m in Sources */,
+				AC6A1EA6186F18D300B54C9C /* DataOutputStream.m in Sources */,
 				ACC3D9C8186EDEBA00A95AFC /* Base32.m in Sources */,
+				AC6A1EAC186F197200B54C9C /* IOUtils.m in Sources */,
 				ACC3D9CA186EDEBA00A95AFC /* BaseNCodec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

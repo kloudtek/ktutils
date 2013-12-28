@@ -47,7 +47,7 @@
 
 + (NSString *)capitalizeWithNSString:(NSString *)txt {
   int len;
-  if (txt == nil || (len = [txt length]) == 0) {
+  if (txt == nil || (len = (int) [txt length]) == 0) {
     return txt;
   }
   JavaLangStringBuilder *tmp = [[JavaLangStringBuilder alloc] initWithInt:len];
