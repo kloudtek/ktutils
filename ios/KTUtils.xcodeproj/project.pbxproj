@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ACC3D9C8186EDEBA00A95AFC /* Base32.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC3D9BD186EDEBA00A95AFC /* Base32.m */; };
+		ACC3D9C9186EDEBA00A95AFC /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC3D9BF186EDEBA00A95AFC /* Base64.m */; };
+		ACC3D9CA186EDEBA00A95AFC /* BaseNCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC3D9C1186EDEBA00A95AFC /* BaseNCodec.m */; };
+		ACC3D9CB186EDEBA00A95AFC /* StringUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC3D9C3186EDEBA00A95AFC /* StringUtils.m */; };
+		ACC3D9CC186EDEBA00A95AFC /* UnexpectedException.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC3D9C5186EDEBA00A95AFC /* UnexpectedException.m */; };
+		ACC3D9CD186EDEBA00A95AFC /* URLDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC3D9C7186EDEBA00A95AFC /* URLDecoder.m */; };
 		ACD697ED186DB2870099ADC1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACD697EC186DB2870099ADC1 /* Foundation.framework */; };
-		ACD697F2186DB2870099ADC1 /* KTUtils.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ACD697F1186DB2870099ADC1 /* KTUtils.h */; };
-		ACD697F4186DB2870099ADC1 /* KTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = ACD697F3186DB2870099ADC1 /* KTUtils.m */; };
 		ACD697FB186DB2870099ADC1 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACD697FA186DB2870099ADC1 /* XCTest.framework */; };
 		ACD697FC186DB2870099ADC1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACD697EC186DB2870099ADC1 /* Foundation.framework */; };
 		ACD697FE186DB2870099ADC1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACD697FD186DB2870099ADC1 /* UIKit.framework */; };
@@ -35,18 +39,27 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				ACD697F2186DB2870099ADC1 /* KTUtils.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		ACC3D9BC186EDEBA00A95AFC /* Base32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base32.h; sourceTree = "<group>"; };
+		ACC3D9BD186EDEBA00A95AFC /* Base32.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base32.m; sourceTree = "<group>"; };
+		ACC3D9BE186EDEBA00A95AFC /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
+		ACC3D9BF186EDEBA00A95AFC /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
+		ACC3D9C0186EDEBA00A95AFC /* BaseNCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseNCodec.h; sourceTree = "<group>"; };
+		ACC3D9C1186EDEBA00A95AFC /* BaseNCodec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseNCodec.m; sourceTree = "<group>"; };
+		ACC3D9C2186EDEBA00A95AFC /* StringUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringUtils.h; sourceTree = "<group>"; };
+		ACC3D9C3186EDEBA00A95AFC /* StringUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringUtils.m; sourceTree = "<group>"; };
+		ACC3D9C4186EDEBA00A95AFC /* UnexpectedException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnexpectedException.h; sourceTree = "<group>"; };
+		ACC3D9C5186EDEBA00A95AFC /* UnexpectedException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnexpectedException.m; sourceTree = "<group>"; };
+		ACC3D9C6186EDEBA00A95AFC /* URLDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLDecoder.h; sourceTree = "<group>"; };
+		ACC3D9C7186EDEBA00A95AFC /* URLDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLDecoder.m; sourceTree = "<group>"; };
+		ACC3D9CE186EDEFE00A95AFC /* KTUtils-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTUtils-Prefix.pch"; sourceTree = "<group>"; };
 		ACD697E9186DB2870099ADC1 /* libKTUtils.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKTUtils.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACD697EC186DB2870099ADC1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		ACD697F0186DB2870099ADC1 /* KTUtils-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KTUtils-Prefix.pch"; sourceTree = "<group>"; };
-		ACD697F1186DB2870099ADC1 /* KTUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KTUtils.h; sourceTree = "<group>"; };
-		ACD697F3186DB2870099ADC1 /* KTUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KTUtils.m; sourceTree = "<group>"; };
 		ACD697F9186DB2870099ADC1 /* KTUtilsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KTUtilsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACD697FA186DB2870099ADC1 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		ACD697FD186DB2870099ADC1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -78,10 +91,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		ACC3D9BB186EDEBA00A95AFC /* KTUtils */ = {
+			isa = PBXGroup;
+			children = (
+				ACC3D9BC186EDEBA00A95AFC /* Base32.h */,
+				ACC3D9BD186EDEBA00A95AFC /* Base32.m */,
+				ACC3D9BE186EDEBA00A95AFC /* Base64.h */,
+				ACC3D9BF186EDEBA00A95AFC /* Base64.m */,
+				ACC3D9C0186EDEBA00A95AFC /* BaseNCodec.h */,
+				ACC3D9C1186EDEBA00A95AFC /* BaseNCodec.m */,
+				ACC3D9C2186EDEBA00A95AFC /* StringUtils.h */,
+				ACC3D9C3186EDEBA00A95AFC /* StringUtils.m */,
+				ACC3D9C4186EDEBA00A95AFC /* UnexpectedException.h */,
+				ACC3D9C5186EDEBA00A95AFC /* UnexpectedException.m */,
+				ACC3D9C6186EDEBA00A95AFC /* URLDecoder.h */,
+				ACC3D9C7186EDEBA00A95AFC /* URLDecoder.m */,
+				ACC3D9CE186EDEFE00A95AFC /* KTUtils-Prefix.pch */,
+			);
+			path = KTUtils;
+			sourceTree = "<group>";
+		};
 		ACD697E0186DB2870099ADC1 = {
 			isa = PBXGroup;
 			children = (
-				ACD697EE186DB2870099ADC1 /* KTUtils */,
+				ACC3D9BB186EDEBA00A95AFC /* KTUtils */,
 				ACD69802186DB2870099ADC1 /* KTUtilsTests */,
 				ACD697EB186DB2870099ADC1 /* Frameworks */,
 				ACD697EA186DB2870099ADC1 /* Products */,
@@ -105,24 +138,6 @@
 				ACD697FD186DB2870099ADC1 /* UIKit.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		ACD697EE186DB2870099ADC1 /* KTUtils */ = {
-			isa = PBXGroup;
-			children = (
-				ACD697F1186DB2870099ADC1 /* KTUtils.h */,
-				ACD697F3186DB2870099ADC1 /* KTUtils.m */,
-				ACD697EF186DB2870099ADC1 /* Supporting Files */,
-			);
-			path = KTUtils;
-			sourceTree = "<group>";
-		};
-		ACD697EF186DB2870099ADC1 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				ACD697F0186DB2870099ADC1 /* KTUtils-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		ACD69802186DB2870099ADC1 /* KTUtilsTests */ = {
@@ -224,7 +239,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ACD697F4186DB2870099ADC1 /* KTUtils.m in Sources */,
+				ACC3D9CB186EDEBA00A95AFC /* StringUtils.m in Sources */,
+				ACC3D9C9186EDEBA00A95AFC /* Base64.m in Sources */,
+				ACC3D9CD186EDEBA00A95AFC /* URLDecoder.m in Sources */,
+				ACC3D9CC186EDEBA00A95AFC /* UnexpectedException.m in Sources */,
+				ACC3D9C8186EDEBA00A95AFC /* Base32.m in Sources */,
+				ACC3D9CA186EDEBA00A95AFC /* BaseNCodec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,6 +354,32 @@
 				DSTROOT = /tmp/KTUtils.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KTUtils/KTUtils-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"/usr/share/j2objc/include\n//",
+					Prefix,
+					"header\n//\n//",
+					The,
+					contents,
+					of,
+					this,
+					file,
+					are,
+					implicitly,
+					included,
+					at,
+					the,
+					beginning,
+					of,
+					every,
+					source,
+					"file.\n//\n\n#ifdef",
+					"__OBJC__\n",
+					"#import",
+					"<Foundation/Foundation.h>\n#endif\n/usr/share/j2objc/include",
+					.,
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -346,6 +392,32 @@
 				DSTROOT = /tmp/KTUtils.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KTUtils/KTUtils-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"/usr/share/j2objc/include\n//",
+					Prefix,
+					"header\n//\n//",
+					The,
+					contents,
+					of,
+					this,
+					file,
+					are,
+					implicitly,
+					included,
+					at,
+					the,
+					beginning,
+					of,
+					every,
+					source,
+					"file.\n//\n\n#ifdef",
+					"__OBJC__\n",
+					"#import",
+					"<Foundation/Foundation.h>\n#endif\n/usr/share/j2objc/include",
+					.,
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -409,6 +481,7 @@
 				ACD6980E186DB2870099ADC1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		ACD6980F186DB2870099ADC1 /* Build configuration list for PBXNativeTarget "KTUtilsTests" */ = {
 			isa = XCConfigurationList;
@@ -417,6 +490,7 @@
 				ACD69811186DB2870099ADC1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
