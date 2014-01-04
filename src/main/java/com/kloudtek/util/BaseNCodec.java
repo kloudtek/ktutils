@@ -2,8 +2,6 @@
  * Copyright (c) 2013 KloudTek Ltd
  */
 
-
-
 package com.kloudtek.util;
 
 /**
@@ -12,6 +10,15 @@ package com.kloudtek.util;
 
 import java.util.Arrays;
 
+/**
+ * Abstract superclass for Base-N encoders and decoders.
+ * <p/>
+ * <p>
+ * This class is thread-safe.
+ * </p>
+ * <p>This class is originally from commons-codec, and all copyrights to the original code belongs to the apache foundation,
+ * only modification by kloudtek are copyrighted kloudtek</p>
+ */
 public abstract class BaseNCodec {
 
     /**

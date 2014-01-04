@@ -4,6 +4,7 @@
 
 package com.kloudtek.util.io;
 
+import java.io.DataInput;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -16,10 +17,31 @@ public class DataInputStream extends java.io.DataInputStream {
     }
 
     public String readString() throws IOException {
-        return IOUtils.readString(this);
+        return readString(this);
     }
 
     public byte[] readData() throws IOException {
-        return IOUtils.readData(this);
+        return readData(this);
+    }
+
+    public static String readString(DataInput in) throws IOException {
+        if (in.readBoolean()) {
+            return in.readUTF();
+        } else {
+            return null;
+        }
+    }
+
+    public static byte[] readData(DataInput in) throws IOException {
+        int len = in.readInt();
+        if (len > 0) {
+            byte[] data = new byte[len];
+            in.readFully(data);
+            return data;
+        } else if (len == 0) {
+            return new byte[0];
+        } else {
+            return null;
+        }
     }
 }

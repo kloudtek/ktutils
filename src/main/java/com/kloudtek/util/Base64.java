@@ -2,12 +2,39 @@
  * Copyright (c) 2013 KloudTek Ltd
  */
 
-
-
 package com.kloudtek.util;
 
 import java.math.BigInteger;
 
+/**
+ * Provides Base64 encoding and decoding as defined by <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>.
+ *
+ * <p>
+ * This class implements section <cite>6.8. Base64 Content-Transfer-Encoding</cite> from RFC 2045 <cite>Multipurpose
+ * Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies</cite> by Freed and Borenstein.
+ * </p>
+ * <p>
+ * The class can be parameterized in the following manner with various constructors:
+ * <ul>
+ * <li>URL-safe mode: Default off.</li>
+ * <li>Line length: Default 76. Line length that aren't multiples of 4 will still essentially end up being multiples of
+ * 4 in the encoded data.
+ * <li>Line separator: Default is CRLF ("\r\n")</li>
+ * </ul>
+ * </p>
+ * <p>
+ * Since this class operates directly on byte streams, and not character streams, it is hard-coded to only
+ * encode/decode character encodings which are compatible with the lower 127 ASCII chart (ISO-8859-1, Windows-1252,
+ * UTF-8, etc).
+ * </p>
+ * <p>
+ * This class is thread-safe.
+ * </p>
+ * <p>This class is originally from commons-codec, and all copyrights to the original code belongs to the apache foundation,
+ * only modification by kloudtek are copyrighted kloudtek</p>
+ * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
+ * @since 1.0
+ **/
 public class Base64 extends BaseNCodec {
 
     /**

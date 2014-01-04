@@ -4,44 +4,33 @@
 
 package com.kloudtek.util.io;
 
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.IOException;
+import java.io.*;
 
 public class IOUtils {
-    public static void writeString(DataOutput out, String str) throws IOException {
-        out.writeBoolean(str != null);
-        if (str != null) {
-            out.writeUTF(str);
-        }
+    private static final int DEF_BUFF_SIZE = 10240;
+
+    public static byte[] toByteArray(InputStream inputStream) throws IOException {
+        ByteArrayDataOutputStream buffer = new ByteArrayDataOutputStream();
+        copy(inputStream,buffer);
+        buffer.close();
+        return buffer.toByteArray();
     }
 
-    public static String readString(DataInput in) throws IOException {
-        if (in.readBoolean()) {
-            return in.readUTF();
-        } else {
-            return null;
-        }
+    public static long copy(final InputStream inputStream, final OutputStream outputStream) throws IOException {
+        return copy(inputStream, outputStream, DEF_BUFF_SIZE);
     }
 
-    public static void writeData(DataOutput out, byte[] data) throws IOException {
-        int len = data != null ? data.length : -1;
-        out.writeInt(len);
-        if (len > -1) {
-            out.write(data);
-        }
-    }
-
-    public static byte[] readData(DataInput in) throws IOException {
-        int len = in.readInt();
-        if (len > 0) {
-            byte[] data = new byte[len];
-            in.readFully(data);
-            return data;
-        } else if (len == 0) {
-            return new byte[0];
-        } else {
-            return null;
+    private static long copy(InputStream inputStream, OutputStream outputStream, int bufSize) throws IOException {
+        byte[] buffer = new byte[bufSize];
+        long count = 0;
+        while (true) {
+            int read = inputStream.read(buffer);
+            if (read > 0) {
+                outputStream.write(buffer, 0, read);
+                count += read;
+            } else {
+                return count;
+            }
         }
     }
 }

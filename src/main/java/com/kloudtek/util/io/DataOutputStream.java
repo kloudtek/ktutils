@@ -4,6 +4,7 @@
 
 package com.kloudtek.util.io;
 
+import java.io.DataOutput;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -22,7 +23,7 @@ public class DataOutputStream extends java.io.DataOutputStream {
      * @throws IOException
      */
     public void writeString(String str) throws IOException {
-        IOUtils.writeString(this, str);
+        writeString(this, str);
     }
 
     /**
@@ -32,6 +33,21 @@ public class DataOutputStream extends java.io.DataOutputStream {
      * @throws IOException
      */
     public void writeData(byte[] data) throws IOException {
-        IOUtils.writeData(this, data);
+        writeData(this, data);
+    }
+
+    public static void writeString(DataOutput out, String str) throws IOException {
+        out.writeBoolean(str != null);
+        if (str != null) {
+            out.writeUTF(str);
+        }
+    }
+
+    public static void writeData(DataOutput out, byte[] data) throws IOException {
+        int len = data != null ? data.length : -1;
+        out.writeInt(len);
+        if (len > -1) {
+            out.write(data);
+        }
     }
 }
