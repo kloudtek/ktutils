@@ -17,4 +17,13 @@ public class SystemUtils {
     public static boolean isAndroid() {
         return android;
     }
+
+    public static boolean hasClass(String className) {
+        try {
+            Class.forName(className);
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
 }

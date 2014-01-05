@@ -9,14 +9,14 @@ import org.testng.annotations.Test;
 
 import java.util.Arrays;
 
-public class ParamComboGeneratorTest {
+public class ParamComboBuilderTest {
     @Test
     public void testToArray() throws Exception {
-        final ParamComboGenerator paramComboGenerator = new ParamComboGenerator(TestEnum.values())
+        final ParamComboBuilder paramComboBuilder = new ParamComboBuilder(TestEnum.values())
                 .add(new Object[]{"111", "222", "333"}).add(new Object[]{"xxx", "yyy", "zzz"})
                 .add(Arrays.asList("OO", "UU", "II", "**", "@@")).addBoolean()
                 .addAll(55, 88, 11).addBoolean().add(TestEnum.values());
-        final Object[][] r = paramComboGenerator.toArray();
+        final Object[][] r = paramComboBuilder.build();
         System.out.println(Arrays.deepToString(r));
         for (int i = 0; i < r.length; i++) {
             for (int f = 0; f < r.length; f++) {

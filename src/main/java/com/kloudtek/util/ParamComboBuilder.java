@@ -5,21 +5,22 @@
 package com.kloudtek.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class ParamComboGenerator {
+public class ParamComboBuilder {
     public List<Object[]> params = new ArrayList<Object[]>();
 
-    public ParamComboGenerator() {
+    public ParamComboBuilder() {
     }
 
-    public ParamComboGenerator(Object obj) {
+    public ParamComboBuilder(Object obj) {
         add(obj);
     }
 
     @SuppressWarnings({"unchecked"})
-    public ParamComboGenerator add(Object p) {
+    public ParamComboBuilder add(Object p) {
         if (p instanceof Object[]) {
             params.add((Object[]) p);
         } else if (p instanceof Collection<?>) {
@@ -30,17 +31,30 @@ public class ParamComboGenerator {
         return this;
     }
 
-    public ParamComboGenerator addAll(Object... p) {
+    public ParamComboBuilder addAll(Object... p) {
         params.add(p);
         return this;
     }
 
-    public ParamComboGenerator addBoolean() {
+    /**
+     * Add all the parameters specified in the array, and a null object
+     *
+     * @param p
+     * @return
+     */
+    public ParamComboBuilder addAllAndNull(Object... p) {
+        Object[] copy = Arrays.copyOf(p, p.length + 1);
+        copy[p.length] = null;
+        params.add(copy);
+        return this;
+    }
+
+    public ParamComboBuilder addBoolean() {
         params.add(new Object[]{true, false});
         return this;
     }
 
-    public Object[][] toArray() {
+    public Object[][] build() {
         final int plen = params.size();
         Object[][] r = new Object[getTotalCombinations()][plen];
         int size = 0;

@@ -4,6 +4,7 @@
 
 package com.kloudtek.util;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -17,6 +18,32 @@ public class ExceptionUtils {
     private static final Logger logger = Logger.getAnonymousLogger();
     private static final Map<Class<?>, Boolean> userDisplayable = Collections.synchronizedMap(new WeakHashMap<Class<?>, Boolean>());
     private static Class<? extends Exception> clazz;
+
+    /**
+     * Throw an exception of the specified class
+     *
+     * @param exceptionClass Exception class
+     * @param msg            Optional message (in which case the exception must have a constructor with a single parameter that is the message)
+     */
+    public static <E extends Exception> void throwException(Class<E> exceptionClass, String msg) throws E {
+        E exception;
+        try {
+            if (msg == null) {
+                exception = exceptionClass.newInstance();
+            } else {
+                exception = exceptionClass.getConstructor(String.class).newInstance(msg);
+            }
+        } catch (InstantiationException e) {
+            throw new UnexpectedException(e);
+        } catch (IllegalAccessException e) {
+            throw new UnexpectedException(e);
+        } catch (NoSuchMethodException e) {
+            throw new UnexpectedException(e);
+        } catch (InvocationTargetException e) {
+            throw new UnexpectedException(e);
+        }
+        throw exception;
+    }
 
     /**
      * Wrap the exception into a RuntimeException, and throw it

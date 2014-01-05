@@ -2,7 +2,9 @@
  * Copyright (c) 2013 KloudTek Ltd
  */
 
-package com.kloudtek.util;
+package com.kloudtek.util.validation;
+
+import com.kloudtek.util.StringUtils;
 
 public class ParamUtils {
     public static void notNull(String name, Object value) {
