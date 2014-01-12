@@ -4,13 +4,14 @@
 
 package com.kloudtek.util;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 
 /**
  * Used to create a temporary directory with restricted permissions (only owner can read/write/execute).
  */
-public class TempDir extends File {
+public class TempDir extends File implements Closeable {
     public TempDir(String prefix, String suffix) throws IOException {
         super(genPath(prefix, suffix));
     }
