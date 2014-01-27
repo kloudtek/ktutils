@@ -4,12 +4,11 @@
 
 package com.kloudtek.util.io;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 
 public class IOUtils {
     private static final int DEF_BUFF_SIZE = 10240;
+    private static final int DEF_CHAR_BUFF_SIZE = 200;
 
     public static byte[] toByteArray(InputStream inputStream) throws IOException {
         ByteArrayDataOutputStream buffer = new ByteArrayDataOutputStream();
@@ -29,6 +28,24 @@ public class IOUtils {
             int read = inputStream.read(buffer);
             if (read > 0) {
                 outputStream.write(buffer, 0, read);
+                count += read;
+            } else {
+                return count;
+            }
+        }
+    }
+
+    public static long copy(final Reader reader, final Writer writer) throws IOException {
+        return copy(reader, writer, DEF_CHAR_BUFF_SIZE);
+    }
+
+    private static long copy(final Reader reader, final Writer writer, int bufSize) throws IOException {
+        char[] buffer = new char[bufSize];
+        long count = 0;
+        while (true) {
+            int read = reader.read(buffer);
+            if (read > 0) {
+                writer.write(buffer, 0, read);
                 count += read;
             } else {
                 return count;
@@ -61,5 +78,12 @@ public class IOUtils {
         data[6] = (byte) (value >>> 8);
         data[7] = (byte) (value >>> 0);
         return data;
+    }
+
+    public static String toString(File file) throws IOException {
+        StringWriter buffer = new StringWriter();
+        FileReader fileReader = new FileReader(file);
+        copy(fileReader,buffer);
+        return buffer.toString();
     }
 }
