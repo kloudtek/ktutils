@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2014 Kloudtek Ltd
+ */
+
 package com.kloudtek.util.io;
 
 import java.io.IOException;
@@ -15,13 +19,14 @@ public class BoundedInputStream extends InputStream {
 
     /**
      * Stream constructor
-     * @param in Wrapped stream
-     * @param maxLen Maximum data that can be read from wrapped stream (must be greater than 0).
+     *
+     * @param in                Wrapped stream
+     * @param maxLen            Maximum data that can be read from wrapped stream (must be greater than 0).
      * @param failOnTooMuchData If set to true, will throw a {@link DataLenghtLimitException} if it's possible read more data
      *                          than the maxLen
      */
     public BoundedInputStream(InputStream in, int maxLen, boolean failOnTooMuchData) {
-        if( maxLen <= 0 ) {
+        if (maxLen <= 0) {
             throw new IllegalArgumentException("maxLen smaller than 1");
         }
         this.in = in;
@@ -31,13 +36,13 @@ public class BoundedInputStream extends InputStream {
 
     @Override
     public int read() throws IOException {
-        if (! failOnTooMuchData && count >= maxLen) {
+        if (!failOnTooMuchData && count >= maxLen) {
             return -1;
         }
         int res = in.read();
-        if( res != -1 ) {
+        if (res != -1) {
             count++;
-            if ( failOnTooMuchData && count > maxLen) {
+            if (failOnTooMuchData && count > maxLen) {
                 throw new DataLenghtLimitException();
             }
         }
@@ -46,16 +51,16 @@ public class BoundedInputStream extends InputStream {
 
     @Override
     public int read(byte[] b) throws IOException {
-        return read(b,0,b.length);
+        return read(b, 0, b.length);
     }
 
     @Override
     public int read(byte[] b, int off, int len) throws IOException {
-        if( !failOnTooMuchData && count >= maxLen ) {
+        if (!failOnTooMuchData && count >= maxLen) {
             return -1;
         }
         int dataRead = in.read(b, off, failOnTooMuchData ? len : (int) Math.min(len, maxLen - count));
-        if( dataRead > 0 && count + dataRead > maxLen && failOnTooMuchData ) {
+        if (dataRead > 0 && count + dataRead > maxLen && failOnTooMuchData) {
             throw new DataLenghtLimitException();
         }
         return dataRead;
@@ -63,11 +68,11 @@ public class BoundedInputStream extends InputStream {
 
     @Override
     public long skip(long n) throws IOException {
-        if( !failOnTooMuchData && count >= maxLen ) {
+        if (!failOnTooMuchData && count >= maxLen) {
             return -1;
         }
         long skip = in.skip(failOnTooMuchData ? n : (int) Math.min(n, maxLen - count));
-        if( skip > 0 && count + skip > maxLen && failOnTooMuchData ) {
+        if (skip > 0 && count + skip > maxLen && failOnTooMuchData) {
             throw new DataLenghtLimitException();
         }
         return skip;

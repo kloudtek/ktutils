@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Kloudtek Ltd 2014.
+ * Copyright (c) 2014 Kloudtek Ltd
  */
 
 package com.kloudtek.util.crypto;
@@ -27,7 +27,8 @@ public class CryptoUtils {
 
     /**
      * Generate a private key using a symmetric algorithm
-     * @param alg Symmetric algorithm
+     *
+     * @param alg     Symmetric algorithm
      * @param keysize Key size
      * @return secret key
      */
@@ -43,6 +44,7 @@ public class CryptoUtils {
 
     /**
      * Generate an HMAC key
+     *
      * @param algorithm digest algorithm
      * @return secret key
      */
@@ -57,6 +59,7 @@ public class CryptoUtils {
 
     /**
      * Generate an AES secret key
+     *
      * @param keysize key size
      * @return key size
      */
@@ -217,7 +220,7 @@ public class CryptoUtils {
 
     public static void rsaVerifySignature(DigestAlgorithm digestAlgorithms, PublicKey key, byte[] data, byte[] signature) throws InvalidKeyException, SignatureException {
         try {
-            Signature sig = Signature.getInstance(digestAlgorithms.getJceId()+"withRSA");
+            Signature sig = Signature.getInstance(digestAlgorithms.getJceId() + "withRSA");
             sig.initVerify(key);
             sig.update(data);
             if (!sig.verify(signature)) {

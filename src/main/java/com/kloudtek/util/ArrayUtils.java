@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 KloudTek Ltd
+ * Copyright (c) 2014 Kloudtek Ltd
  */
 
 package com.kloudtek.util;
@@ -13,6 +13,7 @@ import java.lang.reflect.Array;
 public class ArrayUtils {
     /**
      * Concatenate an array with additional elements
+     *
      * @param array1 Original array
      * @param array2 Elements to add to array
      * @return New array containing all specified elements
@@ -26,6 +27,7 @@ public class ArrayUtils {
 
     /**
      * Concatenate an array with additional elements
+     *
      * @param array1 Original array
      * @param array2 Elements to add to array
      * @return New array containing all specified elements
@@ -39,6 +41,7 @@ public class ArrayUtils {
 
     /**
      * Concatenate an array with additional elements
+     *
      * @param array1 Original array
      * @param array2 Elements to add to array
      * @return New array containing all specified elements
@@ -52,6 +55,7 @@ public class ArrayUtils {
 
     /**
      * Concatenate an array with additional elements
+     *
      * @param array1 Original array
      * @param array2 Elements to add to array
      * @return New array containing all specified elements
@@ -65,6 +69,7 @@ public class ArrayUtils {
 
     /**
      * Concatenate an array with additional elements
+     *
      * @param array1 Original array
      * @param array2 Elements to add to array
      * @return New array containing all specified elements
@@ -78,6 +83,7 @@ public class ArrayUtils {
 
     /**
      * Concatenate an array with additional elements
+     *
      * @param array1 Original array
      * @param array2 Elements to add to array
      * @return New array containing all specified elements
@@ -91,6 +97,7 @@ public class ArrayUtils {
 
     /**
      * Concatenate an array with additional elements
+     *
      * @param array1 Original array
      * @param array2 Elements to add to array
      * @return New array containing all specified elements
@@ -104,6 +111,7 @@ public class ArrayUtils {
 
     /**
      * Concatenate an array with additional elements
+     *
      * @param array1 Original array
      * @param array2 Elements to add to array
      * @return New array containing all specified elements
@@ -117,6 +125,7 @@ public class ArrayUtils {
 
     /**
      * Concatenate an array with additional elements
+     *
      * @param array1 Original array
      * @param array2 Elements to add to array
      * @return New array containing all specified elements

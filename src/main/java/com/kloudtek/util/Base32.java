@@ -1,32 +1,9 @@
 /*
- * Copyright (c) 2013 KloudTek Ltd
+ * Copyright (c) 2014 Kloudtek Ltd
  */
 
 package com.kloudtek.util;
 
-/**
- * Provides Base32 encoding and decoding as defined by <a href="http://www.ietf.org/rfc/rfc4648.txt">RFC 4648</a>.
- * <p/>
- * <p>
- * The class can be parameterized in the following manner with various constructors:
- * <ul>
- * <li>Whether to use the "base32hex" variant instead of the default "base32"</li>
- * <li>Line length: Default 76. Line length that aren't multiples of 8 will still essentially end up being multiples of
- * 8 in the encoded data.
- * <li>Line separator: Default is CRLF ("\r\n")</li>
- * </ul>
- * </p>
- * <p>
- * This class operates directly on byte streams, and not character streams.
- * </p>
- * <p>
- * This class is thread-safe.
- * </p>
- * <p>This class is originally from commons-codec, and all copyrights to the original code belongs to the apache foundation,
- * only modification by kloudtek are copyrighted kloudtek</p>
- *
- * @see <a href="http://www.ietf.org/rfc/rfc4648.txt">RFC 4648</a>
- */
 public class Base32 extends BaseNCodec {
 
     /**

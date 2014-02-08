@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 KloudTek Ltd
+ * Copyright (c) 2014 Kloudtek Ltd
  */
 
 package com.kloudtek.util;
@@ -45,6 +45,7 @@ public class Country {
 
     /**
      * Get country name
+     *
      * @return Country name
      */
     public String getName() {
@@ -53,6 +54,7 @@ public class Country {
 
     /**
      * Get ISO 3166-1 country code
+     *
      * @return ISO 3166-1 country code;
      */
     public String getCode() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 KloudTek Ltd
+ * Copyright (c) 2014 Kloudtek Ltd
  */
 
 package com.kloudtek.util;
@@ -14,8 +14,9 @@ import android.content.DialogInterface;
 public class AndroidUtils {
     /**
      * Create and display an error dialog for an unexpected exception
+     *
      * @param context Context
-     * @param e Exception to display
+     * @param e       Exception to display
      */
     public static void showErrorDialog(Context context, Exception e) {
         createErrorDialogBuilder(context, e).create().show();
@@ -23,8 +24,9 @@ public class AndroidUtils {
 
     /**
      * Create an error dialog for an unexpected exception
+     *
      * @param context Context
-     * @param e Exception to display
+     * @param e       Exception to display
      */
     public static AlertDialog.Builder createErrorDialogBuilder(Context context, Exception e) {
         return new AlertDialog.Builder(context)

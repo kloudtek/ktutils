@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2014 Kloudtek Ltd
+ */
+
 package com.kloudtek.util.io;
 
 import org.junit.Test;
@@ -11,13 +15,13 @@ public class IOUtilsTest extends Assert {
     public void testByteArrayToLong() throws Exception {
         ByteArrayDataOutputStream expected = new ByteArrayDataOutputStream();
         expected.writeLong(Long.MAX_VALUE);
-        assertEquals(IOUtils.byteArrayToLong(expected.toByteArray()),Long.MAX_VALUE);
+        assertEquals(IOUtils.byteArrayToLong(expected.toByteArray()), Long.MAX_VALUE);
     }
 
     @Test
     public void testLongToByteArray() throws Exception {
         ByteArrayDataOutputStream expected = new ByteArrayDataOutputStream();
         expected.writeLong(Long.MAX_VALUE);
-        assertEquals(IOUtils.longToByteArray(Long.MAX_VALUE),expected.toByteArray());
+        assertEquals(IOUtils.longToByteArray(Long.MAX_VALUE), expected.toByteArray());
     }
 }

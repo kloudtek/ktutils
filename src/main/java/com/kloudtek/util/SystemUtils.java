@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 KloudTek Ltd
+ * Copyright (c) 2014 Kloudtek Ltd
  */
 
 package com.kloudtek.util;
@@ -13,7 +13,7 @@ import java.io.IOException;
  * Various system level utility functions
  */
 public class SystemUtils {
-    private static final String[] SERVER_TYPE_FILES = new String[] {"/etc/server-type"};
+    private static final String[] SERVER_TYPE_FILES = new String[]{"/etc/server-type"};
     public static final boolean android;
 
     static {
@@ -37,21 +37,22 @@ public class SystemUtils {
      * <p>Returns the server type.</p>
      * <p>This value is obtained by trying to find it from the following locations and returning the first one found</p>
      * <ul>
-     *     <li>System Property: server-type</li>
-     *     <li>File: /etc/server-type</li>
+     * <li>System Property: server-type</li>
+     * <li>File: /etc/server-type</li>
      * </ul>
      * <p>
-     *     This allows to easily have a consistent manner to distinguish between development / test / production servers,
-     *     and configure your application appropriately.
+     * This allows to easily have a consistent manner to distinguish between development / test / production servers,
+     * and configure your application appropriately.
      * </p>
+     *
      * @return
      */
     public static String getServerType() {
         String type = System.getProperty("server-type");
-        while( type == null ) {
+        while (type == null) {
             for (String filename : SERVER_TYPE_FILES) {
                 File file = new File(filename);
-                if( file.exists() && file.canRead()) {
+                if (file.exists() && file.canRead()) {
                     try {
                         return IOUtils.toString(file).trim();
                     } catch (IOException e) {

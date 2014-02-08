@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2014 Kloudtek Ltd
+ */
+
 package com.kloudtek.util.crypto;
 
 import com.kloudtek.util.UnexpectedException;
@@ -23,7 +27,8 @@ public class JCECryptoProvider implements CryptoProvider {
 
     /**
      * Generate a private key using a symmetric algorithm
-     * @param alg Symmetric algorithm
+     *
+     * @param alg     Symmetric algorithm
      * @param keysize Key size
      * @return secret key
      */
@@ -40,6 +45,7 @@ public class JCECryptoProvider implements CryptoProvider {
 
     /**
      * Generate an HMAC key
+     *
      * @param algorithm digest algorithm
      * @return secret key
      */
@@ -55,6 +61,7 @@ public class JCECryptoProvider implements CryptoProvider {
 
     /**
      * Generate an AES secret key
+     *
      * @param keysize key size
      * @return key size
      */
@@ -239,7 +246,7 @@ public class JCECryptoProvider implements CryptoProvider {
     @Override
     public void rsaVerifySignature(DigestAlgorithm digestAlgorithms, PublicKey key, byte[] data, byte[] signature) throws InvalidKeyException, SignatureException {
         try {
-            Signature sig = Signature.getInstance(digestAlgorithms.getJceId()+"withRSA");
+            Signature sig = Signature.getInstance(digestAlgorithms.getJceId() + "withRSA");
             sig.initVerify(key);
             sig.update(data);
             if (!sig.verify(signature)) {

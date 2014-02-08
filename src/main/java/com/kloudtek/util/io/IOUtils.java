@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 KloudTek Ltd
+ * Copyright (c) 2014 Kloudtek Ltd
  */
 
 package com.kloudtek.util.io;
@@ -15,7 +15,7 @@ public class IOUtils {
 
     public static byte[] toByteArray(InputStream inputStream) throws IOException {
         ByteArrayDataOutputStream buffer = new ByteArrayDataOutputStream();
-        copy(inputStream,buffer);
+        copy(inputStream, buffer);
         buffer.close();
         return buffer.toByteArray();
     }
@@ -86,7 +86,7 @@ public class IOUtils {
     public static String toString(File file) throws IOException {
         StringWriter buffer = new StringWriter();
         FileReader fileReader = new FileReader(file);
-        copy(fileReader,buffer);
+        copy(fileReader, buffer);
         return buffer.toString();
     }
 }

@@ -1,14 +1,15 @@
+/*
+ * Copyright (c) 2014 Kloudtek Ltd
+ */
+
 package com.kloudtek.util.crypto;
 
-import com.kloudtek.util.UnexpectedException;
-
-import javax.crypto.*;
-import javax.crypto.spec.SecretKeySpec;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.SecretKey;
 import java.security.*;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
 
 /**
  * Interface for cryptography providers
@@ -16,7 +17,8 @@ import java.security.spec.X509EncodedKeySpec;
 public interface CryptoProvider {
     /**
      * Generate a private key using a symmetric algorithm
-     * @param alg Symmetric algorithm
+     *
+     * @param alg     Symmetric algorithm
      * @param keysize Key size
      * @return secret key
      */
@@ -24,6 +26,7 @@ public interface CryptoProvider {
 
     /**
      * Generate an HMAC key
+     *
      * @param algorithm digest algorithm
      * @return secret key
      */
@@ -31,6 +34,7 @@ public interface CryptoProvider {
 
     /**
      * Generate an AES secret key
+     *
      * @param keysize key size
      * @return key size
      */
