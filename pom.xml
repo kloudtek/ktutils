@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2013 KloudTek Ltd
+  ~ Copyright (c) 2014 Kloudtek Ltd
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -11,7 +11,8 @@
     <artifactId>ktutils</artifactId>
     <version>1.1</version>
     <packaging>jar</packaging>
-    <name>Java and IOS (converted from java with j2objc) library method of utility functions</name>
+    <name>KTUtils</name>
+    <description>KloudTek utilities</description>
     <url>https://github.com/Kloudtek/ktutils</url>
     <licenses>
         <license>
