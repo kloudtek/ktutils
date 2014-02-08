@@ -10,7 +10,7 @@
 
     <groupId>com.kloudtek.ktutils</groupId>
     <artifactId>ktutils</artifactId>
-    <version>1.1-snapshot</version>
+    <version>1.1</version>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
