@@ -4,6 +4,7 @@
 
 package com.kloudtek.util;
 
+import com.kloudtek.util.crypto.DigestUtils;
 import org.testng.annotations.Test;
 
 import java.io.ByteArrayInputStream;
@@ -11,7 +12,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import static com.kloudtek.util.DigestAlgorithm.SHA1;
+import static com.kloudtek.util.crypto.DigestAlgorithm.SHA1;
 import static org.testng.Assert.*;
 
 public class DigestUtilsTest {

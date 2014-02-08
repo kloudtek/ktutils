@@ -2,7 +2,10 @@
  * Copyright (c) 2013 KloudTek Ltd
  */
 
-package com.kloudtek.util;
+package com.kloudtek.util.crypto;
+
+import com.kloudtek.util.StringUtils;
+import com.kloudtek.util.UnexpectedException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,9 +18,9 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static com.kloudtek.util.DigestAlgorithm.*;
 import static com.kloudtek.util.StringUtils.base64Decode;
 import static com.kloudtek.util.StringUtils.base64Encode;
+import static com.kloudtek.util.crypto.DigestAlgorithm.*;
 
 /**
  * Various digest utilities
