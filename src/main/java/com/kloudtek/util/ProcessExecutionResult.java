@@ -4,6 +4,9 @@
 
 package com.kloudtek.util;
 
+/**
+ * Result of a process execution
+ */
 public class ProcessExecutionResult {
     private Process process;
     private String stdout;

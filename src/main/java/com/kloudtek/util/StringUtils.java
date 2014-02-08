@@ -10,15 +10,21 @@ import java.net.URLEncoder;
 
 /**
  * <p>Various string manipulation utility functions</p>
- * <p>Note: The base64 functions is copied from commons-codec. this was done to avoid problems on android
- * which ships with a pre-historic version of commons-codec and conflicts with having a newer version (bad google!)</p>
  */
 public class StringUtils {
     public static boolean isEmpty(String txt) {
-        return txt == null || txt.trim().isEmpty();
+        return txt == null || txt.isEmpty();
     }
 
     public static boolean isNotEmpty(String txt) {
+        return !isEmpty(txt);
+    }
+
+    public static boolean isBlank(String txt) {
+        return txt == null || txt.isEmpty();
+    }
+
+    public static boolean isNotBlank(String txt) {
         return !isEmpty(txt);
     }
 

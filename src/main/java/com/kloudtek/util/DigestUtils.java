@@ -12,18 +12,27 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static com.kloudtek.util.DigestAlgorithm.*;
 import static com.kloudtek.util.StringUtils.base64Decode;
 import static com.kloudtek.util.StringUtils.base64Encode;
 
 /**
- * Created by yannick on 14/11/13.
+ * Various digest utilities
  */
 public class DigestUtils {
+    private static final Logger logger = Logger.getLogger(DigestUtils.class.getName());
     private static final SecureRandom random = new SecureRandom();
     public static final int BUFSZ = 8192;
 
+    /**
+     * Create a digest object
+     *
+     * @param alg Digest algorithm
+     * @return Message digest object
+     */
     public static MessageDigest digest(DigestAlgorithm alg) {
         try {
             return MessageDigest.getInstance(alg.getJceId());
@@ -32,6 +41,13 @@ public class DigestUtils {
         }
     }
 
+    /**
+     * Create a digest from a byte array
+     *
+     * @param data Data to create digest from
+     * @param alg  Algorithm to use for digest
+     * @return digest value
+     */
     public static byte[] digest(byte[] data, DigestAlgorithm alg) {
         try {
             MessageDigest sha = MessageDigest.getInstance(alg.getJceId());
@@ -42,6 +58,14 @@ public class DigestUtils {
         }
     }
 
+    /**
+     * Create a digest from a file
+     *
+     * @param file File from which to create digest from
+     * @param alg  Algorithm to use for digest
+     * @return digest value
+     * @throws java.io.IOException If an error occurs while reading the file
+     */
     public static byte[] digest(File file, DigestAlgorithm alg) throws IOException {
         FileInputStream is = new FileInputStream(file);
         try {
@@ -50,7 +74,7 @@ public class DigestUtils {
             try {
                 is.close();
             } catch (IOException e) {
-                //
+                logger.log(Level.WARNING, e.getMessage(), e);
             }
         }
     }

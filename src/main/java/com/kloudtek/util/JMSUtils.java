@@ -18,6 +18,9 @@ import java.util.logging.Logger;
 import static com.kloudtek.util.JMSUtils.DestType.QUEUE;
 import static com.kloudtek.util.JMSUtils.DestType.TOPIC;
 
+/**
+ * Various JMS utilities
+ */
 public class JMSUtils {
     private static final Logger logger = Logger.getLogger(JMSUtils.class.getName());
 

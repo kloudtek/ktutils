@@ -14,6 +14,9 @@ import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+/**
+ * Annotation used to specify a certain class is expected
+ */
 @Target({FIELD, ANNOTATION_TYPE})
 @Retention(RUNTIME)
 @Constraint(validatedBy = IsClassValidator.class)
@@ -22,8 +25,6 @@ public @interface IsClass {
     String message() default "{com.kloudtek.util.validation.isclass}";
 
     Class<?>[] groups() default {};
-
-    Class<? extends Payload>[] payload() default {};
 
     Class<?> value();
 }

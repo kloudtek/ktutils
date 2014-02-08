@@ -14,6 +14,9 @@ import java.text.MessageFormat;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * Various JSF related utility functions
+ */
 public class JSFUtils {
     public static String getParameter(String key) {
         return getExternalContext().getRequestParameterMap().get(key);

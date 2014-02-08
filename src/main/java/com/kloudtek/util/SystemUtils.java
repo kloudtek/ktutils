@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by yannick on 03/11/13.
+ * Various system level utility functions
  */
 public class SystemUtils {
     private static final String[] SERVER_TYPE_FILES = new String[] {"/etc/server-type"};

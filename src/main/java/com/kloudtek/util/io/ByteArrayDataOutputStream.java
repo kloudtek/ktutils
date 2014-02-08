@@ -7,7 +7,7 @@ package com.kloudtek.util.io;
 import java.io.ByteArrayOutputStream;
 
 /**
- * Created by yannick on 13/11/13.
+ * Combines a {@link DataOutputStream} with a {@link java.io.ByteArrayOutputStream}
  */
 public class ByteArrayDataOutputStream extends DataOutputStream {
     public ByteArrayDataOutputStream() {

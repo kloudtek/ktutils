@@ -9,7 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
- * Reflection helper methods.
+ * Various reflection related utility functions
  */
 public class ReflectionUtils {
     public static String toString(Method method) {

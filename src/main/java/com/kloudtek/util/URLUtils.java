@@ -10,6 +10,9 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
+/**
+ * Various URL/URI related utility functions
+ */
 public class URLUtils {
     public static String encodeUTF8(String text) {
         try {

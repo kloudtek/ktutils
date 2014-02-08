@@ -7,7 +7,7 @@ package com.kloudtek.util.io;
 import java.io.ByteArrayInputStream;
 
 /**
- * Created by yannick on 13/11/13.
+ * Combines a {@link DataInputStream} with a {@link java.io.ByteArrayInputStream}
  */
 public class ByteArrayDataInputStream extends DataInputStream {
     public ByteArrayDataInputStream(byte[] buf) {

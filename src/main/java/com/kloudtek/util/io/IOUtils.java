@@ -6,6 +6,9 @@ package com.kloudtek.util.io;
 
 import java.io.*;
 
+/**
+ * Various I/O relation utilities
+ */
 public class IOUtils {
     private static final int DEF_BUFF_SIZE = 10240;
     private static final int DEF_CHAR_BUFF_SIZE = 200;

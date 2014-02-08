@@ -9,7 +9,7 @@ import javax.validation.ValidatorFactory;
 import java.util.Set;
 
 /**
- * Created by yannick on 05/01/2014.
+ * Annotation based validator that uses a JSR 303 implementation
  */
 public class AnnotationBasedValidatorJSR303Impl implements AnnotationBasedValidator {
     private final Validator validator;

@@ -4,6 +4,9 @@
 
 package com.kloudtek.util;
 
+/**
+ * Exception used to wrap unexpected exceptions that shouldn't have occurred.
+ */
 public class UnexpectedException extends RuntimeException {
     public UnexpectedException() {
     }

@@ -7,6 +7,9 @@ package com.kloudtek.util;
 import javax.persistence.PersistenceException;
 import javax.transaction.UserTransaction;
 
+/**
+ * Various JTA-related utility functions
+ */
 public class JTAUtils {
     public static void beginTransaction(UserTransaction tx) {
         try {

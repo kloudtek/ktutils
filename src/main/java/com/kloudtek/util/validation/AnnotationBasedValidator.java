@@ -1,7 +1,7 @@
 package com.kloudtek.util.validation;
 
 /**
- * Created by yannick on 05/01/2014.
+ * Interface for annotation based validators
  */
 public interface AnnotationBasedValidator {
     @SuppressWarnings({"unchecked", "ThrowableResultOfMethodCallIgnored"})

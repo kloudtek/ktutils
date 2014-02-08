@@ -2,13 +2,16 @@
  * Copyright (c) 2013 KloudTek Ltd
  */
 
-package com.kloudtek.util;
+package com.kloudtek.util.logging;
 
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 
+/**
+ * Simple log formatter
+ */
 public class SimpleLogFormatter extends Formatter {
     private final DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
     private final Date date = new Date();

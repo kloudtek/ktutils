@@ -2,7 +2,7 @@
  * Copyright (c) 2013 KloudTek Ltd
  */
 
-package com.kloudtek.util;
+package com.kloudtek.util.jaxb;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.text.SimpleDateFormat;

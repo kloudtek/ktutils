@@ -4,6 +4,8 @@
 
 package com.kloudtek.util;
 
+import com.kloudtek.util.logging.NoCleanLogManager;
+
 import javax.jms.*;
 import java.io.EOFException;
 import java.net.ConnectException;
@@ -15,9 +17,9 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 /**
- * This is used to create a java applications that connect to a JMS Broker and handle incoming messages.
+ * JMS client
  */
-public abstract class JMSApplication implements Runnable {
+public abstract class JMSClient implements Runnable {
     protected final Logger logger;
     private State state = State.UNCONNECTED;
     protected Connection connection;
@@ -30,19 +32,19 @@ public abstract class JMSApplication implements Runnable {
      * Constructor
      *
      * @param sessionType       Type of JMS Session
-     * @param noCleanLogManager If this is true, we will attempt to set the Log Manager to use {@link NoCleanLogManager}, so
+     * @param noCleanLogManager If this is true, we will attempt to set the Log Manager to use {@link com.kloudtek.util.logging.NoCleanLogManager}, so
      *                          that the cleanup thread may use logging. This will only work if LogManager hasn't been used up till now
      * @param loggerName        Logger name that will be used for all logging
      */
-    public JMSApplication(SessionType sessionType, boolean noCleanLogManager, String loggerName) {
+    public JMSClient(SessionType sessionType, boolean noCleanLogManager, String loggerName) {
         this(sessionType, noCleanLogManager, loggerName, 20000);
     }
 
-    public JMSApplication(SessionType sessionType, boolean noCleanLogManager, String loggerName, long connectRetry) {
+    public JMSClient(SessionType sessionType, boolean noCleanLogManager, String loggerName, long connectRetry) {
         this.sessionType = sessionType;
         this.connectRetry = connectRetry;
         if (noCleanLogManager) {
-            System.setProperty("java.util.logging.manager", "com.kloudtek.util.NoCleanLogManager");
+            System.setProperty("java.util.logging.manager", "com.kloudtek.util.logging.NoCleanLogManager");
         }
         if (loggerName != null) {
             logger = Logger.getLogger(loggerName);

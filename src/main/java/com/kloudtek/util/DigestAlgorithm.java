@@ -5,7 +5,7 @@
 package com.kloudtek.util;
 
 /**
- * Created by yannick on 09/11/13.
+ * Enumeration of digest algorithms
  */
 public enum DigestAlgorithm {
     MD5(16), SHA1(20, "SHA-1"), SHA256(32, "SHA-256"), SHA512(64, "SHA-512");

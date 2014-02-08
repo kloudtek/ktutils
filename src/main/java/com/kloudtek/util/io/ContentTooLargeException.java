@@ -1,7 +1,7 @@
 package com.kloudtek.util.io;
 
 /**
- * Created by yannick on 03/01/2014.
+ * Exception thrown when provided content is too large
  */
 public class ContentTooLargeException extends Exception {
     public ContentTooLargeException() {

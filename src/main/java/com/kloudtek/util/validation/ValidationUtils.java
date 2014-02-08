@@ -44,7 +44,7 @@ public class ValidationUtils {
         }
     }
 
-    public static <E extends Exception> void validateNotNull(Class<E> exceptionClass, String msg, Object... values) throws E {
+    public static <E extends Exception> void notNull(Class<E> exceptionClass, String msg, Object... values) throws E {
         if (values != null) {
             for (Object value : values) {
                 if (value == null) {
@@ -54,7 +54,7 @@ public class ValidationUtils {
         }
     }
 
-    public static <E extends Exception> void validateNotEmpty(Class<E> exceptionClass, String msg, String... values) throws E {
+    public static <E extends Exception> void notEmpty(Class<E> exceptionClass, String msg, String... values) throws E {
         if (values != null) {
             for (String value : values) {
                 if (isEmpty(value)) {

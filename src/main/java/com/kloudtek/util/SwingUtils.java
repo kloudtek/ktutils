@@ -16,7 +16,7 @@ import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 /**
- * Swing-Related utility class
+ * Various Swing related utility functions
  */
 public class SwingUtils {
     private static Logger logger = Logger.getAnonymousLogger();

@@ -9,6 +9,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * <p>Used to create combination of various parameters</p>
+ */
 public class ParamComboBuilder {
     public List<Object[]> params = new ArrayList<Object[]>();
 
@@ -39,7 +42,7 @@ public class ParamComboBuilder {
     /**
      * Add all the parameters specified in the array, and a null object
      *
-     * @param p
+     * @param p parameters
      * @return
      */
     public ParamComboBuilder addAllAndNull(Object... p) {

@@ -2,7 +2,7 @@
  * Copyright (c) 2013 KloudTek Ltd
  */
 
-package com.kloudtek.util.cdi;
+package com.kloudtek.util;
 
 import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.spi.BeanManager;
@@ -14,6 +14,9 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.HashSet;
 
+/**
+ * Various CDI related utility functions
+ */
 public class CDIUtils {
     public static BeanManager getBeanManager() {
         try {

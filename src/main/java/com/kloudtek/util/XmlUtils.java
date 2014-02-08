@@ -33,6 +33,9 @@ import java.util.*;
 
 // TODO: implement caches
 
+/**
+ * Various XML related utility functions
+ */
 public class XmlUtils {
     private static final WeakHashMap<Thread, SoftReference<DocumentBuilderFactory>> documentBuilderFactoryCache = new WeakHashMap<Thread, SoftReference<DocumentBuilderFactory>>();
     private static final WeakHashMap<Thread, SoftReference<DocumentBuilder>> documentBuilderCache = new WeakHashMap<Thread, SoftReference<DocumentBuilder>>();

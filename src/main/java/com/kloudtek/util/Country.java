@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Represents a country.
+ * Represents a country (with mapping support to/from ISO 3166-1 country codes).
  */
 public class Country {
     private static Map<String, String> codeToNameMap;
@@ -33,7 +33,7 @@ public class Country {
      * Constructs a country object only providing the code (the country name will automatically be looked up based
      * on that code.
      *
-     * @param code Country code
+     * @param code ISO 3166-1 Country code
      * @throws IllegalArgumentException If the country code isn't valid.
      */
     public Country(String code) throws IllegalArgumentException {
@@ -44,12 +44,18 @@ public class Country {
         }
     }
 
-    @XmlElement(name = "Name", namespace = "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2")
+    /**
+     * Get country name
+     * @return Country name
+     */
     public String getName() {
         return name;
     }
 
-    @XmlElement(name = "IdentificationCode", namespace = "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2")
+    /**
+     * Get ISO 3166-1 country code
+     * @return ISO 3166-1 country code;
+     */
     public String getCode() {
         return code;
     }

@@ -15,6 +15,9 @@ import javax.xml.xpath.*;
 import java.lang.ref.SoftReference;
 import java.util.*;
 
+/**
+ * Various XPath related utility functions
+ */
 public class XPathUtils {
     private static final WeakHashMap<Thread, SoftReference<XPath>> xpathCache = new WeakHashMap<Thread, SoftReference<XPath>>();
 

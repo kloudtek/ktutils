@@ -17,6 +17,9 @@ import javax.naming.directory.ModificationItem;
 import java.util.Hashtable;
 import java.util.Stack;
 
+/**
+ * Various LDAP related utility functions
+ */
 public class LDAPUtils {
     @SuppressWarnings({"unchecked"})
     public static DirContext createLdapContext(String url, @Nullable String userDn, @Nullable String password) throws NamingException {

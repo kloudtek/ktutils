@@ -2,13 +2,16 @@
  * Copyright (c) 2013 KloudTek Ltd
  */
 
-package com.kloudtek.util;
+package com.kloudtek.util.logging;
 
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Logging related utilities
+ */
 public class LoggingUtils {
     public static void setupSimpleLogging(Level lvl, boolean showLevel, boolean showTimestamp) {
         for (final Handler handler : Logger.getLogger("").getHandlers()) {

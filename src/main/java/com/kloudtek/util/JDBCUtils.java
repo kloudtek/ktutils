@@ -8,6 +8,9 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Various JDBC related utility functions
+ */
 public class JDBCUtils {
     private static final Logger logger = Logger.getLogger(JDBCUtils.class.getName());
     private static final String POSTGRESDRIVER = "org.postgresql.Driver";
