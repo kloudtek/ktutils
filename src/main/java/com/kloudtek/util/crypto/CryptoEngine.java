@@ -14,7 +14,7 @@ import java.security.spec.InvalidKeySpecException;
 /**
  * Interface for cryptography providers
  */
-public interface CryptoProvider {
+public interface CryptoEngine {
     /**
      * Generate a private key using a symmetric algorithm
      *
@@ -99,4 +99,8 @@ public interface CryptoProvider {
     byte[] rsaSign(DigestAlgorithm digestAlgorithms, PrivateKey key, byte[] data) throws InvalidKeyException, SignatureException;
 
     void rsaVerifySignature(DigestAlgorithm digestAlgorithms, PublicKey key, byte[] data, byte[] signature) throws InvalidKeyException, SignatureException;
+
+    byte[] sign(String algorithm, PrivateKey key, byte[] data) throws SignatureException, InvalidKeyException;
+
+    void verifySignature(String algorithm, PublicKey key, byte[] data, byte[] signature) throws SignatureException, InvalidKeyException;
 }

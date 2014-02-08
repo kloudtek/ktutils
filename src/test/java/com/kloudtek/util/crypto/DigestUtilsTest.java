@@ -2,9 +2,8 @@
  * Copyright (c) 2014 Kloudtek Ltd
  */
 
-package com.kloudtek.util;
+package com.kloudtek.util.crypto;
 
-import com.kloudtek.util.crypto.DigestUtils;
 import org.testng.annotations.Test;
 
 import java.io.ByteArrayInputStream;

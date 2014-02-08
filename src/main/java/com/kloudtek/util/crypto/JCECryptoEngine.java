@@ -17,11 +17,11 @@ import java.security.spec.X509EncodedKeySpec;
 /**
  * Cryptography provider that uses the standard java crypto extension (JCE)
  */
-public class JCECryptoProvider implements CryptoProvider {
+public class JCECryptoEngine implements CryptoEngine {
     public static final String S_RSA = "RSA";
     public static final String S_AES = "AES";
-    public static final String AES_CBC_PKCS_5_PADDING = "AES_CBC_PKCS5_PADDING";
-    public static final String RSA_ECB_OAEPPADDING = "RSA/ECB/OAEPPadding";
+    public static final String AES_CBC_PKCS_5_PADDING = "AES/ECB/PKCS5PADDING";
+    public static final String RSA_ECB_OAEPPADDING = "RSA/ECB/OAEPWithSHA1AndMGF1Padding";
 
     // Key generation
 
@@ -62,12 +62,12 @@ public class JCECryptoProvider implements CryptoProvider {
     /**
      * Generate an AES secret key
      *
-     * @param keysize key size
+     * @param keySize key size
      * @return key size
      */
     @Override
-    public SecretKey generateAesKey(int keysize) {
-        return generateKey(SymmetricAlgorithm.AES, keysize);
+    public SecretKey generateAesKey(int keySize) {
+        return generateKey(SymmetricAlgorithm.AES, keySize);
     }
 
     @Override
@@ -76,10 +76,10 @@ public class JCECryptoProvider implements CryptoProvider {
     }
 
     @Override
-    public KeyPair generateKeyPair(AsymmetricAlgorithm alg, int keysize) {
+    public KeyPair generateKeyPair(AsymmetricAlgorithm alg, int keySize) {
         try {
             KeyPairGenerator kg = KeyPairGenerator.getInstance(alg.getJceId());
-            kg.initialize(keysize);
+            kg.initialize(keySize);
             return kg.generateKeyPair();
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
@@ -184,31 +184,6 @@ public class JCECryptoProvider implements CryptoProvider {
         return decrypt(key, data, AES_CBC_PKCS_5_PADDING);
     }
 
-    // Encryption
-
-    @Override
-    public byte[] encrypt(Key key, byte[] data, String alg) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-        return crypt(key, data, alg, Cipher.ENCRYPT_MODE);
-    }
-
-    @Override
-    public byte[] decrypt(Key key, byte[] data, String alg) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-        return crypt(key, data, alg, Cipher.DECRYPT_MODE);
-    }
-
-    @Override
-    public byte[] crypt(Key key, byte[] data, String alg, int mode) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-        try {
-            Cipher aesCipher = Cipher.getInstance(alg);
-            aesCipher.init(mode, key);
-            return aesCipher.doFinal(data);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchPaddingException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     // RSA Encryption and signing
 
     @Override
@@ -233,8 +208,43 @@ public class JCECryptoProvider implements CryptoProvider {
 
     @Override
     public byte[] rsaSign(DigestAlgorithm digestAlgorithms, PrivateKey key, byte[] data) throws InvalidKeyException, SignatureException {
+        return sign(digestAlgorithms.name() + "withRSA", key, data);
+    }
+
+    @Override
+    public void rsaVerifySignature(DigestAlgorithm digestAlgorithms, PublicKey key, byte[] data, byte[] signature) throws InvalidKeyException, SignatureException {
+        verifySignature(digestAlgorithms.name() + "withRSA", key, data, signature);
+    }
+
+    // Basic encryption / signing methods
+
+    @Override
+    public byte[] encrypt(Key key, byte[] data, String alg) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+        return crypt(key, data, alg, Cipher.ENCRYPT_MODE);
+    }
+
+    @Override
+    public byte[] decrypt(Key key, byte[] data, String alg) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+        return crypt(key, data, alg, Cipher.DECRYPT_MODE);
+    }
+
+    @Override
+    public byte[] crypt(Key key, byte[] data, String alg, int mode) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         try {
-            Signature signature = Signature.getInstance(digestAlgorithms.getJceId() + "withRSA");
+            Cipher aesCipher = Cipher.getInstance(alg);
+            aesCipher.init(mode, key);
+            return aesCipher.doFinal(data);
+        } catch (NoSuchAlgorithmException e) {
+            throw new UnexpectedException(e);
+        } catch (NoSuchPaddingException e) {
+            throw new UnexpectedException(e);
+        }
+    }
+
+    @Override
+    public byte[] sign(String algorithm, PrivateKey key, byte[] data) throws SignatureException, InvalidKeyException {
+        try {
+            Signature signature = Signature.getInstance(algorithm);
             signature.initSign(key);
             signature.update(data);
             return signature.sign();
@@ -244,9 +254,9 @@ public class JCECryptoProvider implements CryptoProvider {
     }
 
     @Override
-    public void rsaVerifySignature(DigestAlgorithm digestAlgorithms, PublicKey key, byte[] data, byte[] signature) throws InvalidKeyException, SignatureException {
+    public void verifySignature(String algorithm, PublicKey key, byte[] data, byte[] signature) throws SignatureException, InvalidKeyException {
         try {
-            Signature sig = Signature.getInstance(digestAlgorithms.getJceId() + "withRSA");
+            Signature sig = Signature.getInstance(algorithm);
             sig.initVerify(key);
             sig.update(data);
             if (!sig.verify(signature)) {
