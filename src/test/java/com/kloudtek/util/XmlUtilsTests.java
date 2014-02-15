@@ -4,20 +4,26 @@
 
 package com.kloudtek.util;
 
+import org.apache.commons.io.FileUtils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Text;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
+import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
 
 import static com.kloudtek.util.XPathUtils.evalXPathElement;
 import static com.kloudtek.util.XPathUtils.evalXPathNode;
 import static com.kloudtek.util.XmlUtils.getXPath;
 import static com.kloudtek.util.XmlUtils.parse;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 /**
  * Test @{link XmlUtils} functionality
@@ -60,5 +66,23 @@ public class XmlUtilsTests {
         final Text node2 = (Text) evalXPathNode(TEXT2, doc);
         assertEquals(node2.getNodeValue().trim(), "cat");
         assertEquals(getXPath(node2), TEXT2);
+    }
+
+    @Test
+    public void testXXEAttackWithoutProtection() throws ParserConfigurationException, IOException, SAXException, XPathExpressionException {
+        File tempFile = File.createTempFile("xxe", "test");
+        try {
+            FileUtils.write(tempFile, "hacked");
+            String XXE_ATTACK = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
+                    " <!DOCTYPE foo [  \n" +
+                    "  <!ELEMENT foo ANY >\n" +
+                    "  <!ENTITY xxe SYSTEM \"" + tempFile.toURI() + "\" >]><foo>&xxe;</foo>";
+            InputSource source = new InputSource(new StringReader(XXE_ATTACK));
+            Document doc = XmlUtils.getDocumentBuilderFactory(true, true).newDocumentBuilder().parse(source);
+            String val = XPathUtils.evalXPathString("foo/text()", doc);
+            assertTrue(!val.trim().toLowerCase().contains("hacked"));
+        } finally {
+            tempFile.delete();
+        }
     }
 }

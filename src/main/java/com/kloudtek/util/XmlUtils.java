@@ -88,7 +88,7 @@ public class XmlUtils {
     }
 
     public static Document parse(InputStream stream) throws IOException, SAXException {
-        return getDocumentBuilder().parse(stream);
+        return getDocumentBuilder().parse(new InputSource(stream));
     }
 
     public static Document parse(Reader reader) throws IOException, SAXException {
@@ -194,9 +194,26 @@ public class XmlUtils {
         }
     }
 
+    public static DocumentBuilderFactory getDocumentBuilderFactory() {
+        return getDocumentBuilderFactory(true, true);
+    }
+
     public static DocumentBuilderFactory getDocumentBuilderFactory(final boolean namespaceAware) {
+        return getDocumentBuilderFactory(namespaceAware, true);
+    }
+
+    public static DocumentBuilderFactory getDocumentBuilderFactory(final boolean namespaceAware, boolean disableDtdXxe) {
         final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        documentBuilderFactory.setNamespaceAware(namespaceAware);
+        if (namespaceAware) {
+            documentBuilderFactory.setNamespaceAware(namespaceAware);
+        }
+        if (disableDtdXxe) {
+            setDocBuilderFeature(documentBuilderFactory, "http://xerces.apache.org/xerces-j/features.html#external-general-entities", false);
+            setDocBuilderFeature(documentBuilderFactory, "http://xerces.apache.org/xerces2-j/features.html#external-general-entities", false);
+            setDocBuilderFeature(documentBuilderFactory, "http://xml.org/sax/features/external-general-entities", false);
+            setDocBuilderFeature(documentBuilderFactory, "http://xerces.apache.org/xerces2-j/features.html#disallow-doctype-decl", true);
+            setDocBuilderFeature(documentBuilderFactory, "http://apache.org/xml/features/disallow-doctype-decl", true);
+        }
         return documentBuilderFactory;
     }
 
@@ -446,5 +463,19 @@ public class XmlUtils {
     private <X> void cache(WeakHashMap<Thread, SoftReference<X>> cache, X value) {
         final Thread t = Thread.currentThread();
         cache.put(t, new SoftReference<X>(value));
+    }
+
+    /**
+     * Set a {@link javax.xml.parsers.DocumentBuilderFactory} feature, suppressing any exceptions
+     *
+     * @param documentBuilderFactory Document builder factory
+     * @param name                   Feature name
+     * @param value                  Feature value
+     */
+    private static void setDocBuilderFeature(DocumentBuilderFactory documentBuilderFactory, String name, boolean value) {
+        try {
+            documentBuilderFactory.setFeature(name, value);
+        } catch (ParserConfigurationException e) {
+        }
     }
 }
