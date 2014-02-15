@@ -9,7 +9,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.kloudtek.ktutils</groupId>
     <artifactId>ktutils</artifactId>
-    <version>1.1.1-snapshot</version>
+    <version>1.1.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>KTUtils</name>
     <description>KloudTek utilities</description>

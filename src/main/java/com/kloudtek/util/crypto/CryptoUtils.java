@@ -4,8 +4,11 @@
 
 package com.kloudtek.util.crypto;
 
+import com.kloudtek.util.UnexpectedException;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import java.security.*;
 import java.security.interfaces.RSAPublicKey;
@@ -172,5 +175,15 @@ public class CryptoUtils {
 
     public static byte[] sign(String algorithm, PrivateKey key, byte[] data) throws SignatureException, InvalidKeyException {
         return provider.sign(algorithm, key, data);
+    }
+
+    public static byte[] hmac(SecretKey key, DigestAlgorithm algorithms, byte[] data) throws InvalidKeyException {
+        try {
+            Mac mac = Mac.getInstance("Hmac" + algorithms.name());
+            mac.init(key);
+            return mac.doFinal(data);
+        } catch (NoSuchAlgorithmException e) {
+            throw new UnexpectedException(e);
+        }
     }
 }
