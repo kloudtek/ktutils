@@ -4,14 +4,14 @@
 
 package com.kloudtek.util.io;
 
+import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 /**
  * This stream puts a limit on how much data can be read from a wrapped stream.
  */
-public class BoundedInputStream extends InputStream {
-    private InputStream in;
+public class BoundedInputStream extends FilterInputStream {
     private final int maxLen;
     private final boolean failOnTooMuchData;
     private long count = 0;
@@ -26,10 +26,10 @@ public class BoundedInputStream extends InputStream {
      *                          than the maxLen
      */
     public BoundedInputStream(InputStream in, int maxLen, boolean failOnTooMuchData) {
+        super(in);
         if (maxLen <= 0) {
             throw new IllegalArgumentException("maxLen smaller than 1");
         }
-        this.in = in;
         this.maxLen = maxLen;
         this.failOnTooMuchData = failOnTooMuchData;
     }
@@ -39,7 +39,7 @@ public class BoundedInputStream extends InputStream {
         if (!failOnTooMuchData && count >= maxLen) {
             return -1;
         }
-        int res = in.read();
+        int res = super.read();
         if (res != -1) {
             count++;
             if (failOnTooMuchData && count > maxLen) {
@@ -59,7 +59,7 @@ public class BoundedInputStream extends InputStream {
         if (!failOnTooMuchData && count >= maxLen) {
             return -1;
         }
-        int dataRead = in.read(b, off, failOnTooMuchData ? len : (int) Math.min(len, maxLen - count));
+        int dataRead = super.read(b, off, failOnTooMuchData ? len : (int) Math.min(len, maxLen - count));
         if (dataRead > 0 && count + dataRead > maxLen && failOnTooMuchData) {
             throw new DataLenghtLimitException();
         }
@@ -71,7 +71,7 @@ public class BoundedInputStream extends InputStream {
         if (!failOnTooMuchData && count >= maxLen) {
             return -1;
         }
-        long skip = in.skip(failOnTooMuchData ? n : (int) Math.min(n, maxLen - count));
+        long skip = super.skip(failOnTooMuchData ? n : (int) Math.min(n, maxLen - count));
         if (skip > 0 && count + skip > maxLen && failOnTooMuchData) {
             throw new DataLenghtLimitException();
         }
@@ -79,29 +79,19 @@ public class BoundedInputStream extends InputStream {
     }
 
     @Override
-    public int available() throws IOException {
-        return in.available();
-    }
-
-    @Override
-    public void close() throws IOException {
-        in.close();
-    }
-
-    @Override
     public synchronized void mark(int readlimit) {
-        in.mark(readlimit);
+        super.mark(readlimit);
         mark = count;
     }
 
     @Override
     public synchronized void reset() throws IOException {
-        in.reset();
+        super.reset();
         count = mark;
     }
 
     @Override
     public boolean markSupported() {
-        return in.markSupported();
+        return super.markSupported();
     }
 }
