@@ -109,6 +109,10 @@ public class CryptoUtils {
         return provider.aesEncrypt(key, data);
     }
 
+    public static SecretKey generateAes128Key() {
+        return provider.generateAes128Key();
+    }
+
     public static SecretKey generateAes256Key() {
         return provider.generateAes256Key();
     }

@@ -17,7 +17,7 @@ import java.security.spec.X509EncodedKeySpec;
 /**
  * Cryptography provider that uses the standard java crypto extension (JCE)
  */
-public class JCECryptoEngine implements CryptoEngine {
+public class JCECryptoEngine extends CryptoEngine {
     public static final String S_RSA = "RSA";
     public static final String S_AES = "AES";
     public static final String AES_CBC_PKCS_5_PADDING = "AES/ECB/PKCS5PADDING";
@@ -59,22 +59,6 @@ public class JCECryptoEngine implements CryptoEngine {
         }
     }
 
-    /**
-     * Generate an AES secret key
-     *
-     * @param keySize key size
-     * @return key size
-     */
-    @Override
-    public SecretKey generateAesKey(int keySize) {
-        return generateKey(SymmetricAlgorithm.AES, keySize);
-    }
-
-    @Override
-    public SecretKey generateAes256Key() {
-        return generateKey(SymmetricAlgorithm.AES, 256);
-    }
-
     @Override
     public KeyPair generateKeyPair(AsymmetricAlgorithm alg, int keySize) {
         try {
@@ -84,16 +68,6 @@ public class JCECryptoEngine implements CryptoEngine {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public KeyPair generateRSA2048KeyPair() {
-        return generateKeyPair(AsymmetricAlgorithm.RSA, 2048);
-    }
-
-    @Override
-    public KeyPair generateRSA4096KeyPair() {
-        return generateKeyPair(AsymmetricAlgorithm.RSA, 4096);
     }
 
     /**

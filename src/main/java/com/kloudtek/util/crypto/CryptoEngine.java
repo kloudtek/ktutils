@@ -14,7 +14,7 @@ import java.security.spec.InvalidKeySpecException;
 /**
  * Interface for cryptography providers
  */
-public interface CryptoEngine {
+public abstract class CryptoEngine {
     /**
      * Generate a private key using a symmetric algorithm
      *
@@ -22,7 +22,7 @@ public interface CryptoEngine {
      * @param keysize Key size
      * @return secret key
      */
-    SecretKey generateKey(SymmetricAlgorithm alg, int keysize);
+    public abstract SecretKey generateKey(SymmetricAlgorithm alg, int keysize);
 
     /**
      * Generate an HMAC key
@@ -30,23 +30,35 @@ public interface CryptoEngine {
      * @param algorithm digest algorithm
      * @return secret key
      */
-    SecretKey generateHmacKey(DigestAlgorithm algorithm);
+    public abstract SecretKey generateHmacKey(DigestAlgorithm algorithm);
 
     /**
      * Generate an AES secret key
      *
-     * @param keysize key size
+     * @param keySize key size
      * @return key size
      */
-    SecretKey generateAesKey(int keysize);
+    public SecretKey generateAesKey(int keySize) {
+        return generateKey(SymmetricAlgorithm.AES, keySize);
+    }
 
-    SecretKey generateAes256Key();
+    public SecretKey generateAes128Key() {
+        return generateKey(SymmetricAlgorithm.AES, 128);
+    }
 
-    KeyPair generateKeyPair(AsymmetricAlgorithm alg, int keysize);
+    public SecretKey generateAes256Key() {
+        return generateKey(SymmetricAlgorithm.AES, 256);
+    }
 
-    KeyPair generateRSA2048KeyPair();
+    public abstract KeyPair generateKeyPair(AsymmetricAlgorithm alg, int keysize);
 
-    KeyPair generateRSA4096KeyPair();
+    public KeyPair generateRSA2048KeyPair() {
+        return generateKeyPair(AsymmetricAlgorithm.RSA, 2048);
+    }
+
+    public KeyPair generateRSA4096KeyPair() {
+        return generateKeyPair(AsymmetricAlgorithm.RSA, 4096);
+    }
 
     /**
      * Read an X509 Encoded S_RSA public key
@@ -55,7 +67,7 @@ public interface CryptoEngine {
      * @return Public key object
      * @throws java.security.spec.InvalidKeySpecException If the key is invalid
      */
-    RSAPublicKey readRSAPublicKey(byte[] key) throws InvalidKeySpecException;
+    public abstract RSAPublicKey readRSAPublicKey(byte[] key) throws InvalidKeySpecException;
 
     /**
      * Read a PKCS8 Encoded S_RSA private key
@@ -64,43 +76,43 @@ public interface CryptoEngine {
      * @return Public key object
      * @throws InvalidKeySpecException If the key is invalid
      */
-    PrivateKey readRSAPrivateKey(byte[] encodedPriKey) throws InvalidKeySpecException;
+    public abstract PrivateKey readRSAPrivateKey(byte[] encodedPriKey) throws InvalidKeySpecException;
 
-    byte[] hmac(DigestAlgorithm algorithm, SecretKey key, byte[] data) throws InvalidKeyException;
+    public abstract byte[] hmac(DigestAlgorithm algorithm, SecretKey key, byte[] data) throws InvalidKeyException;
 
-    byte[] hmacSha1(SecretKey key, byte[] data) throws InvalidKeyException;
+    public abstract byte[] hmacSha1(SecretKey key, byte[] data) throws InvalidKeyException;
 
-    byte[] hmacSha256(SecretKey key, byte[] data) throws InvalidKeyException;
+    public abstract byte[] hmacSha256(SecretKey key, byte[] data) throws InvalidKeyException;
 
-    byte[] hmacSha512(SecretKey key, byte[] data) throws InvalidKeyException;
+    public abstract byte[] hmacSha512(SecretKey key, byte[] data) throws InvalidKeyException;
 
-    byte[] aesEncrypt(byte[] key, byte[] data) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException;
+    public abstract byte[] aesEncrypt(byte[] key, byte[] data) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException;
 
-    byte[] aesEncrypt(SecretKey key, byte[] data) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException;
+    public abstract byte[] aesEncrypt(SecretKey key, byte[] data) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException;
 
-    byte[] aesDecrypt(byte[] key, byte[] data) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException;
+    public abstract byte[] aesDecrypt(byte[] key, byte[] data) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException;
 
-    byte[] aesDecrypt(SecretKey key, byte[] data) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException;
+    public abstract byte[] aesDecrypt(SecretKey key, byte[] data) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException;
 
-    byte[] encrypt(Key key, byte[] data, String alg) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException;
+    public abstract byte[] encrypt(Key key, byte[] data, String alg) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException;
 
-    byte[] decrypt(Key key, byte[] data, String alg) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException;
+    public abstract byte[] decrypt(Key key, byte[] data, String alg) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException;
 
-    byte[] crypt(Key key, byte[] data, String alg, int mode) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException;
+    public abstract byte[] crypt(Key key, byte[] data, String alg, int mode) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException;
 
-    byte[] rsaEncrypt(byte[] key, byte[] data) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException, InvalidKeySpecException;
+    public abstract byte[] rsaEncrypt(byte[] key, byte[] data) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException, InvalidKeySpecException;
 
-    byte[] rsaEncrypt(PublicKey key, byte[] data) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException;
+    public abstract byte[] rsaEncrypt(PublicKey key, byte[] data) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException;
 
-    byte[] rsaDecrypt(byte[] key, byte[] data) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException, InvalidKeySpecException;
+    public abstract byte[] rsaDecrypt(byte[] key, byte[] data) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException, InvalidKeySpecException;
 
-    byte[] rsaDecrypt(PrivateKey key, byte[] data) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException;
+    public abstract byte[] rsaDecrypt(PrivateKey key, byte[] data) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException;
 
-    byte[] rsaSign(DigestAlgorithm digestAlgorithms, PrivateKey key, byte[] data) throws InvalidKeyException, SignatureException;
+    public abstract byte[] rsaSign(DigestAlgorithm digestAlgorithms, PrivateKey key, byte[] data) throws InvalidKeyException, SignatureException;
 
-    void rsaVerifySignature(DigestAlgorithm digestAlgorithms, PublicKey key, byte[] data, byte[] signature) throws InvalidKeyException, SignatureException;
+    public abstract void rsaVerifySignature(DigestAlgorithm digestAlgorithms, PublicKey key, byte[] data, byte[] signature) throws InvalidKeyException, SignatureException;
 
-    byte[] sign(String algorithm, PrivateKey key, byte[] data) throws SignatureException, InvalidKeyException;
+    public abstract byte[] sign(String algorithm, PrivateKey key, byte[] data) throws SignatureException, InvalidKeyException;
 
-    void verifySignature(String algorithm, PublicKey key, byte[] data, byte[] signature) throws SignatureException, InvalidKeyException;
+    public abstract void verifySignature(String algorithm, PublicKey key, byte[] data, byte[] signature) throws SignatureException, InvalidKeyException;
 }
