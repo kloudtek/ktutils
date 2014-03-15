@@ -81,7 +81,7 @@ public class CryptoUtilsTest {
     @Test
     public void testRSAEncrypt() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         KeyPair kp = KeyPairGenerator.getInstance("RSA").generateKeyPair();
-        byte[] data = getRandomData(100);
+        byte[] data = getRandomData(80);
         byte[] encrypted = CryptoUtils.rsaEncrypt(kp.getPublic(), data);
         assertTrue(Arrays.equals(data, CryptoUtils.rsaDecrypt(kp.getPrivate(), encrypted)));
         data = getRandomData(32);
