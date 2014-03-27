@@ -12,6 +12,10 @@ import android.content.DialogInterface;
  * Various utility functions for android operation system
  */
 public class AndroidUtils {
+    public static void applyFixes() {
+        AndroidPRNFix.apply();
+    }
+
     /**
      * Create and display an error dialog for an unexpected exception
      *
