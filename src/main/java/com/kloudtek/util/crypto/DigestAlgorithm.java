@@ -4,11 +4,16 @@
 
 package com.kloudtek.util.crypto;
 
+import javax.xml.bind.annotation.XmlEnum;
+import javax.xml.bind.annotation.XmlEnumValue;
+
 /**
  * Enumeration of digest algorithms
  */
+@XmlEnum
 public enum DigestAlgorithm {
-    MD5(16), SHA1(20, "SHA-1"), SHA256(32, "SHA-256"), SHA512(64, "SHA-512");
+    @XmlEnumValue("md5")MD5(16), @XmlEnumValue("sha1")SHA1(20, "SHA-1"), @XmlEnumValue("sha256")SHA256(32, "SHA-256"),
+    @XmlEnumValue("sha512")SHA512(64, "SHA-512");
     private int hashLen;
     private String jceId;
 
