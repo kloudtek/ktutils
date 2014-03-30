@@ -5,11 +5,13 @@
 package com.kloudtek.util.io;
 
 import java.io.*;
+import java.util.logging.Logger;
 
 /**
  * Various I/O relation utilities
  */
 public class IOUtils {
+    private static final Logger logger = Logger.getLogger(IOUtils.class.getName());
     private static final int DEF_BUFF_SIZE = 10240;
     private static final int DEF_CHAR_BUFF_SIZE = 200;
 
@@ -88,5 +90,18 @@ public class IOUtils {
         FileReader fileReader = new FileReader(file);
         copy(fileReader, buffer);
         return buffer.toString();
+    }
+
+    /**
+     * Close a closeable object, suppressing any resulting exception
+     *
+     * @param closeable Closeable object
+     */
+    public static void close(Closeable closeable) {
+        try {
+            closeable.close();
+        } catch (IOException e) {
+            //
+        }
     }
 }
