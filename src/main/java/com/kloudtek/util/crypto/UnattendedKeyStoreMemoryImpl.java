@@ -10,6 +10,10 @@ import java.util.HashMap;
 public class UnattendedKeyStoreMemoryImpl extends AbstractUnattendedKeyStore {
     private HashMap<String, Object> keys = new HashMap<String, Object>();
 
+    public HashMap<String, Object> getKeys() {
+        return keys;
+    }
+
     @Override
     public Object getEntry(String id) {
         return keys.get(id);
