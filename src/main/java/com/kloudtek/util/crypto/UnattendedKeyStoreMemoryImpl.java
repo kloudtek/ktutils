@@ -38,4 +38,9 @@ public class UnattendedKeyStoreMemoryImpl extends AbstractUnattendedKeyStore {
     public void importKeyPair(String id, KeyPair keyPair) {
         keys.put(id, keyPair);
     }
+
+    @Override
+    public void removeKey(String id) {
+        keys.remove(id);
+    }
 }

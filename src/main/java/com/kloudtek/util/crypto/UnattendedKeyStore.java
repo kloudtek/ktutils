@@ -18,4 +18,6 @@ public interface UnattendedKeyStore {
     void importKeyPair(String id, KeyPair key);
 
     KeyPair createRSAKeyPair(String id, int keySize);
+
+    void removeKey(String id);
 }
