@@ -13,6 +13,7 @@ import javax.crypto.SecretKey;
 import java.security.*;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
 
 /**
  * Various cryptographic methods
@@ -33,6 +34,7 @@ public class CryptoUtils {
 
     /**
      * Generate RSA 4096bit key pair
+     *
      * @return RSA Key pair
      */
     public static KeyPair generateRSA4096KeyPair() {
@@ -41,6 +43,7 @@ public class CryptoUtils {
 
     /**
      * Generate RSA 4096bit key pair
+     *
      * @return RSA Key pair
      */
     public static KeyPair generateRSA2048KeyPair() {
@@ -189,5 +192,43 @@ public class CryptoUtils {
         } catch (NoSuchAlgorithmException e) {
             throw new UnexpectedException(e);
         }
+    }
+
+    /**
+     * Split a key into multiple keys using XOR
+     *
+     * @param key    key to split
+     * @param amount How many new keys should be generated
+     * @return List of keys
+     */
+    public static byte[][] splitKey(byte[] key, int amount) {
+        int keyLen = key.length;
+        SecureRandom rng = new SecureRandom();
+        ArrayList<byte[]> keys = new ArrayList<byte[]>(amount);
+        byte[] xorVal = key;
+        for (int i = 0; i < amount - 1; i++) {
+            byte[] newKey = new byte[keyLen];
+            rng.nextBytes(newKey);
+            keys.add(newKey);
+            xorVal = xor(xorVal, newKey);
+        }
+        keys.add(xorVal);
+        return keys.toArray(new byte[key.length][amount]);
+    }
+
+    public static byte[] mergeSplitKey(byte[]... keys) {
+        byte[] val = keys[0];
+        for (int i = 1; i < keys.length; i++) {
+            val = xor(val, keys[i]);
+        }
+        return val;
+    }
+
+    private static byte[] xor(byte[] b1, byte[] b2) {
+        byte[] val = new byte[b1.length];
+        for (int i = 0; i < b1.length; i++) {
+            val[i] = (byte) (b1[i] ^ b2[i]);
+        }
+        return val;
     }
 }

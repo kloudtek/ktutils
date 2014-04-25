@@ -89,6 +89,18 @@ public class CryptoUtilsTest {
         assertTrue(Arrays.equals(data, CryptoUtils.rsaDecrypt(kp.getPrivate(), encrypted)));
     }
 
+    @Test
+    public void testSplitKey() throws UnsupportedEncodingException {
+        String data = "hello world";
+        byte[][] keys = CryptoUtils.splitKey(data.getBytes("UTF-8"), 4);
+        byte[] merged = CryptoUtils.mergeSplitKey(keys[0], keys[1], keys[2], keys[3]);
+        assertEquals(new String(merged), data);
+        merged = CryptoUtils.mergeSplitKey(keys[3], keys[0], keys[1], keys[2]);
+        assertEquals(new String(merged), data);
+        merged = CryptoUtils.mergeSplitKey(keys[3], keys[2], keys[1], keys[0]);
+        assertEquals(new String(merged), data);
+    }
+
     /**
      * Change a random byte of the specified data
      *
