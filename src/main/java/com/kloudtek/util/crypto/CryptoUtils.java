@@ -203,25 +203,37 @@ public class CryptoUtils {
      */
     public static byte[][] splitKey(byte[] key, int amount) {
         int keyLen = key.length;
-        SecureRandom rng = new SecureRandom();
         ArrayList<byte[]> keys = new ArrayList<byte[]>(amount);
-        byte[] xorVal = key;
-        for (int i = 0; i < amount - 1; i++) {
-            byte[] newKey = new byte[keyLen];
-            rng.nextBytes(newKey);
-            keys.add(newKey);
-            xorVal = xor(xorVal, newKey);
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount must be 1 or more");
+        } else if (amount == 1) {
+            keys.add(key);
+        } else {
+            SecureRandom rng = new SecureRandom();
+            byte[] xorVal = key;
+            for (int i = 0; i < amount - 1; i++) {
+                byte[] newKey = new byte[keyLen];
+                rng.nextBytes(newKey);
+                keys.add(newKey);
+                xorVal = xor(xorVal, newKey);
+            }
+            keys.add(xorVal);
         }
-        keys.add(xorVal);
         return keys.toArray(new byte[key.length][amount]);
     }
 
     public static byte[] mergeSplitKey(byte[]... keys) {
-        byte[] val = keys[0];
-        for (int i = 1; i < keys.length; i++) {
-            val = xor(val, keys[i]);
+        if (keys == null || keys.length == 0) {
+            throw new IllegalArgumentException("There must be at least one key");
+        } else if (keys.length == 1) {
+            return keys[0];
+        } else {
+            byte[] val = keys[0];
+            for (int i = 1; i < keys.length; i++) {
+                val = xor(val, keys[i]);
+            }
+            return val;
         }
-        return val;
     }
 
     private static byte[] xor(byte[] b1, byte[] b2) {
