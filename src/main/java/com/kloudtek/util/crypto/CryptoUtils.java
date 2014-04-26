@@ -14,12 +14,16 @@ import java.security.*;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * Various cryptographic methods
  */
 public class CryptoUtils {
     private static CryptoEngine provider = new JCECryptoEngine();
+    private static final SecureRandom rng = new SecureRandom();
 
     /**
      * Generate a private key using a symmetric algorithm
@@ -223,14 +227,28 @@ public class CryptoUtils {
     }
 
     public static byte[] mergeSplitKey(byte[]... keys) {
-        if (keys == null || keys.length == 0) {
+        if (keys == null) {
             throw new IllegalArgumentException("There must be at least one key");
-        } else if (keys.length == 1) {
-            return keys[0];
         } else {
-            byte[] val = keys[0];
-            for (int i = 1; i < keys.length; i++) {
-                val = xor(val, keys[i]);
+            return mergeSplitKey(Arrays.asList(keys));
+        }
+    }
+
+    public static byte[] mergeSplitKey(Collection<byte[]> keys) {
+        if (keys == null || keys.isEmpty()) {
+            throw new IllegalArgumentException("There must be at least one key");
+        } else if (keys.size() == 1) {
+            return keys.iterator().next();
+        } else {
+            Iterator<byte[]> i = keys.iterator();
+            byte[] val = i.next();
+            int len = val.length;
+            while (i.hasNext()) {
+                byte[] next = i.next();
+                if (next.length != len) {
+                    throw new IllegalArgumentException("All keys must have the same length");
+                }
+                val = xor(val, next);
             }
             return val;
         }
@@ -242,5 +260,14 @@ public class CryptoUtils {
             val[i] = (byte) (b1[i] ^ b2[i]);
         }
         return val;
+    }
+
+    /**
+     * Retrieve shared instance of {@link SecureRandom}
+     *
+     * @return {@link SecureRandom} instance
+     */
+    public static SecureRandom rng() {
+        return rng;
     }
 }

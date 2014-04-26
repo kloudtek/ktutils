@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2014 Kloudtek Ltd
+ */
+
 package com.kloudtek.util.crypto;
 
 import org.testng.annotations.Test;
@@ -104,7 +108,7 @@ public class CryptoUtilsTest {
     /**
      * Change a random byte of the specified data
      *
-     * @param data Data to scamble
+     * @param data Data to scramble
      */
     private void scrambleByte(byte[] data) {
         int idx = new SecureRandom().nextInt(data.length);
