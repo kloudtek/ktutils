@@ -4,6 +4,7 @@
 
 package com.kloudtek.util.validation;
 
+import com.kloudtek.util.StringUtils;
 import com.kloudtek.util.SystemUtils;
 import com.kloudtek.util.UnexpectedException;
 
@@ -62,5 +63,14 @@ public class ValidationUtils {
                 }
             }
         }
+    }
+
+    public static boolean notEmpty(String... values) {
+        for (String value : values) {
+            if (StringUtils.isEmpty(value)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

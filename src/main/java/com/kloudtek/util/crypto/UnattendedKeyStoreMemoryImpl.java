@@ -2,6 +2,7 @@ package com.kloudtek.util.crypto;
 
 import java.security.Key;
 import java.security.KeyPair;
+import java.security.PublicKey;
 import java.util.HashMap;
 
 /**
@@ -27,6 +28,11 @@ public class UnattendedKeyStoreMemoryImpl extends AbstractUnattendedKeyStore {
     @Override
     public Key getKey(String id) {
         return (Key) keys.get(id);
+    }
+
+    @Override
+    public PublicKey getPublicKey(String id) {
+        return (PublicKey) keys.get(id);
     }
 
     @Override

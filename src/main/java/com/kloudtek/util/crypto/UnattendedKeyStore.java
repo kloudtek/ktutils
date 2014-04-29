@@ -2,6 +2,7 @@ package com.kloudtek.util.crypto;
 
 import java.security.Key;
 import java.security.KeyPair;
+import java.security.PublicKey;
 
 /**
  * Interface for a keystore that run in an unattended applications (ie. a server application)
@@ -9,9 +10,11 @@ import java.security.KeyPair;
 public interface UnattendedKeyStore {
     Object getEntry(String id);
 
-    Object getKeyPair(String id);
+    KeyPair getKeyPair(String id);
 
     Key getKey(String id);
+
+    PublicKey getPublicKey(String id);
 
     void importKey(String id, Key key);
 
