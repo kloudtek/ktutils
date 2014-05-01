@@ -13,14 +13,22 @@ import java.io.IOException;
  */
 public class TempDir extends File implements Closeable {
     public TempDir(String prefix, String suffix) throws IOException {
-        super(genPath(prefix, suffix));
+        super(create(prefix, suffix));
     }
 
     public TempDir(String prefix) throws IOException {
-        super(genPath(prefix, "tmp"));
+        super(create(prefix, "tmp"));
     }
 
-    private static String genPath(String prefix, String suffix) throws IOException {
+    /**
+     * Generate the temporary directory
+     *
+     * @param prefix Directory prefix
+     * @param suffix Directory suffix
+     * @return Path to the temporary directory
+     * @throws IOException If an error occurs creating the temp directory
+     */
+    private static String create(String prefix, String suffix) throws IOException {
         final File tmp = File.createTempFile(prefix, suffix);
         if (!tmp.delete()) {
             throw new IOException("Unable to delete temp file: " + tmp.getPath());
@@ -46,15 +54,20 @@ public class TempDir extends File implements Closeable {
      * @throws IOException If an error occurs while deleting the directory.
      */
     public void close() throws IOException {
-        del(this);
+        delete(this);
     }
 
-    private static void del(File file) {
+    /**
+     * Recursively delete all files
+     *
+     * @param file
+     */
+    private static void delete(File file) {
         if (file.isDirectory()) {
             final File[] childs = file.listFiles();
             if (childs != null) {
                 for (File child : childs) {
-                    del(child);
+                    delete(child);
                 }
             }
         }

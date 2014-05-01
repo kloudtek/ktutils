@@ -12,6 +12,9 @@ import android.content.DialogInterface;
  * Various utility functions for android operation system
  */
 public class AndroidUtils {
+    /**
+     * Apply any appropriate fixes and workarounds (like for example android RNG fix)
+     */
     public static void applyFixes() {
         AndroidPRNFix.apply();
     }
