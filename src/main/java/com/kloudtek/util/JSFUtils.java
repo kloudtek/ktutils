@@ -215,4 +215,12 @@ public class JSFUtils {
         }
         return url.append(ctxPath).toString();
     }
+
+    public static Map<String, Object> getViewMap(boolean create) {
+        return FacesContext.getCurrentInstance().getViewRoot().getViewMap(create);
+    }
+
+    public static Map<String, Object> getViewMap() {
+        return getViewMap(true);
+    }
 }

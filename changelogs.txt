@@ -1,3 +1,0 @@
-1.0.2
-
- * Added java 6 jar
