@@ -86,6 +86,10 @@ public class CryptoUtils {
         return provider.readRSAPrivateKey(encodedPriKey);
     }
 
+    public static SecretKey readAESKey(byte[] encodedAesKey) {
+        return provider.readAESKey(encodedAesKey);
+    }
+
     /**
      * Decrypt data encrypted using AES/CBC/PKCS5_PADDING algorithm
      *

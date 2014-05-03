@@ -78,6 +78,8 @@ public abstract class CryptoEngine {
      */
     public abstract PrivateKey readRSAPrivateKey(byte[] encodedPriKey) throws InvalidKeySpecException;
 
+    public abstract SecretKey readAESKey(byte[] encodedAesKey);
+
     public abstract byte[] hmac(DigestAlgorithm algorithm, SecretKey key, byte[] data) throws InvalidKeyException;
 
     public abstract byte[] hmacSha1(SecretKey key, byte[] data) throws InvalidKeyException;

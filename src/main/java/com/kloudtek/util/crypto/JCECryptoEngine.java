@@ -108,6 +108,11 @@ public class JCECryptoEngine extends CryptoEngine {
         }
     }
 
+    @Override
+    public SecretKey readAESKey(byte[] encodedAesKey) {
+        return new SecretKeySpec(encodedAesKey, "AES");
+    }
+
     // HMAC
 
     @Override
