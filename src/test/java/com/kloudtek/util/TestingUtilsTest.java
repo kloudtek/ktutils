@@ -16,13 +16,13 @@ public class TestingUtilsTest extends Assert {
     @Test
     public void testCorruptData() throws Exception {
         byte[] data = new byte[100];
-        assertNotEquals(data, TestingUtils.corruptData(data, 1));
-        assertNotEquals(data, TestingUtils.corruptData(data, 10));
+        assertNotEquals(data, TestingUtils.makeCorruptedCopyOfData(data, 1));
+        assertNotEquals(data, TestingUtils.makeCorruptedCopyOfData(data, 10));
     }
 
     @Test
     public void testChangeData() throws Exception {
-        assertNotEquals(TestingUtils.changeData(Byte.MAX_VALUE), Byte.MAX_VALUE);
-        assertNotEquals(TestingUtils.changeData(ZERO), ZERO);
+        assertNotEquals(TestingUtils.corruptData(Byte.MAX_VALUE), Byte.MAX_VALUE);
+        assertNotEquals(TestingUtils.corruptData(ZERO), ZERO);
     }
 }

@@ -7,6 +7,8 @@ package com.kloudtek.util.io;
 import java.io.DataInput;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Extends JDK DataInputStream to provide some extra methods.
@@ -23,6 +25,20 @@ public class DataInputStream extends java.io.DataInputStream {
     public byte[] readData() throws IOException {
         return readData(this);
     }
+
+
+    public List<Long> readLongList() throws IOException {
+        return readLongList(this);
+    }
+
+    public List<Integer> readIntList() throws IOException {
+        return readIntList(this);
+    }
+
+    public List<String> readUTFList() throws IOException {
+        return readUTFList(this);
+    }
+
 
     public static String readString(DataInput in) throws IOException {
         if (in.readBoolean()) {
@@ -43,5 +59,32 @@ public class DataInputStream extends java.io.DataInputStream {
         } else {
             return null;
         }
+    }
+
+    public static List<Long> readLongList(DataInput in) throws IOException {
+        int nb = in.readInt();
+        ArrayList<Long> list = new ArrayList<Long>(nb);
+        for (int i = 0; i < nb; i++) {
+            list.add(in.readLong());
+        }
+        return list;
+    }
+
+    public static List<Integer> readIntList(DataInput in) throws IOException {
+        int nb = in.readInt();
+        ArrayList<Integer> list = new ArrayList<Integer>(nb);
+        for (int i = 0; i < nb; i++) {
+            list.add(in.readInt());
+        }
+        return list;
+    }
+
+    public static List<String> readUTFList(DataInput in) throws IOException {
+        int nb = in.readInt();
+        ArrayList<String> list = new ArrayList<String>(nb);
+        for (int i = 0; i < nb; i++) {
+            list.add(in.readUTF());
+        }
+        return list;
     }
 }

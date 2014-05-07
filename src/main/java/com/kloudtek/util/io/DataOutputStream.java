@@ -7,6 +7,7 @@ package com.kloudtek.util.io;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
 /**
  * Extends JDK DataOutputStream to provide some extra methods.
@@ -34,6 +35,27 @@ public class DataOutputStream extends java.io.DataOutputStream {
      */
     public void writeData(byte[] data) throws IOException {
         writeData(this, data);
+    }
+
+    public void writeLongList(List<Long> list) throws IOException {
+        writeInt(list.size());
+        for (Long val : list) {
+            writeLong(val);
+        }
+    }
+
+    public void writeIntList(List<Integer> list) throws IOException {
+        writeInt(list.size());
+        for (Integer val : list) {
+            writeInt(val);
+        }
+    }
+
+    public void writeUTFList(List<String> list) throws IOException {
+        writeInt(list.size());
+        for (String val : list) {
+            writeUTF(val);
+        }
     }
 
     public static void writeString(DataOutput out, String str) throws IOException {
