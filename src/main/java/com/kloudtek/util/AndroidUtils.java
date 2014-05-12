@@ -25,6 +25,16 @@ public class AndroidUtils {
      * @param context Context
      * @param e       Exception to display
      */
+    public static void showErrorDialog(Context context, String title, String message) {
+        createDialogBuilder(context, title, message).create().show();
+    }
+
+    /**
+     * Create and display an error dialog for an unexpected exception
+     *
+     * @param context Context
+     * @param e       Exception to display
+     */
     public static void showErrorDialog(Context context, Exception e) {
         createErrorDialogBuilder(context, e).create().show();
     }
@@ -36,9 +46,19 @@ public class AndroidUtils {
      * @param e       Exception to display
      */
     public static AlertDialog.Builder createErrorDialogBuilder(Context context, Exception e) {
+        return createDialogBuilder(context, "Unexpected error", "An unexpected error has occurred: " + e.getMessage());
+    }
+
+    /**
+     * Create an error dialog for an unexpected exception
+     *
+     * @param context Context
+     * @param e       Exception to display
+     */
+    public static AlertDialog.Builder createDialogBuilder(Context context, String title, String message) {
         return new AlertDialog.Builder(context)
-                .setTitle("Unexpected error")
-                .setMessage("An unexpected error has occured: " + e.getMessage())
+                .setTitle(title)
+                .setMessage(message)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
