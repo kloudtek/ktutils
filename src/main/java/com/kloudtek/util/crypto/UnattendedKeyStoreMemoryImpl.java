@@ -13,6 +13,10 @@ import java.util.HashMap;
  * Created by yannick on 21/04/2014.
  */
 public class UnattendedKeyStoreMemoryImpl extends AbstractUnattendedKeyStore {
+    public UnattendedKeyStoreMemoryImpl(CryptoEngine cryptoEngine) {
+        super(cryptoEngine);
+    }
+
     private HashMap<String, Object> keys = new HashMap<String, Object>();
 
     public HashMap<String, Object> getKeys() {
