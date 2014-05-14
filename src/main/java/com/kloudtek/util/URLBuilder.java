@@ -18,6 +18,9 @@ public class URLBuilder {
     private final List<Param> parameters = new ArrayList<Param>();
 
     public URLBuilder(String url) {
+        if (url == null) {
+            throw new IllegalArgumentException("url mustn't be null");
+        }
         this.baseUrl = extractParams(url);
     }
 
