@@ -26,7 +26,6 @@ public class DataInputStream extends java.io.DataInputStream {
         return readData(this);
     }
 
-
     public List<Long> readLongList() throws IOException {
         return readLongList(this);
     }
