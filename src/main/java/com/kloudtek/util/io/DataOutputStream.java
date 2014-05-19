@@ -8,6 +8,7 @@ import java.io.DataOutput;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Extends JDK DataOutputStream to provide some extra methods.
@@ -37,6 +38,11 @@ public class DataOutputStream extends java.io.DataOutputStream {
         writeData(this, data);
     }
 
+
+    public void writeUUID(UUID uuid) throws IOException {
+        writeUUID(this, uuid);
+    }
+
     public void writeLongList(List<Long> list) throws IOException {
         writeInt(list.size());
         for (Long val : list) {
@@ -48,6 +54,13 @@ public class DataOutputStream extends java.io.DataOutputStream {
         writeInt(list.size());
         for (Integer val : list) {
             writeInt(val);
+        }
+    }
+
+    public void writeUUIDList(List<UUID> list) throws IOException {
+        writeInt(list.size());
+        for (UUID val : list) {
+            writeUUID(val);
         }
     }
 
@@ -71,5 +84,10 @@ public class DataOutputStream extends java.io.DataOutputStream {
         if (len > -1) {
             out.write(data);
         }
+    }
+
+    public static void writeUUID(DataOutput out, UUID uuid) throws IOException {
+        out.writeLong(uuid.getMostSignificantBits());
+        out.writeLong(uuid.getLeastSignificantBits());
     }
 }

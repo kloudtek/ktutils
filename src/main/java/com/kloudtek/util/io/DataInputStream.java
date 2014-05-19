@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Extends JDK DataInputStream to provide some extra methods.
@@ -22,12 +23,20 @@ public class DataInputStream extends java.io.DataInputStream {
         return readString(this);
     }
 
+    public UUID readUUID() throws IOException {
+        return readUUID(this);
+    }
+
     public byte[] readData() throws IOException {
         return readData(this);
     }
 
     public List<Long> readLongList() throws IOException {
         return readLongList(this);
+    }
+
+    public List<UUID> readUUIDList() throws IOException {
+        return readUUIDList(this);
     }
 
     public List<Integer> readIntList() throws IOException {
@@ -38,13 +47,16 @@ public class DataInputStream extends java.io.DataInputStream {
         return readUTFList(this);
     }
 
-
     public static String readString(DataInput in) throws IOException {
         if (in.readBoolean()) {
             return in.readUTF();
         } else {
             return null;
         }
+    }
+
+    public static UUID readUUID(DataInput in) throws IOException {
+        return new UUID(in.readLong(), in.readLong());
     }
 
     public static byte[] readData(DataInput in) throws IOException {
@@ -65,6 +77,15 @@ public class DataInputStream extends java.io.DataInputStream {
         ArrayList<Long> list = new ArrayList<Long>(nb);
         for (int i = 0; i < nb; i++) {
             list.add(in.readLong());
+        }
+        return list;
+    }
+
+    public static List<UUID> readUUIDList(DataInput in) throws IOException {
+        int nb = in.readInt();
+        ArrayList<UUID> list = new ArrayList<UUID>(nb);
+        for (int i = 0; i < nb; i++) {
+            list.add(new UUID(in.readLong(), in.readLong()));
         }
         return list;
     }
