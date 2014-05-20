@@ -19,12 +19,12 @@ public class UserDisplayableException extends RuntimeException {
         super(message);
     }
 
-    public UserDisplayableException(String message, String errorTitle) {
+    public UserDisplayableException(String errorTitle, String message) {
         super(message);
         this.errorTitle = errorTitle;
     }
 
-    public UserDisplayableException(String message, Throwable cause, String errorTitle, String errorCode) {
+    public UserDisplayableException(String errorTitle, String message, Throwable cause, String errorCode) {
         super(message, cause);
         this.errorTitle = errorTitle;
         this.errorCode = errorCode;
@@ -37,10 +37,6 @@ public class UserDisplayableException extends RuntimeException {
 
     public UserDisplayableException(String message, Throwable cause) {
         super(message, cause);
-    }
-
-    public UserDisplayableException(Throwable cause) {
-        super(cause);
     }
 
 
