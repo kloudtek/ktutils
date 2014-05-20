@@ -9,6 +9,7 @@ package com.kloudtek.util;
  */
 @UserDisplayable
 public class UserDisplayableException extends RuntimeException {
+    private String errorTitle;
     private String errorCode;
 
     public UserDisplayableException() {
@@ -18,13 +19,14 @@ public class UserDisplayableException extends RuntimeException {
         super(message);
     }
 
-    public UserDisplayableException(String message, String errorCode) {
+    public UserDisplayableException(String message, String errorTitle) {
         super(message);
-        this.errorCode = errorCode;
+        this.errorTitle = errorTitle;
     }
 
-    public UserDisplayableException(String message, Throwable cause, String errorCode) {
+    public UserDisplayableException(String message, Throwable cause, String errorTitle, String errorCode) {
         super(message, cause);
+        this.errorTitle = errorTitle;
         this.errorCode = errorCode;
     }
 
@@ -41,6 +43,7 @@ public class UserDisplayableException extends RuntimeException {
         super(cause);
     }
 
+
     /**
      * Return specified error code.
      *
@@ -48,5 +51,9 @@ public class UserDisplayableException extends RuntimeException {
      */
     public String getErrorCode() {
         return errorCode;
+    }
+
+    public String getErrorTitle() {
+        return errorTitle;
     }
 }
