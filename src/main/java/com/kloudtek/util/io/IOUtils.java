@@ -5,6 +5,8 @@
 package com.kloudtek.util.io;
 
 import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.logging.Logger;
 
 /**
@@ -20,6 +22,15 @@ public class IOUtils {
         copy(inputStream, buffer);
         buffer.close();
         return buffer.toByteArray();
+    }
+
+    public static byte[] toByteArray(File file) throws IOException {
+        FileInputStream is = new FileInputStream(file);
+        try {
+            return toByteArray(is);
+        } finally {
+            close(is);
+        }
     }
 
     public static long copy(final InputStream inputStream, final OutputStream outputStream) throws IOException {
@@ -85,6 +96,20 @@ public class IOUtils {
         return data;
     }
 
+    public static short byteArrayToShort(byte[] bytes) {
+        if (bytes.length != 2) {
+            throw new IllegalArgumentException();
+        }
+        return ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getShort();
+    }
+
+    public static byte[] shortToByteArray(short value) {
+        byte[] returnByteArray = new byte[2];
+        returnByteArray[0] = (byte) (value & 0xff);
+        returnByteArray[1] = (byte) ((value >>> 8) & 0xff);
+        return returnByteArray;
+    }
+
     public static String toString(File file) throws IOException {
         StringWriter buffer = new StringWriter();
         FileReader fileReader = new FileReader(file);
@@ -95,13 +120,29 @@ public class IOUtils {
     /**
      * Close a closeable object, suppressing any resulting exception
      *
-     * @param closeable Closeable object
+     * @param closeable Closeable object, can be null (in which case nothing will be done)
      */
     public static void close(Closeable closeable) {
+        if (closeable != null) {
+            try {
+                closeable.close();
+            } catch (IOException e) {
+            }
+        }
+    }
+
+    /**
+     * Write data to a file
+     *
+     * @param file File to write data to
+     * @param data Data to write
+     */
+    public static void write(File file, byte[] data) throws IOException {
+        FileOutputStream fos = new FileOutputStream(file);
         try {
-            closeable.close();
-        } catch (IOException e) {
-            //
+            fos.write(data);
+        } finally {
+            close(fos);
         }
     }
 }

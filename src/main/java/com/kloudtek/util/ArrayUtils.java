@@ -5,6 +5,9 @@
 package com.kloudtek.util;
 
 import java.lang.reflect.Array;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Various array-related utilities
@@ -135,5 +138,27 @@ public class ArrayUtils {
         System.arraycopy(array1, 0, result, 0, array1.length);
         System.arraycopy(array2, 0, result, array1.length, array2.length);
         return result;
+    }
+
+    /**
+     * Convert an array of characters to an array of bytes using UTF8 encoding
+     *
+     * @param chars Array of characters
+     * @return Byte array
+     */
+    public static byte[] toBytes(char[] chars) {
+        CharBuffer charBuffer = CharBuffer.wrap(chars);
+        return StandardCharsets.UTF_8.encode(charBuffer).array();
+    }
+
+    /**
+     * Convert an array of bytes to an array of chars using UTF8 encoding
+     *
+     * @param data Array of characters
+     * @return Byte array
+     */
+    public static char[] toChars(byte[] data) {
+        ByteBuffer byteBuffer = ByteBuffer.wrap(data);
+        return StandardCharsets.UTF_8.decode(byteBuffer).array();
     }
 }

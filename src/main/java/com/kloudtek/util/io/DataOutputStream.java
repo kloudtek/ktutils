@@ -38,9 +38,20 @@ public class DataOutputStream extends java.io.DataOutputStream {
         writeData(this, data);
     }
 
-
     public void writeUUID(UUID uuid) throws IOException {
         writeUUID(this, uuid);
+    }
+
+    public void writeByteEnum(Enum enumeration) throws IOException {
+        writeByteEnum(this, enumeration);
+    }
+
+    public void writeShortEnum(Enum enumeration) throws IOException {
+        writeShortEnum(this, enumeration);
+    }
+
+    public void writeIntEnum(Enum enumeration) throws IOException {
+        writeIntEnum(this, enumeration);
     }
 
     public void writeLongList(List<Long> list) throws IOException {
@@ -89,5 +100,17 @@ public class DataOutputStream extends java.io.DataOutputStream {
     public static void writeUUID(DataOutput out, UUID uuid) throws IOException {
         out.writeLong(uuid.getMostSignificantBits());
         out.writeLong(uuid.getLeastSignificantBits());
+    }
+
+    public static void writeByteEnum(DataOutput out, Enum enumeration) throws IOException {
+        out.writeByte(enumeration.ordinal());
+    }
+
+    public static void writeShortEnum(DataOutput out, Enum enumeration) throws IOException {
+        out.writeShort(enumeration.ordinal());
+    }
+
+    public static void writeIntEnum(DataOutput out, Enum enumeration) throws IOException {
+        out.writeInt(enumeration.ordinal());
     }
 }

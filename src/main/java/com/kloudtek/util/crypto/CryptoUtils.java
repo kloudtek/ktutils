@@ -5,11 +5,16 @@
 package com.kloudtek.util.crypto;
 
 import com.kloudtek.util.UnexpectedException;
+import org.jetbrains.annotations.NotNull;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
+import javax.security.auth.DestroyFailedException;
+import javax.security.auth.Destroyable;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
 import java.security.*;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
@@ -17,11 +22,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Various cryptographic methods
  */
 public class CryptoUtils {
+    private static final Logger logger = Logger.getLogger(CryptoUtils.class.getName());
     private static CryptoEngine provider = new JCECryptoEngine();
     private static final SecureRandom rng = new SecureRandom();
 
@@ -64,6 +72,10 @@ public class CryptoUtils {
         return provider.generateHmacKey(algorithm);
     }
 
+    public static SecretKey generatePBEAESKey(char[] key, int iterations, byte[] salt, int keyLen) throws InvalidKeySpecException {
+        return provider.generatePBEAESKey(key, iterations, salt, keyLen);
+    }
+
     /**
      * Read an X509 Encoded S_RSA public key
      *
@@ -88,6 +100,10 @@ public class CryptoUtils {
 
     public static SecretKey readAESKey(byte[] encodedAesKey) {
         return provider.readAESKey(encodedAesKey);
+    }
+
+    public static SecretKey readHMACKey(@NotNull DigestAlgorithm algorithm, @NotNull byte[] encodedKey) {
+        return provider.readHMACKey(algorithm, encodedKey);
     }
 
     /**
@@ -230,6 +246,42 @@ public class CryptoUtils {
         return keys.toArray(new byte[key.length][amount]);
     }
 
+    /**
+     * fill the array with zeros
+     *
+     * @param data
+     */
+    public static void zero(char[] data) {
+        Arrays.fill(data, '\u0000');
+    }
+
+    /**
+     * fill the array with zeros
+     *
+     * @param data
+     */
+    public static void zero(byte[] data) {
+        Arrays.fill(data, (byte) 0);
+    }
+
+    /**
+     * fill the array with zeros
+     *
+     * @param data
+     */
+    public static void zero(CharBuffer data) {
+        zero(data.array());
+    }
+
+    /**
+     * fill the array with zeros
+     *
+     * @param data
+     */
+    public static void zero(ByteBuffer data) {
+        zero(data.array());
+    }
+
     public static byte[] mergeSplitKey(byte[]... keys) {
         if (keys == null) {
             throw new IllegalArgumentException("There must be at least one key");
@@ -273,5 +325,22 @@ public class CryptoUtils {
      */
     public static SecureRandom rng() {
         return rng;
+    }
+
+    /**
+     * Attempt to zero all data in the key
+     *
+     * @param key Key to destroy
+     */
+    public static void destroy(Key key) {
+        if (key instanceof Destroyable) {
+            if (!((Destroyable) key).isDestroyed()) {
+                try {
+                    ((Destroyable) key).destroy();
+                } catch (DestroyFailedException e) {
+                    logger.log(Level.WARNING, "Failed to destroy key: " + e.getMessage(), e);
+                }
+            }
+        }
     }
 }

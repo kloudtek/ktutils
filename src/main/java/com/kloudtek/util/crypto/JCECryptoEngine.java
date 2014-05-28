@@ -5,12 +5,15 @@
 package com.kloudtek.util.crypto;
 
 import com.kloudtek.util.UnexpectedException;
+import org.jetbrains.annotations.NotNull;
 
 import javax.crypto.*;
+import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.*;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
@@ -78,7 +81,7 @@ public class JCECryptoEngine extends CryptoEngine {
      * @throws java.security.spec.InvalidKeySpecException If the key is invalid
      */
     @Override
-    public RSAPublicKey readRSAPublicKey(byte[] key) throws InvalidKeySpecException {
+    public RSAPublicKey readRSAPublicKey(@NotNull byte[] key) throws InvalidKeySpecException {
         PublicKey result;
         try {
             KeyFactory keyFactory = KeyFactory.getInstance(S_RSA);
@@ -98,7 +101,7 @@ public class JCECryptoEngine extends CryptoEngine {
      * @throws InvalidKeySpecException If the key is invalid
      */
     @Override
-    public PrivateKey readRSAPrivateKey(byte[] encodedPriKey) throws InvalidKeySpecException {
+    public PrivateKey readRSAPrivateKey(@NotNull byte[] encodedPriKey) throws InvalidKeySpecException {
         try {
             KeyFactory keyFactory = KeyFactory.getInstance(S_RSA);
             PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(encodedPriKey);
@@ -109,8 +112,13 @@ public class JCECryptoEngine extends CryptoEngine {
     }
 
     @Override
-    public SecretKey readAESKey(byte[] encodedAesKey) {
+    public SecretKey readAESKey(@NotNull byte[] encodedAesKey) {
         return new SecretKeySpec(encodedAesKey, "AES");
+    }
+
+    @Override
+    public SecretKey readHMACKey(@NotNull DigestAlgorithm algorithm, @NotNull byte[] encodedKey) {
+        return new SecretKeySpec(encodedKey, "Hmac" + algorithm.getJceId());
     }
 
     // HMAC
@@ -241,6 +249,17 @@ public class JCECryptoEngine extends CryptoEngine {
             if (!sig.verify(signature)) {
                 throw new SignatureException();
             }
+        } catch (NoSuchAlgorithmException e) {
+            throw new UnexpectedException(e);
+        }
+    }
+
+    @Override
+    public SecretKey generatePBEAESKey(char[] password, int iterations, byte[] salt, int keyLen) throws InvalidKeySpecException {
+        try {
+            KeySpec keySpec = new PBEKeySpec(password, salt, iterations, keyLen);
+            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+            return new SecretKeySpec(keyFactory.generateSecret(keySpec).getEncoded(), "AES");
         } catch (NoSuchAlgorithmException e) {
             throw new UnexpectedException(e);
         }

@@ -4,6 +4,8 @@
 
 package com.kloudtek.util.crypto;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.SecretKey;
@@ -67,7 +69,7 @@ public abstract class CryptoEngine {
      * @return Public key object
      * @throws java.security.spec.InvalidKeySpecException If the key is invalid
      */
-    public abstract RSAPublicKey readRSAPublicKey(byte[] key) throws InvalidKeySpecException;
+    public abstract RSAPublicKey readRSAPublicKey(@NotNull byte[] key) throws InvalidKeySpecException;
 
     /**
      * Read a PKCS8 Encoded S_RSA private key
@@ -76,9 +78,11 @@ public abstract class CryptoEngine {
      * @return Public key object
      * @throws InvalidKeySpecException If the key is invalid
      */
-    public abstract PrivateKey readRSAPrivateKey(byte[] encodedPriKey) throws InvalidKeySpecException;
+    public abstract PrivateKey readRSAPrivateKey(@NotNull byte[] encodedPriKey) throws InvalidKeySpecException;
 
-    public abstract SecretKey readAESKey(byte[] encodedAesKey);
+    public abstract SecretKey readAESKey(@NotNull byte[] encodedAesKey);
+
+    public abstract SecretKey readHMACKey(@NotNull DigestAlgorithm algorithm, @NotNull byte[] encodedKey);
 
     public abstract byte[] hmac(DigestAlgorithm algorithm, SecretKey key, byte[] data) throws InvalidKeyException;
 
@@ -117,4 +121,6 @@ public abstract class CryptoEngine {
     public abstract byte[] sign(String algorithm, PrivateKey key, byte[] data) throws SignatureException, InvalidKeyException;
 
     public abstract void verifySignature(String algorithm, PublicKey key, byte[] data, byte[] signature) throws SignatureException, InvalidKeyException;
+
+    public abstract SecretKey generatePBEAESKey(char[] key, int iterations, byte[] salt, int keyLen) throws InvalidKeySpecException;
 }

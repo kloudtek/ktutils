@@ -47,6 +47,18 @@ public class DataInputStream extends java.io.DataInputStream {
         return readUTFList(this);
     }
 
+    public <X> X readByteEnum(Class<X> enumClass) throws IOException {
+        return readByteEnum(enumClass, this);
+    }
+
+    public <X> X readShortEnum(Class<X> enumClass) throws IOException {
+        return readShortEnum(enumClass, this);
+    }
+
+    public <X> X readIntEnum(Class<X> enumClass) throws IOException {
+        return readIntEnum(enumClass, this);
+    }
+
     public static String readString(DataInput in) throws IOException {
         if (in.readBoolean()) {
             return in.readUTF();
@@ -106,5 +118,25 @@ public class DataInputStream extends java.io.DataInputStream {
             list.add(in.readUTF());
         }
         return list;
+    }
+
+    public static <X> X readByteEnum(Class<X> enumClass, DataInput in) throws IOException {
+        return readEnum(enumClass, in.readByte());
+    }
+
+    public static <X> X readShortEnum(Class<X> enumClass, DataInput in) throws IOException {
+        return readEnum(enumClass, in.readShort());
+    }
+
+    public static <X> X readIntEnum(Class<X> enumClass, DataInput in) throws IOException {
+        return readEnum(enumClass, in.readInt());
+    }
+
+    private static <X> X readEnum(Class<X> enumClass, int idx) throws IOException {
+        try {
+            return enumClass.getEnumConstants()[idx];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new IOException("Invalid enum value");
+        }
     }
 }
