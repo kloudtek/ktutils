@@ -103,14 +103,18 @@ public class DataOutputStream extends java.io.DataOutputStream {
     }
 
     public static void writeByteEnum(DataOutput out, Enum enumeration) throws IOException {
-        out.writeByte(enumeration.ordinal());
+        out.writeByte(enumValue(enumeration));
     }
 
     public static void writeShortEnum(DataOutput out, Enum enumeration) throws IOException {
-        out.writeShort(enumeration.ordinal());
+        out.writeShort(enumValue(enumeration));
     }
 
     public static void writeIntEnum(DataOutput out, Enum enumeration) throws IOException {
-        out.writeInt(enumeration.ordinal());
+        out.writeInt(enumValue(enumeration));
+    }
+
+    protected static int enumValue(Enum enumeration) {
+        return enumeration != null ? enumeration.ordinal() : -1;
     }
 }

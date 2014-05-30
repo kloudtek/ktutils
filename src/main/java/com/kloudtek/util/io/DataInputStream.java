@@ -134,7 +134,7 @@ public class DataInputStream extends java.io.DataInputStream {
 
     private static <X> X readEnum(Class<X> enumClass, int idx) throws IOException {
         try {
-            return enumClass.getEnumConstants()[idx];
+            return idx == -1 ? null : enumClass.getEnumConstants()[idx];
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new IOException("Invalid enum value");
         }
