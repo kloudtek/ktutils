@@ -6,6 +6,7 @@ package com.kloudtek.util.crypto;
 
 import com.kloudtek.util.UnexpectedException;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -251,8 +252,12 @@ public class CryptoUtils {
      *
      * @param data
      */
-    public static void zero(char[] data) {
-        Arrays.fill(data, '\u0000');
+    public static void zero(@NotNull char[]... data) {
+        for (char[] chars : data) {
+            if (chars != null) {
+                Arrays.fill(chars, '\u0000');
+            }
+        }
     }
 
     /**
@@ -260,8 +265,12 @@ public class CryptoUtils {
      *
      * @param data
      */
-    public static void zero(byte[] data) {
-        Arrays.fill(data, (byte) 0);
+    public static void zero(@NotNull byte[]... data) {
+        for (byte[] bytes : data) {
+            if (bytes != null) {
+                Arrays.fill(bytes, (byte) 0);
+            }
+        }
     }
 
     /**
@@ -332,8 +341,8 @@ public class CryptoUtils {
      *
      * @param key Key to destroy
      */
-    public static void destroy(Key key) {
-        if (key instanceof Destroyable) {
+    public static void destroy(@Nullable Key key) {
+        if (key != null && key instanceof Destroyable) {
             if (!((Destroyable) key).isDestroyed()) {
                 try {
                     ((Destroyable) key).destroy();
