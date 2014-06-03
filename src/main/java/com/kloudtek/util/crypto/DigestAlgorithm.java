@@ -34,4 +34,13 @@ public enum DigestAlgorithm {
     public int getHashLen() {
         return hashLen;
     }
+
+    public static DigestAlgorithm getByJceId(String jceId) {
+        for (DigestAlgorithm digestAlgorithm : values()) {
+            if (digestAlgorithm.getJceId().equals(jceId)) {
+                return digestAlgorithm;
+            }
+        }
+        return null;
+    }
 }
