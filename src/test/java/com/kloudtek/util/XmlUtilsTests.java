@@ -78,7 +78,15 @@ public class XmlUtilsTests {
                     "  <!ELEMENT foo ANY >\n" +
                     "  <!ENTITY xxe SYSTEM \"" + tempFile.toURI() + "\" >]><foo>&xxe;</foo>";
             InputSource source = new InputSource(new StringReader(XXE_ATTACK));
-            Document doc = XmlUtils.getDocumentBuilderFactory(true, true).newDocumentBuilder().parse(source);
+            Document doc = null;
+            try {
+                doc = XmlUtils.getDocumentBuilderFactory(true, true).newDocumentBuilder().parse(source);
+            } catch (SAXException e) {
+                if (e.getMessage().contains("DOCTYPE is disallowed")) {
+                    return;
+                }
+                throw e;
+            }
             String val = XPathUtils.evalXPathString("foo/text()", doc);
             assertTrue(!val.trim().toLowerCase().contains("hacked"));
         } finally {
