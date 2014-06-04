@@ -7,6 +7,7 @@ package com.kloudtek.util;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.StrictMode;
 
 /**
  * Various utility functions for android operation system
@@ -65,5 +66,17 @@ public class AndroidUtils {
                         dialog.dismiss();
                     }
                 });
+    }
+
+    public static void enableDevelopmentMode() {
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                .detectAll()
+                .penaltyLog()
+                .build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                .detectAll()
+                .penaltyLog()
+                .penaltyDeath()
+                .build());
     }
 }
