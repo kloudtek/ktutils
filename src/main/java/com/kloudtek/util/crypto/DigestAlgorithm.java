@@ -16,15 +16,20 @@ public enum DigestAlgorithm {
     @XmlEnumValue("sha512")SHA512(64, "SHA-512");
     private int hashLen;
     private String jceId;
+    private String jceHmacId;
 
     DigestAlgorithm(int hashLen) {
-        this.hashLen = hashLen;
-        jceId = name();
+        init(hashLen, name());
     }
 
     DigestAlgorithm(int hashLen, String jceId) {
+        init(hashLen, jceId);
+    }
+
+    private void init(int hashLen, String jceId) {
         this.hashLen = hashLen;
         this.jceId = jceId;
+        jceHmacId = "Hmac" + jceId;
     }
 
     public String getJceId() {
@@ -35,10 +40,10 @@ public enum DigestAlgorithm {
         return hashLen;
     }
 
-    public static DigestAlgorithm getByJceId(String jceId) {
-        for (DigestAlgorithm digestAlgorithm : values()) {
-            if (digestAlgorithm.getJceId().equals(jceId)) {
-                return digestAlgorithm;
+    public static DigestAlgorithm get(String id) {
+        for (DigestAlgorithm alg : values()) {
+            if (alg.jceId.equals(id) || alg.jceHmacId.equals(id)) {
+                return alg;
             }
         }
         return null;

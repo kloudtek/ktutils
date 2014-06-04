@@ -4,13 +4,11 @@
 
 package com.kloudtek.util.crypto;
 
-import com.kloudtek.util.UnexpectedException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.security.auth.DestroyFailedException;
 import javax.security.auth.Destroyable;
@@ -210,13 +208,7 @@ public class CryptoUtils {
     }
 
     public static byte[] hmac(SecretKey key, DigestAlgorithm algorithms, byte[] data) throws InvalidKeyException {
-        try {
-            Mac mac = Mac.getInstance("Hmac" + algorithms.name());
-            mac.init(key);
-            return mac.doFinal(data);
-        } catch (NoSuchAlgorithmException e) {
-            throw new UnexpectedException(e);
-        }
+        return provider.hmac(algorithms, key, data);
     }
 
     /**
