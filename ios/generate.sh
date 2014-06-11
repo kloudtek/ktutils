@@ -7,10 +7,10 @@ rsync -a ../src/main/java/ _java
 KU=com/kloudtek/util
 
 j2objc -use-arc --no-package-directories --prefix com.kloudtek.util=KTUtil --prefix com.kloudtek.util.io=KTUtil \
-    -sourcepath _java -d KTUtils java/net/URLDecoder.java ${KU}/StringUtils.java ${KU}/BaseNCodec.java ${KU}/Base64.java ${KU}/Base32.java \
+    -sourcepath _java -d KTUtils javax/security/auth/DestroyFailedException.java javax/security/auth/Destroyable.java java/net/URLDecoder.java ${KU}/StringUtils.java ${KU}/ArrayUtils.java ${KU}/BaseNCodec.java ${KU}/Base64.java ${KU}/Base32.java \
     ${KU}/UnexpectedException.java ${KU}/io/IOUtils.java ${KU}/io/DataInputStream.java ${KU}/io/DataOutputStream.java  \
     ${KU}/io/ByteArrayDataInputStream.java ${KU}/io/ByteArrayDataOutputStream.java ${KU}/io/IOUtils.java  ${KU}/crypto/CryptoEngine.java \
-    ${KU}/crypto/DigestUtils.java  ${KU}/crypto/CryptoUtils.java
+    ${KU}/crypto/DigestUtils.java  ${KU}/crypto/CryptoUtils.java ${KU}/crypto/AsymmetricAlgorithm.java ${KU}/crypto/DigestAlgorithm.java ${KU}/crypto/SymmetricAlgorithm.java	
 
 find KTUtils -type f -name '*' -exec sed -i '' s/java\\/net\\/URLDecoder/URLDecoder/g {} +
 find KTUtils -type f -name '*' -exec sed -i '' s/java\\/security\\/DataInputStream/DataInputStream/g {} +
@@ -21,12 +21,17 @@ find KTUtils -type f -name '*' -exec sed -i '' s/java\\/security\\/KeyException/
 find KTUtils -type f -name '*' -exec sed -i '' s/java\\/security\\/KeyPair/KeyPair/g {} +
 find KTUtils -type f -name '*' -exec sed -i '' s/java\\/security\\/PrivateKey/PrivateKey/g {} +
 find KTUtils -type f -name '*' -exec sed -i '' s/java\\/security\\/PublicKey/PublicKey/g {} +
+find KTUtils -type f -name '*' -exec sed -i '' s/java\\/security\\/interfaces\\/RSAPublicKey/RSAPublicKey/g {} +
+find KTUtils -type f -name '*' -exec sed -i '' s/java\\/security\\/interfaces\\/RSAPrivateKey/RSAPrivateKey/g {} +
 find KTUtils -type f -name '*' -exec sed -i '' s/java\\/security\\/SignatureException/SignatureException/g {} +
 find KTUtils -type f -name '*' -exec sed -i '' s/java\\/security\\/spec\\/InvalidKeySpecException/InvalidKeySpecException/g {} +
-find KTUtils -type f -name '*' -exec sed -i '' s/java\\/security\\/interfaces\\/RSAPublicKey/RSAPublicKey/g {} +
+
 find KTUtils -type f -name '*' -exec sed -i '' s/java\\/security\\/interfaces\\/RSAKey/RSAKey/g {} +
 find KTUtils -type f -name '*' -exec sed -i '' s/javax\\/crypto\\/BadPaddingException/BadPaddingException/g {} +
 find KTUtils -type f -name '*' -exec sed -i '' s/javax\\/crypto\\/IllegalBlockSizeException/IllegalBlockSizeException/g {} +
 find KTUtils -type f -name '*' -exec sed -i '' s/javax\\/crypto\\/SecretKey/SecretKey/g {} +
+find KTUtils -type f -name '*' -exec sed -i '' s/javax\\/security\\/auth\\/Destroyable/Destroyable/g {} +
+find KTUtils -type f -name '*' -exec sed -i '' s/javax\\/security\\/auth\\/DestroyFailedException/DestroyFailedException/g {} +
+
 
 rm -rf _java
