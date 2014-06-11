@@ -13,7 +13,6 @@ public enum DigestAlgorithm {
     SHA512(64, "SHA-512");
     private int hashLen;
     private String jceId;
-    private String jceHmacId;
 
     DigestAlgorithm(int hashLen) {
         init(hashLen, name());
@@ -26,7 +25,6 @@ public enum DigestAlgorithm {
     private void init(int hashLen, String jceId) {
         this.hashLen = hashLen;
         this.jceId = jceId;
-        jceHmacId = "Hmac" + jceId;
     }
 
     public String getJceId() {
@@ -38,8 +36,9 @@ public enum DigestAlgorithm {
     }
 
     public static DigestAlgorithm get(String id) {
+        id = id.toUpperCase();
         for (DigestAlgorithm alg : values()) {
-            if (alg.jceId.equals(id) || alg.jceHmacId.equals(id)) {
+            if (id.endsWith(alg.jceId) || id.endsWith(alg.name())) {
                 return alg;
             }
         }
