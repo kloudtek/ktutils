@@ -105,7 +105,7 @@ public class StringUtils {
      * @param str String to convert.
      * @return UTF-8 characters byte array
      */
-    public static byte[] toUTF8(String str) {
+    public static byte[] utf8(String str) {
         try {
             return str.getBytes("UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -119,7 +119,7 @@ public class StringUtils {
      * @param utf8Chars UTF-8 characters byte array
      * @return Converted string.
      */
-    public static String fromUTF8(byte[] utf8Chars) {
+    public static String utf8(byte[] utf8Chars) {
         try {
             return new String(utf8Chars, "UTF-8");
         } catch (UnsupportedEncodingException e) {

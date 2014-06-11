@@ -78,8 +78,9 @@ public abstract class BaseNCodec {
         @Override
         public String toString() {
             return String.format("%s[buffer=%s, currentLinePos=%s, eof=%s, ibitWorkArea=%s, lbitWorkArea=%s, " +
-                    "modulus=%s, pos=%s, readPos=%s]", this.getClass().getSimpleName(), Arrays.toString(buffer),
-                    currentLinePos, eof, ibitWorkArea, lbitWorkArea, modulus, pos, readPos);
+                            "modulus=%s, pos=%s, readPos=%s]", this.getClass().getSimpleName(), Arrays.toString(buffer),
+                    currentLinePos, eof, ibitWorkArea, lbitWorkArea, modulus, pos, readPos
+            );
         }
     }
 
@@ -301,7 +302,7 @@ public abstract class BaseNCodec {
      * @return A String containing only Base-N character data
      */
     public String encodeToString(final byte[] pArray) {
-        return StringUtils.fromUTF8(encode(pArray));
+        return StringUtils.utf8(encode(pArray));
     }
 
     /**
@@ -312,7 +313,7 @@ public abstract class BaseNCodec {
      * @return String containing only character data in the appropriate alphabet.
      */
     public String encodeAsString(final byte[] pArray) {
-        return StringUtils.fromUTF8(encode(pArray));
+        return StringUtils.utf8(encode(pArray));
     }
 
     /**
@@ -341,7 +342,7 @@ public abstract class BaseNCodec {
      * @return a byte array containing binary data
      */
     public byte[] decode(final String pArray) {
-        return decode(StringUtils.toUTF8(pArray));
+        return decode(StringUtils.utf8(pArray));
     }
 
     /**
@@ -424,7 +425,7 @@ public abstract class BaseNCodec {
      * @see #isInAlphabet(byte[], boolean)
      */
     public boolean isInAlphabet(final String basen) {
-        return isInAlphabet(StringUtils.toUTF8(basen), true);
+        return isInAlphabet(StringUtils.utf8(basen), true);
     }
 
     /**

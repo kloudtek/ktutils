@@ -202,7 +202,7 @@ public class Base32 extends BaseNCodec {
             }
             // Must be done after initializing the tables
             if (containsAlphabetOrPad(lineSeparator)) {
-                final String sep = StringUtils.fromUTF8(lineSeparator);
+                final String sep = StringUtils.utf8(lineSeparator);
                 throw new IllegalArgumentException("lineSeparator must not contain Base32 characters: [" + sep + "]");
             }
             this.encodeSize = BYTES_PER_ENCODED_BLOCK + lineSeparator.length;

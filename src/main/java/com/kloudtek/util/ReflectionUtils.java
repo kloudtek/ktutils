@@ -38,6 +38,14 @@ public class ReflectionUtils {
         }
     }
 
+    public static void set(Class<?> clazz, String name, Object value) {
+        try {
+            findField(clazz, name).set(null, value);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static Object get(Object obj, String name) {
         try {
             return findField(obj, name).get(obj);
@@ -46,7 +54,15 @@ public class ReflectionUtils {
         }
     }
 
-    private static Field findField(Object obj, String name) {
+    public static Object get(Class<?> clazz, String name) {
+        try {
+            return findField(clazz, name).get(null);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Field findField(Object obj, String name) {
         Class<?> cl = obj.getClass();
         while (cl != null) {
             try {
@@ -60,5 +76,20 @@ public class ReflectionUtils {
             }
         }
         throw new IllegalArgumentException("Field " + name + " not found in " + obj.getClass().getName());
+    }
+
+    public static Field findField(Class<?> cl, String name) {
+        while (cl != null) {
+            try {
+                Field field = cl.getDeclaredField(name);
+                if (!field.isAccessible()) {
+                    field.setAccessible(true);
+                }
+                return field;
+            } catch (NoSuchFieldException e) {
+                cl = cl.getSuperclass();
+            }
+        }
+        throw new IllegalArgumentException("Field " + name + " not found in " + cl.getName());
     }
 }
