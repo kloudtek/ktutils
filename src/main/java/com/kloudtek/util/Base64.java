@@ -225,7 +225,7 @@ public class Base64 extends BaseNCodec {
         // @see test case Base64Test.testConstructors()
         if (lineSeparator != null) {
             if (containsAlphabetOrPad(lineSeparator)) {
-                final String sep = StringUtils.fromUTF8(lineSeparator);
+                final String sep = StringUtils.utf8(lineSeparator);
                 throw new IllegalArgumentException("lineSeparator must not contain base64 characters: [" + sep + "]");
             }
             if (lineLength > 0) { // null line-sep forces no chunking rather than throwing IAE
@@ -458,7 +458,7 @@ public class Base64 extends BaseNCodec {
      * @since 1.5
      */
     public static boolean isBase64(final String base64) {
-        return isBase64(StringUtils.toUTF8(base64));
+        return isBase64(StringUtils.utf8(base64));
     }
 
     /**
@@ -500,7 +500,7 @@ public class Base64 extends BaseNCodec {
      * @since 1.4 (NOTE:  1.4 chunked the output, whereas 1.5 does not).
      */
     public static String encodeBase64String(final byte[] binaryData) {
-        return StringUtils.fromUTF8(encodeBase64(binaryData, false));
+        return StringUtils.utf8(encodeBase64(binaryData, false));
     }
 
     /**
@@ -526,7 +526,7 @@ public class Base64 extends BaseNCodec {
      * @since 1.4
      */
     public static String encodeBase64URLSafeString(final byte[] binaryData) {
-        return StringUtils.fromUTF8(encodeBase64(binaryData, false, true));
+        return StringUtils.utf8(encodeBase64(binaryData, false, true));
     }
 
     /**
