@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 
 /**
  * Various array-related utilities
@@ -221,7 +221,7 @@ public class ArrayUtils {
     @NotNull
     public static byte[] toBytes(@NotNull char[] chars) {
         CharBuffer charBuffer = CharBuffer.wrap(chars);
-        return StandardCharsets.UTF_8.encode(charBuffer).array();
+        return Charset.forName("UTF-8").encode(charBuffer).array();
     }
 
     /**
@@ -233,7 +233,7 @@ public class ArrayUtils {
     @NotNull
     public static char[] toChars(@NotNull byte[] data) {
         ByteBuffer byteBuffer = ByteBuffer.wrap(data);
-        return StandardCharsets.UTF_8.decode(byteBuffer).array();
+        return Charset.forName("UTF-8").decode(byteBuffer).array();
     }
 
     /**
