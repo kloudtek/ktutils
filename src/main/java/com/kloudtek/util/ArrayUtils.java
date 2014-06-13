@@ -4,12 +4,14 @@
 
 package com.kloudtek.util;
 
+import com.kloudtek.util.crypto.CryptoUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 
 /**
  * Various array-related utilities
@@ -213,7 +215,7 @@ public class ArrayUtils {
     }
 
     /**
-     * Convert an array of characters to an array of bytes using UTF8 encoding
+     * Convert an array of characters to an array of bytes using UTF8 encoding.
      *
      * @param chars Array of characters
      * @return Byte array
@@ -221,7 +223,10 @@ public class ArrayUtils {
     @NotNull
     public static byte[] toBytes(@NotNull char[] chars) {
         CharBuffer charBuffer = CharBuffer.wrap(chars);
-        return Charset.forName("UTF-8").encode(charBuffer).array();
+        ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(charBuffer);
+        byte[] bytes = Arrays.copyOfRange(byteBuffer.array(), byteBuffer.position(), byteBuffer.limit());
+        CryptoUtils.zero(byteBuffer);
+        return bytes;
     }
 
     /**
@@ -233,7 +238,10 @@ public class ArrayUtils {
     @NotNull
     public static char[] toChars(@NotNull byte[] data) {
         ByteBuffer byteBuffer = ByteBuffer.wrap(data);
-        return Charset.forName("UTF-8").decode(byteBuffer).array();
+        CharBuffer charBuffer = Charset.forName("UTF-8").decode(byteBuffer);
+        char[] chars = Arrays.copyOfRange(charBuffer.array(), charBuffer.position(), charBuffer.limit());
+        CryptoUtils.zero(charBuffer);
+        return chars;
     }
 
     /**

@@ -52,6 +52,10 @@ public abstract class CryptoEngine {
         return generateKey(SymmetricAlgorithm.AES, 256);
     }
 
+    public SecretKey generateAes192Key() {
+        return generateKey(SymmetricAlgorithm.AES, 192);
+    }
+
     public abstract KeyPair generateKeyPair(AsymmetricAlgorithm alg, int keysize);
 
     public KeyPair generateRSA2048KeyPair() {

@@ -28,6 +28,28 @@ import java.util.logging.Logger;
  * Various cryptographic methods
  */
 public class CryptoUtils {
+    private static final char[] symbolsAllCaps;
+    private static final char[] symbols;
+
+    static {
+        StringBuilder tmp = new StringBuilder();
+        for (char c = '2'; c <= '9'; c++) {
+            tmp.append(c);
+        }
+        for (char c = 'A'; c <= 'Z'; c++) {
+            if (c != 'I' && c != 'O') {
+                tmp.append(c);
+            }
+        }
+        symbolsAllCaps = tmp.toString().toCharArray();
+        for (char c = 'a'; c <= 'z'; c++) {
+            if (c != 'l' && c != 'o') {
+                tmp.append(c);
+            }
+        }
+        symbols = tmp.toString().toCharArray();
+    }
+
     private static final Logger logger = Logger.getLogger(CryptoUtils.class.getName());
     private static CryptoEngine provider = new JCECryptoEngine();
     private static final SecureRandom rng = new SecureRandom();
@@ -137,6 +159,10 @@ public class CryptoUtils {
 
     public static SecretKey generateAes128Key() {
         return provider.generateAes128Key();
+    }
+
+    public static SecretKey generateAes192Key() {
+        return provider.generateAes192Key();
     }
 
     public static SecretKey generateAes256Key() {
@@ -343,5 +369,14 @@ public class CryptoUtils {
                 }
             }
         }
+    }
+
+    public static char[] generateRandomPassword(int len, boolean allCaps) {
+        char[] charSet = allCaps ? symbolsAllCaps : symbols;
+        char[] pw = new char[len];
+        for (int i = 0; i < len; i++) {
+            pw[i] = charSet[rng.nextInt(charSet.length)];
+        }
+        return pw;
     }
 }
