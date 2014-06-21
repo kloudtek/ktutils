@@ -195,25 +195,25 @@ public class JSFUtils {
     }
 
     /**
-     * Build an URL, using the face context request's schema, address and port
+     * Return an absolute URL under the context path.
      *
-     * @param ctx  JSF FaceContext
-     * @param path URL path
-     * @return url.
+     * @return absolute URL
      */
-    public static String buildUrl(FacesContext ctx, String path) {
-        final ExternalContext ectx = ctx.getExternalContext();
-        return URLUtils.buildUrl(ectx.getRequestScheme(), ectx.getRequestServerName(), ectx.getRequestServerPort(), path);
+    public static String getPathUrl(String path) {
+        return createContextURLBuilder().addPath(path).toString();
     }
 
-    public static String getContextURI() {
-        HttpServletRequest req = getHttpRequest();
-        String ctxPath = req.getContextPath();
-        StringBuilder url = new StringBuilder().append(req.getScheme()).append("://").append(req.getServerName()).append(":").append(req.getServerPort());
-        if (ctxPath == null || ctxPath.length() == 0) {
-            url.append("/");
+    public static String getContextURL() {
+        return createContextURLBuilder().toString();
+    }
+
+    public static URLBuilder createContextURLBuilder() {
+        final ExternalContext ctx = JSFUtils.getExternalContext();
+        URLBuilder urlBuilder = new URLBuilder(ctx.getRequestScheme() + "://" + ctx.getRequestServerName() + ":" + ctx.getRequestServerPort());
+        if (!StringUtils.isEmpty(ctx.getRequestContextPath())) {
+            urlBuilder.addPath(ctx.getRequestContextPath());
         }
-        return url.append(ctxPath).toString();
+        return urlBuilder;
     }
 
     public static Map<String, Object> getViewMap(boolean create) {
