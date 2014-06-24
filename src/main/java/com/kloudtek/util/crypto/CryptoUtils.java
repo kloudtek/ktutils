@@ -30,6 +30,9 @@ import java.util.logging.Logger;
 public class CryptoUtils {
     private static final char[] symbolsAllCaps;
     private static final char[] symbols;
+    private static final Logger logger = Logger.getLogger(CryptoUtils.class.getName());
+    private static CryptoEngine provider = new JCECryptoEngine();
+    private static final SecureRandom rng = new SecureRandom();
 
     static {
         StringBuilder tmp = new StringBuilder();
@@ -49,10 +52,6 @@ public class CryptoUtils {
         }
         symbols = tmp.toString().toCharArray();
     }
-
-    private static final Logger logger = Logger.getLogger(CryptoUtils.class.getName());
-    private static CryptoEngine provider = new JCECryptoEngine();
-    private static final SecureRandom rng = new SecureRandom();
 
     /**
      * Generate a private key using a symmetric algorithm

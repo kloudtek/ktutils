@@ -199,7 +199,7 @@ public class JSFUtils {
      *
      * @return absolute URL
      */
-    public static String getPathUrl(String path) {
+    public static String getContextURL(String path) {
         return createContextURLBuilder().addPath(path).toString();
     }
 
