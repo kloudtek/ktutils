@@ -4,6 +4,7 @@
 
 package com.kloudtek.util.crypto;
 
+import com.kloudtek.util.ArrayUtils;
 import org.testng.annotations.Test;
 
 import java.io.ByteArrayInputStream;
@@ -43,5 +44,16 @@ public class DigestUtilsTest {
         byte[] value = "afdsfsdafasdafdsasfdsa".getBytes();
         byte[] digest = MessageDigest.getInstance("SHA-1").digest(value);
         assertEquals(DigestUtils.digest(new ByteArrayInputStream(value), SHA1), digest);
+    }
+
+    @Test
+    public void testSaltedDigest(){
+        byte[] data = ArrayUtils.toBytes("Password".toCharArray());
+        byte[] value = DigestUtils.saltedDigest(data, DigestAlgorithm.SHA1);
+        String s = new String(value);
+        System.out.println("s = " + s);
+
+        boolean b = DigestUtils.compareSaltedDigest(value, data, DigestAlgorithm.SHA1);
+        System.out.println("b = " + b);
     }
 }
