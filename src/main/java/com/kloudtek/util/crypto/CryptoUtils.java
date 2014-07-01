@@ -4,6 +4,7 @@
 
 package com.kloudtek.util.crypto;
 
+import com.kloudtek.util.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -377,5 +378,10 @@ public class CryptoUtils {
             pw[i] = charSet[rng.nextInt(charSet.length)];
         }
         return pw;
+    }
+
+    public static String fingerprint(byte[] data) {
+        byte[] md5 = DigestUtils.md5(data);
+        return StringUtils.base64Encode(md5).toUpperCase();
     }
 }
