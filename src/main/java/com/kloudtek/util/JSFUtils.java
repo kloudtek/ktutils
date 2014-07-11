@@ -223,4 +223,9 @@ public class JSFUtils {
     public static Map<String, Object> getViewMap() {
         return getViewMap(true);
     }
+
+    public static boolean hasErrorMessages() {
+        FacesMessage.Severity severity = FacesContext.getCurrentInstance().getMaximumSeverity();
+        return severity != null && (severity.getOrdinal() == FacesMessage.SEVERITY_ERROR.getOrdinal() || severity.getOrdinal() == FacesMessage.SEVERITY_FATAL.getOrdinal());
+    }
 }
