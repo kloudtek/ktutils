@@ -9,18 +9,18 @@
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
               version="2.0">
     <application>
-        <system-event-listener>
-            <system-event-listener-class>com.kloudtek.util.spring.SpringJSFViewScopeRegistrationListener
-            </system-event-listener-class>
+        <system-event-sessionListener>
+            <system-event-sessionListener-class>com.kloudtek.util.spring.SpringJSFViewScopeRegistrationListener
+            </system-event-sessionListener-class>
             <system-event-class>javax.faces.event.PostConstructViewMapEvent</system-event-class>
             <source-class>javax.faces.component.UIViewRoot</source-class>
-        </system-event-listener>
+        </system-event-sessionListener>
 
-        <system-event-listener>
-            <system-event-listener-class>com.kloudtek.util.spring.SpringJSFViewScopeRegistrationListener
-            </system-event-listener-class>
+        <system-event-sessionListener>
+            <system-event-sessionListener-class>com.kloudtek.util.spring.SpringJSFViewScopeRegistrationListener
+            </system-event-sessionListener-class>
             <system-event-class>javax.faces.event.PreDestroyViewMapEvent</system-event-class>
             <source-class>javax.faces.component.UIViewRoot</source-class>
-        </system-event-listener>
+        </system-event-sessionListener>
     </application>
 </faces-config>
