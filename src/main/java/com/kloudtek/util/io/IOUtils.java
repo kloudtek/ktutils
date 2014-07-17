@@ -117,6 +117,16 @@ public class IOUtils {
         return buffer.toString();
     }
 
+    public static String toString(InputStream inputStream) throws IOException {
+        return toString(new InputStreamReader(inputStream));
+    }
+
+    public static String toString(Reader reader) throws IOException {
+        StringWriter buffer = new StringWriter();
+        copy(reader, buffer);
+        return buffer.toString();
+    }
+
     /**
      * Close a closeable object, suppressing any resulting exception
      *
