@@ -4,9 +4,11 @@
 
 package com.kloudtek.util;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.StrictMode;
 
 /**
@@ -68,15 +70,28 @@ public class AndroidUtils {
                 });
     }
 
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     public static void enableDevelopmentMode() {
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                .detectAll()
-                .penaltyLog()
-                .build());
-        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                .detectAll()
-                .penaltyLog()
-                .penaltyDeath()
-                .build());
+        enableDevelopmentMode(false);
+    }
+
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
+    public static void enableDevelopmentMode(boolean harsh) {
+        StrictMode.ThreadPolicy.Builder threadPolicyBuilder = new StrictMode.ThreadPolicy.Builder()
+                .detectAll();
+        StrictMode.VmPolicy.Builder vmPolicyBuilder = new StrictMode.VmPolicy.Builder()
+                .detectActivityLeaks()
+                .detectLeakedClosableObjects()
+                .detectLeakedRegistrationObjects()
+                .detectLeakedSqlLiteObjects();
+        if (harsh) {
+            threadPolicyBuilder.penaltyDeath();
+            vmPolicyBuilder.penaltyDeath();
+        } else {
+            threadPolicyBuilder.penaltyLog();
+            vmPolicyBuilder.penaltyLog();
+        }
+        StrictMode.setThreadPolicy(threadPolicyBuilder.build());
+        StrictMode.setVmPolicy(vmPolicyBuilder.build());
     }
 }
