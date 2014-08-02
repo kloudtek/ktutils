@@ -80,16 +80,14 @@ public class AndroidUtils {
         StrictMode.ThreadPolicy.Builder threadPolicyBuilder = new StrictMode.ThreadPolicy.Builder()
                 .detectAll();
         StrictMode.VmPolicy.Builder vmPolicyBuilder = new StrictMode.VmPolicy.Builder()
-                .detectActivityLeaks()
                 .detectLeakedClosableObjects()
                 .detectLeakedRegistrationObjects()
                 .detectLeakedSqlLiteObjects();
+        threadPolicyBuilder.penaltyLog();
+        vmPolicyBuilder.penaltyLog();
         if (harsh) {
             threadPolicyBuilder.penaltyDeath();
             vmPolicyBuilder.penaltyDeath();
-        } else {
-            threadPolicyBuilder.penaltyLog();
-            vmPolicyBuilder.penaltyLog();
         }
         StrictMode.setThreadPolicy(threadPolicyBuilder.build());
         StrictMode.setVmPolicy(vmPolicyBuilder.build());
