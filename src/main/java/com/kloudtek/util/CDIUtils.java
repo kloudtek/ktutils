@@ -39,7 +39,7 @@ public class CDIUtils {
             cl.add(qac);
         }
         Annotation proxy = (Annotation) Proxy.newProxyInstance(qualifier.getClassLoader(), new Class<?>[]{qualifier}, new Handler(qualifier, qualifierArgs));
-        return (X) instances.select(proxy).get();
+        return instances.select(proxy).get();
     }
 
     static class Handler implements InvocationHandler {
