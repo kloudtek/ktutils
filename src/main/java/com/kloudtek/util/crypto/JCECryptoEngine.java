@@ -264,4 +264,24 @@ public class JCECryptoEngine extends CryptoEngine {
             throw new UnexpectedException(e);
         }
     }
+
+    @Override
+    public byte[] digest(byte[] data, DigestAlgorithm alg) {
+        try {
+            MessageDigest sha = MessageDigest.getInstance(alg.getJceId());
+            sha.update(data);
+            return sha.digest();
+        } catch (NoSuchAlgorithmException e) {
+            throw new UnexpectedException(e);
+        }
+    }
+
+    @Override
+    public Digest digest(DigestAlgorithm alg) {
+        try {
+            return new JCEDigest(MessageDigest.getInstance(alg.getJceId()));
+        } catch (NoSuchAlgorithmException e) {
+            throw new UnexpectedException(e);
+        }
+    }
 }

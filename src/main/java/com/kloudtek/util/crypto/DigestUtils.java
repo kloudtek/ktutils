@@ -36,12 +36,8 @@ public class DigestUtils {
      * @param alg Digest algorithm
      * @return Message digest object
      */
-    public static MessageDigest digest(DigestAlgorithm alg) {
-        try {
-            return MessageDigest.getInstance(alg.getJceId());
-        } catch (NoSuchAlgorithmException e) {
-            throw new UnexpectedException(e);
-        }
+    public static Digest digest(DigestAlgorithm alg) {
+        return CryptoUtils.engine.digest(alg);
     }
 
     /**
@@ -52,13 +48,7 @@ public class DigestUtils {
      * @return digest value
      */
     public static byte[] digest(byte[] data, DigestAlgorithm alg) {
-        try {
-            MessageDigest sha = MessageDigest.getInstance(alg.getJceId());
-            sha.update(data);
-            return sha.digest();
-        } catch (NoSuchAlgorithmException e) {
-            throw new UnexpectedException(e);
-        }
+        return CryptoUtils.engine.digest(data, alg);
     }
 
     /**
@@ -82,68 +72,94 @@ public class DigestUtils {
         }
     }
 
+    /**
+     * Read all data from a stream and create a digest from it
+     *
+     * @param inputStream Data stream
+     * @param alg         Algorithm to use for digest
+     * @return Digest
+     * @throws IOException If an error occurs reading from the stream
+     */
     public static byte[] digest(InputStream inputStream, DigestAlgorithm alg) throws IOException {
-        return digest(inputStream, alg.getJceId());
-    }
-
-    public static byte[] digest(InputStream inputStream, String alg) throws IOException {
-        try {
-            byte[] buffer = new byte[BUFSZ];
-            MessageDigest digest = MessageDigest.getInstance(alg);
-            for (int i = inputStream.read(buffer, 0, BUFSZ); i != -1; i = inputStream.read(buffer, 0, BUFSZ)) {
-                digest.update(buffer, 0, i);
-            }
-            return digest.digest();
-        } catch (NoSuchAlgorithmException e) {
-            throw new UnexpectedException("Algorithm not supported: " + alg, e);
+        byte[] buffer = new byte[BUFSZ];
+        Digest digest = digest(alg);
+        for (int i = inputStream.read(buffer, 0, BUFSZ); i != -1; i = inputStream.read(buffer, 0, BUFSZ)) {
+            digest.update(buffer, 0, i);
         }
+        return digest.digest();
     }
 
+    /**
+     * Create a salted digest from the provided data
+     *
+     * @param data Data to create digest from
+     * @param alg  Algorithm to use for digest
+     * @return Digest
+     */
     public static byte[] saltedDigest(byte[] data, DigestAlgorithm alg) {
         return saltedDigest(generateSalt(), data, alg);
     }
 
+    /**
+     * Create a salted digest from the provided data
+     *
+     * @param salt Salt value
+     * @param data Data to create digest from
+     * @param alg  Algorithm to use for digest
+     * @return Digest
+     */
     public static byte[] saltedDigest(byte[] salt, byte[] data, DigestAlgorithm alg) {
-        return saltedDigest(salt, data, alg.getJceId(), alg.getHashLen());
+        Digest sha = digest(alg);
+        sha.update(data);
+        sha.update(salt);
+        byte[] digest = sha.digest();
+        byte[] digestWithSalt = new byte[alg.getHashLen() + salt.length];
+        System.arraycopy(digest, 0, digestWithSalt, 0, digest.length);
+        System.arraycopy(salt, 0, digestWithSalt, digest.length, salt.length);
+        return digestWithSalt;
     }
 
-    public static byte[] saltedDigest(byte[] salt, byte[] data, String alg, int hashLen) {
-        try {
-            MessageDigest sha = MessageDigest.getInstance(alg);
-            sha.update(data);
-            sha.update(salt);
-            byte[] digest = sha.digest();
-            byte[] digestWithSalt = new byte[hashLen + salt.length];
-            System.arraycopy(digest, 0, digestWithSalt, 0, digest.length);
-            System.arraycopy(salt, 0, digestWithSalt, digest.length, salt.length);
-            return digestWithSalt;
-        } catch (NoSuchAlgorithmException e) {
-            throw new UnexpectedException(e);
-        }
-    }
-
+    /**
+     * Compare a salted digest to some data.
+     *
+     * @param digest Salted digest
+     * @param data   Data to validate digest again
+     * @param alg    Algorithm to use for digest
+     * @return True if the data matches the digest
+     */
     public static boolean compareSaltedDigest(byte[] digest, byte[] data, DigestAlgorithm alg) {
-        try {
-            MessageDigest sha = MessageDigest.getInstance(alg.getJceId());
-            byte[] digestData = Arrays.copyOfRange(digest, 0, alg.getHashLen());
-            byte[] salt = Arrays.copyOfRange(digest, alg.getHashLen(), digest.length);
-            sha.update(data);
-            sha.update(salt);
-            byte[] encoded = sha.digest();
-            return MessageDigest.isEqual(digestData, encoded);
-        } catch (NoSuchAlgorithmException e) {
-            throw new UnexpectedException(e);
-        }
+        Digest sha = digest(alg);
+        byte[] digestData = Arrays.copyOfRange(digest, 0, alg.getHashLen());
+        byte[] salt = Arrays.copyOfRange(digest, alg.getHashLen(), digest.length);
+        sha.update(data);
+        sha.update(salt);
+        byte[] encoded = sha.digest();
+        return compareDigest(digestData, encoded);
     }
 
+    public static boolean compareDigest(byte[] digesta, byte[] digestb) {
+        if (digesta.length != digestb.length) {
+            return false;
+        }
+
+        int result = 0;
+        // time-constant comparison
+        for (int i = 0; i < digesta.length; i++) {
+            result |= digesta[i] ^ digestb[i];
+        }
+        return result == 0;
+    }
+
+    /**
+     * Compare a salted digest to some data.
+     *
+     * @param b64Digest Base 64 encoded Salted digest
+     * @param data      Data to validate digest again
+     * @param alg       Algorithm to use for digest
+     * @return True if the data matches the digest
+     */
     public static boolean compareSaltedDigest(String b64Digest, String data, DigestAlgorithm alg) {
         return compareSaltedDigest(base64Decode(b64Digest), data.getBytes(), alg);
-    }
-
-    private static byte[] generateSalt() {
-        final byte[] salt = new byte[8];
-        random.nextBytes(salt);
-        return salt;
     }
 
     public static byte[] saltedDigest(String text, DigestAlgorithm alg) {
@@ -204,5 +220,16 @@ public class DigestUtils {
 
     public static byte[] md5(File file) throws IOException {
         return digest(file, MD5);
+    }
+
+    /**
+     * Generate a random salt value of 8 bytes
+     *
+     * @return Salt data
+     */
+    private static byte[] generateSalt() {
+        final byte[] salt = new byte[8];
+        random.nextBytes(salt);
+        return salt;
     }
 }

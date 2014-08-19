@@ -4,6 +4,7 @@
 
 package com.kloudtek.util.crypto;
 
+import com.kloudtek.util.UnexpectedException;
 import org.jetbrains.annotations.NotNull;
 
 import javax.crypto.BadPaddingException;
@@ -127,4 +128,15 @@ public abstract class CryptoEngine {
     public abstract void verifySignature(String algorithm, PublicKey key, byte[] data, byte[] signature) throws SignatureException, InvalidKeyException;
 
     public abstract SecretKey generatePBEAESKey(char[] key, int iterations, byte[] salt, int keyLen) throws InvalidKeySpecException;
+
+    /**
+     * Create a digest from a byte array
+     *
+     * @param data Data to create digest from
+     * @param alg  Algorithm to use for digest
+     * @return digest value
+     */
+    public abstract byte[] digest(byte[] data, DigestAlgorithm alg);
+
+    public abstract Digest digest(DigestAlgorithm alg);
 }
