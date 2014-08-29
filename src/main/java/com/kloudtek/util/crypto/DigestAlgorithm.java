@@ -9,6 +9,7 @@ package com.kloudtek.util.crypto;
  * Enumeration of digest algorithms
  */
 public enum DigestAlgorithm {
+    // DO NOT CHANGE ORDER, ordinal() is used in various serialization !!!!!!
     MD5(16), SHA1(20, "SHA-1"), SHA256(32, "SHA-256"),
     SHA512(64, "SHA-512");
     private int hashLen;

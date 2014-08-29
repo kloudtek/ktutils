@@ -15,6 +15,9 @@ import java.util.UUID;
  * Extends JDK DataInputStream to provide some extra methods.
  */
 public class DataInputStream extends java.io.DataInputStream {
+
+    public static final int DEFAULT_MAX_LEN = 10240;
+
     public DataInputStream(InputStream in) {
         super(in);
     }
@@ -28,7 +31,19 @@ public class DataInputStream extends java.io.DataInputStream {
     }
 
     public byte[] readData() throws IOException {
-        return readData(this);
+        return readData(false, DEFAULT_MAX_LEN);
+    }
+
+    public byte[] readData(boolean nonNull) throws IOException {
+        return readData(nonNull, DEFAULT_MAX_LEN);
+    }
+
+    public byte[] readData(boolean nonNull, int maxLen) throws IOException {
+        byte[] bytes = readData(this, maxLen);
+        if (bytes == null && nonNull) {
+            throw new IOException("readData return null when expected not to");
+        }
+        return bytes;
     }
 
     public List<Long> readLongList() throws IOException {
@@ -72,7 +87,14 @@ public class DataInputStream extends java.io.DataInputStream {
     }
 
     public static byte[] readData(DataInput in) throws IOException {
+        return readData(in, DEFAULT_MAX_LEN);
+    }
+
+    public static byte[] readData(DataInput in, int maxLen) throws IOException {
         int len = in.readInt();
+        if (len > maxLen) {
+            throw new IOException("Data block larger than max " + maxLen + ": " + len);
+        }
         if (len > 0) {
             byte[] data = new byte[len];
             in.readFully(data);
