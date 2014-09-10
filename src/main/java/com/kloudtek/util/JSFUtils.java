@@ -4,6 +4,8 @@
 
 package com.kloudtek.util;
 
+import org.jetbrains.annotations.Nullable;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -227,5 +229,9 @@ public class JSFUtils {
     public static boolean hasErrorMessages() {
         FacesMessage.Severity severity = FacesContext.getCurrentInstance().getMaximumSeverity();
         return severity != null && (severity.getOrdinal() == FacesMessage.SEVERITY_ERROR.getOrdinal() || severity.getOrdinal() == FacesMessage.SEVERITY_FATAL.getOrdinal());
+    }
+
+    public static <X> X getManagedBean( String name, Class<X> classType) {
+        return FacesContext.getCurrentInstance().getApplication().evaluateExpressionGet(FacesContext.getCurrentInstance(), "#{"+name+"}", classType);
     }
 }
