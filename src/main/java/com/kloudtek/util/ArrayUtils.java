@@ -4,7 +4,6 @@
 
 package com.kloudtek.util;
 
-import com.kloudtek.util.crypto.CryptoUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Array;
@@ -222,25 +221,46 @@ public class ArrayUtils {
      */
     @NotNull
     public static byte[] toBytes(@NotNull char[] chars) {
+        return toBytes(chars, false);
+    }
+
+    /**
+     * Convert an array of characters to an array of bytes using UTF8 encoding.
+     *
+     * @param chars      Array of characters
+     * @param zeroBuffer Zero the temporary buffer
+     * @return Byte array
+     */
+    @NotNull
+    public static byte[] toBytes(@NotNull char[] chars, boolean zeroBuffer) {
         CharBuffer charBuffer = CharBuffer.wrap(chars);
         ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(charBuffer);
         byte[] bytes = Arrays.copyOfRange(byteBuffer.array(), byteBuffer.position(), byteBuffer.limit());
-        CryptoUtils.zero(byteBuffer);
+        if (zeroBuffer) {
+            zero(byteBuffer);
+        }
         return bytes;
+    }
+
+    public static char[] toChars(@NotNull byte[] data) {
+        return toChars(data, false);
     }
 
     /**
      * Convert an array of bytes to an array of chars using UTF8 encoding
      *
-     * @param data Array of characters
+     * @param data       Array of characters
+     * @param zeroBuffer Zero the temporary buffer
      * @return Byte array
      */
     @NotNull
-    public static char[] toChars(@NotNull byte[] data) {
+    public static char[] toChars(@NotNull byte[] data, boolean zeroBuffer) {
         ByteBuffer byteBuffer = ByteBuffer.wrap(data);
         CharBuffer charBuffer = Charset.forName("UTF-8").decode(byteBuffer);
         char[] chars = Arrays.copyOfRange(charBuffer.array(), charBuffer.position(), charBuffer.limit());
-        CryptoUtils.zero(charBuffer);
+        if( zeroBuffer ) {
+            zero(charBuffer);
+        }
         return chars;
     }
 
@@ -249,7 +269,7 @@ public class ArrayUtils {
      *
      * @param b1 First byte array
      * @param b2 Second byte array
-     * @return
+     * @return xored data
      */
     @NotNull
     public static byte[] xor(@NotNull byte[] b1, @NotNull byte[] b2) {
@@ -260,5 +280,49 @@ public class ArrayUtils {
             result[i] = (byte) (b1[i] ^ b2[i]);
         }
         return result;
+    }
+
+    /**
+     * fill the array with zeros
+     *
+     * @param data
+     */
+    public static void zero(@NotNull char[]... data) {
+        for (char[] chars : data) {
+            if (chars != null) {
+                Arrays.fill(chars, '\u0000');
+            }
+        }
+    }
+
+    /**
+     * fill the array with zeros
+     *
+     * @param data
+     */
+    public static void zero(@NotNull byte[]... data) {
+        for (byte[] bytes : data) {
+            if (bytes != null) {
+                Arrays.fill(bytes, (byte) 0);
+            }
+        }
+    }
+
+    /**
+     * fill the array with zeros
+     *
+     * @param data
+     */
+    public static void zero(CharBuffer data) {
+        zero(data.array());
+    }
+
+    /**
+     * fill the array with zeros
+     *
+     * @param data
+     */
+    public static void zero(ByteBuffer data) {
+        zero(data.array());
     }
 }

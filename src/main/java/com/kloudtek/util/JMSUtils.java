@@ -229,7 +229,7 @@ public class JMSUtils {
             final MapMessage mapMessage = (MapMessage) message;
             MapMessage clone = session.createMapMessage();
             copyHeaders(message, clone, setCorrelationId);
-            final Enumeration names = mapMessage.getMapNames();
+            final Enumeration<?> names = mapMessage.getMapNames();
             while (names.hasMoreElements()) {
                 String name = (String) names.nextElement();
                 clone.setObject(name, mapMessage.getObject(name));
@@ -272,7 +272,7 @@ public class JMSUtils {
     }
 
     private static void copyHeaders(Message message, Message clone, boolean setCorrelationId) throws JMSException {
-        final Enumeration propertyNames = message.getPropertyNames();
+        final Enumeration<?> propertyNames = message.getPropertyNames();
         while (propertyNames.hasMoreElements()) {
             String name = (String) propertyNames.nextElement();
             clone.setObjectProperty(name, message.getObjectProperty(name));

@@ -102,10 +102,10 @@ ComKloudtekUtilCryptoDigestAlgorithmEnum *ComKloudtekUtilCryptoDigestAlgorithmEn
     { "init__WithInt:withNSString:", "init", "V", 0x2, NULL },
     { "getJceId", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "getHashLen", NULL, "I", 0x1, NULL },
-    { "getWithNSString:", "get", "Lcom.kloudtek.util.crypto.DigestAlgorithm;", 0x9, NULL },
+    { "getWithNSString:", "get", "Lcom.kloudtek.kryptotek.DigestAlgorithm;", 0x9, NULL },
   };
-  static const char *superclass_type_args[] = {"Lcom.kloudtek.util.crypto.DigestAlgorithm;"};
-  static J2ObjcClassInfo _ComKloudtekUtilCryptoDigestAlgorithmEnum = { "DigestAlgorithm", "com.kloudtek.util.crypto", NULL, 0x4011, 6, methods, 0, NULL, 1, superclass_type_args};
+  static const char *superclass_type_args[] = {"Lcom.kloudtek.kryptotek.DigestAlgorithm;"};
+  static J2ObjcClassInfo _ComKloudtekUtilCryptoDigestAlgorithmEnum = { "DigestAlgorithm", "com.kloudtek.kryptotek", NULL, 0x4011, 6, methods, 0, NULL, 1, superclass_type_args};
   return &_ComKloudtekUtilCryptoDigestAlgorithmEnum;
 }
 

@@ -256,7 +256,7 @@ withComKloudtekUtilCryptoDigestAlgorithmEnum:(ComKloudtekUtilCryptoDigestAlgorit
     { "random_", NULL, 0x1a, "Ljava.security.SecureRandom;", &ComKloudtekUtilCryptoDigestUtils_random_,  },
     { "BUFSZ_", NULL, 0x19, "I", NULL, .constantValue.asInt = ComKloudtekUtilCryptoDigestUtils_BUFSZ },
   };
-  static J2ObjcClassInfo _ComKloudtekUtilCryptoDigestUtils = { "DigestUtils", "com.kloudtek.util.crypto", NULL, 0x1, 27, methods, 3, fields, 0, NULL};
+  static J2ObjcClassInfo _ComKloudtekUtilCryptoDigestUtils = { "DigestUtils", "com.kloudtek.kryptotek", NULL, 0x1, 27, methods, 3, fields, 0, NULL};
   return &_ComKloudtekUtilCryptoDigestUtils;
 }
 

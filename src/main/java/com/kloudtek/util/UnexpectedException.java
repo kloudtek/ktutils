@@ -8,6 +8,8 @@ package com.kloudtek.util;
  * Exception used to wrap unexpected exceptions that shouldn't have occurred.
  */
 public class UnexpectedException extends RuntimeException {
+    private static final long serialVersionUID = 3849867336388232277L;
+
     public UnexpectedException() {
     }
 

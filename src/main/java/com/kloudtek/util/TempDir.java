@@ -12,6 +12,8 @@ import java.io.IOException;
  * Used to create a temporary directory with restricted permissions (only owner can read/write/execute).
  */
 public class TempDir extends File implements Closeable {
+    private static final long serialVersionUID = -3906256837550665841L;
+
     public TempDir(String prefix, String suffix) throws IOException {
         super(create(prefix, suffix));
     }

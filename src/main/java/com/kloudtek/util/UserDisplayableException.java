@@ -9,6 +9,7 @@ package com.kloudtek.util;
  */
 @UserDisplayable
 public class UserDisplayableException extends RuntimeException {
+    private static final long serialVersionUID = 827829244973328402L;
     private String errorTitle;
     private String errorCode;
 

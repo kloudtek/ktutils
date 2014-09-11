@@ -23,7 +23,7 @@ import java.util.Stack;
 public class LDAPUtils {
     @SuppressWarnings({"unchecked"})
     public static DirContext createLdapContext(String url, @Nullable String userDn, @Nullable String password) throws NamingException {
-        Hashtable env = new Hashtable();
+        Hashtable<String,String> env = new Hashtable<String,String>();
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
         env.put(Context.PROVIDER_URL, url);
         if (userDn != null) {

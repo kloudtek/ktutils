@@ -9,6 +9,8 @@ package com.kloudtek.util;
  * database) is in an unexpected and invalid state
  */
 public class InvalidStateException extends RuntimeException {
+    private static final long serialVersionUID = 6233488148149076609L;
+
     public InvalidStateException() {
     }
 

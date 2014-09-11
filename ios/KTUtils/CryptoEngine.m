@@ -286,7 +286,7 @@
     { "generatePBEAESKeyWithCharArray:withInt:withByteArray:withInt:", "generatePBEAESKey", "Ljavax.crypto.SecretKey;", 0x401, "Ljava.security.spec.InvalidKeySpecException;" },
     { "init", NULL, NULL, 0x1, NULL },
   };
-  static J2ObjcClassInfo _ComKloudtekUtilCryptoCryptoEngine = { "CryptoEngine", "com.kloudtek.util.crypto", NULL, 0x401, 34, methods, 0, NULL, 0, NULL};
+  static J2ObjcClassInfo _ComKloudtekUtilCryptoCryptoEngine = { "CryptoEngine", "com.kloudtek.kryptotek", NULL, 0x401, 34, methods, 0, NULL, 0, NULL};
   return &_ComKloudtekUtilCryptoCryptoEngine;
 }
 

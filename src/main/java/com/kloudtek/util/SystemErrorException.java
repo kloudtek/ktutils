@@ -9,6 +9,8 @@ package com.kloudtek.util;
  */
 @UserDisplayable
 public class SystemErrorException extends RuntimeException {
+    private static final long serialVersionUID = 1L;
+
     public SystemErrorException() {
     }
 

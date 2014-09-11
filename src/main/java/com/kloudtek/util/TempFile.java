@@ -12,6 +12,8 @@ import java.io.IOException;
  * Used to create a temporary file with restricted permissions (only owner can read/write/execute)
  */
 public class TempFile extends File implements Closeable {
+    private static final long serialVersionUID = 3421025956189900097L;
+
     public TempFile(String prefix, String suffix) throws IOException {
         super(genPath(prefix, suffix));
     }

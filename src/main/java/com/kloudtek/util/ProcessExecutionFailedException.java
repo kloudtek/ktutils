@@ -8,6 +8,7 @@ package com.kloudtek.util;
  * Thrown when a launched process's return code isn't zero.
  */
 public class ProcessExecutionFailedException extends Exception {
+    private static final long serialVersionUID = -2331325732059820363L;
     private Process process;
     private String stdout;
 

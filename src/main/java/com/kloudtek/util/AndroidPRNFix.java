@@ -120,6 +120,7 @@ class AndroidPRNFix {
      * all requests to the Linux PRNG.
      */
     private static class LinuxPRNGSecureRandomProvider extends Provider {
+        private static final long serialVersionUID = 3263056877389927045L;
 
         public LinuxPRNGSecureRandomProvider() {
             super("LinuxPRNG",
@@ -141,6 +142,7 @@ class AndroidPRNFix {
      * ({@code /dev/urandom}).
      */
     public static class LinuxPRNGSecureRandom extends SecureRandomSpi {
+        private static final long serialVersionUID = 6912951311944915317L;
         /*
          * IMPLEMENTATION NOTE: Requests to generate bytes and to mix in a seed
          * are passed through to the Linux PRNG (/dev/urandom). Instances of
@@ -152,9 +154,7 @@ class AndroidPRNFix {
          * serialized (on sLock) to ensure that multiple threads do not get
          * duplicated PRNG output.
          */
-
         private static final File URANDOM_FILE = new File("/dev/urandom");
-
         private static final Object sLock = new Object();
 
         /**

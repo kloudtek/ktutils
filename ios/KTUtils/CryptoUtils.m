@@ -435,10 +435,10 @@ JavaSecuritySecureRandom * ComKloudtekUtilCryptoCryptoUtils_rng__;
     { "symbolsAllCaps_", NULL, 0x1a, "[C", &ComKloudtekUtilCryptoCryptoUtils_symbolsAllCaps_,  },
     { "symbols_", NULL, 0x1a, "[C", &ComKloudtekUtilCryptoCryptoUtils_symbols_,  },
     { "logger_", NULL, 0x1a, "Ljava.util.logging.Logger;", &ComKloudtekUtilCryptoCryptoUtils_logger_,  },
-    { "provider_", NULL, 0xa, "Lcom.kloudtek.util.crypto.CryptoEngine;", &ComKloudtekUtilCryptoCryptoUtils_provider_,  },
+    { "provider_", NULL, 0xa, "Lcom.kloudtek.kryptotek.CryptoEngine;", &ComKloudtekUtilCryptoCryptoUtils_provider_,  },
     { "rng__", "rng", 0x1a, "Ljava.security.SecureRandom;", &ComKloudtekUtilCryptoCryptoUtils_rng__,  },
   };
-  static J2ObjcClassInfo _ComKloudtekUtilCryptoCryptoUtils = { "CryptoUtils", "com.kloudtek.util.crypto", NULL, 0x1, 46, methods, 5, fields, 0, NULL};
+  static J2ObjcClassInfo _ComKloudtekUtilCryptoCryptoUtils = { "CryptoUtils", "com.kloudtek.kryptotek", NULL, 0x1, 46, methods, 5, fields, 0, NULL};
   return &_ComKloudtekUtilCryptoCryptoUtils;
 }
 

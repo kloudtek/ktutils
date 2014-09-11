@@ -8,6 +8,8 @@ package com.kloudtek.util.io;
  * Exception thrown when provided content is too large
  */
 public class ContentTooLargeException extends Exception {
+    private static final long serialVersionUID = -8040146589049029793L;
+
     public ContentTooLargeException() {
     }
 

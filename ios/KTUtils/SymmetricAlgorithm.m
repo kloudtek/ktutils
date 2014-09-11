@@ -68,8 +68,8 @@ ComKloudtekUtilCryptoSymmetricAlgorithmEnum *ComKloudtekUtilCryptoSymmetricAlgor
     { "initWithNSString:", "SymmetricAlgorithm", NULL, 0x2, NULL },
     { "getJceId", NULL, "Ljava.lang.String;", 0x1, NULL },
   };
-  static const char *superclass_type_args[] = {"Lcom.kloudtek.util.crypto.SymmetricAlgorithm;"};
-  static J2ObjcClassInfo _ComKloudtekUtilCryptoSymmetricAlgorithmEnum = { "SymmetricAlgorithm", "com.kloudtek.util.crypto", NULL, 0x4011, 3, methods, 0, NULL, 1, superclass_type_args};
+  static const char *superclass_type_args[] = {"Lcom.kloudtek.kryptotek.SymmetricAlgorithm;"};
+  static J2ObjcClassInfo _ComKloudtekUtilCryptoSymmetricAlgorithmEnum = { "SymmetricAlgorithm", "com.kloudtek.kryptotek", NULL, 0x4011, 3, methods, 0, NULL, 1, superclass_type_args};
   return &_ComKloudtekUtilCryptoSymmetricAlgorithmEnum;
 }
 

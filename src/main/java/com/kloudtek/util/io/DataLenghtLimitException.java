@@ -10,6 +10,8 @@ import java.io.IOException;
  * Created by yannick on 03/01/2014.
  */
 public class DataLenghtLimitException extends IOException {
+    private static final long serialVersionUID = -4072065874880438208L;
+
     public DataLenghtLimitException() {
     }
 

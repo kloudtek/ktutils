@@ -85,8 +85,8 @@ ComKloudtekUtilCryptoAsymmetricAlgorithmEnum *ComKloudtekUtilCryptoAsymmetricAlg
     { "getJceId", NULL, "Ljava.lang.String;", 0x1, NULL },
     { "getCryptAlg", NULL, "Ljava.lang.String;", 0x1, NULL },
   };
-  static const char *superclass_type_args[] = {"Lcom.kloudtek.util.crypto.AsymmetricAlgorithm;"};
-  static J2ObjcClassInfo _ComKloudtekUtilCryptoAsymmetricAlgorithmEnum = { "AsymmetricAlgorithm", "com.kloudtek.util.crypto", NULL, 0x4011, 5, methods, 0, NULL, 1, superclass_type_args};
+  static const char *superclass_type_args[] = {"Lcom.kloudtek.kryptotek.AsymmetricAlgorithm;"};
+  static J2ObjcClassInfo _ComKloudtekUtilCryptoAsymmetricAlgorithmEnum = { "AsymmetricAlgorithm", "com.kloudtek.kryptotek", NULL, 0x4011, 5, methods, 0, NULL, 1, superclass_type_args};
   return &_ComKloudtekUtilCryptoAsymmetricAlgorithmEnum;
 }
 

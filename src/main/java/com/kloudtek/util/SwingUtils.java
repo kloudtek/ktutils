@@ -40,6 +40,8 @@ public class SwingUtils {
     }
 
     public static class Frame extends JFrame {
+        private static final long serialVersionUID = -5345962084881252916L;
+
         public Frame(final String title, final Preferences prefs) throws HeadlessException {
             super(title);
             addWindowListener(new WindowAdapter() {
