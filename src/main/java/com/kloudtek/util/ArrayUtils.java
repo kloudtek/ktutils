@@ -22,6 +22,7 @@ public class ArrayUtils {
      *
      * @param array1 Original array
      * @param array2 Elements to add to array
+     * @param <X> array type
      * @return New array containing all specified elements
      */
     @NotNull
@@ -285,7 +286,7 @@ public class ArrayUtils {
     /**
      * fill the array with zeros
      *
-     * @param data
+     * @param data Data to zero
      */
     public static void zero(@NotNull char[]... data) {
         for (char[] chars : data) {
@@ -298,7 +299,7 @@ public class ArrayUtils {
     /**
      * fill the array with zeros
      *
-     * @param data
+     * @param data Data to zero
      */
     public static void zero(@NotNull byte[]... data) {
         for (byte[] bytes : data) {
@@ -311,7 +312,7 @@ public class ArrayUtils {
     /**
      * fill the array with zeros
      *
-     * @param data
+     * @param data Data to zero
      */
     public static void zero(CharBuffer data) {
         zero(data.array());
@@ -320,7 +321,7 @@ public class ArrayUtils {
     /**
      * fill the array with zeros
      *
-     * @param data
+     * @param data Data to zero
      */
     public static void zero(ByteBuffer data) {
         zero(data.array());

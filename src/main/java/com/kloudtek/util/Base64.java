@@ -118,13 +118,8 @@ public class Base64 extends BaseNCodec {
 
     /**
      * Creates a Base64 codec used for decoding (all modes) and encoding in URL-unsafe mode.
-     * <p>
      * When encoding the line length is 0 (no chunking), and the encoding table is STANDARD_ENCODE_TABLE.
-     * </p>
-     * <p/>
-     * <p>
      * When decoding all variants are supported.
-     * </p>
      */
     public Base64() {
         this(0);
@@ -132,14 +127,9 @@ public class Base64 extends BaseNCodec {
 
     /**
      * Creates a Base64 codec used for decoding (all modes) and encoding in the given URL-safe mode.
-     * <p>
      * When encoding the line length is 76, the line separator is CRLF, and the encoding table is
      * STANDARD_ENCODE_TABLE.
-     * </p>
-     * <p/>
-     * <p>
      * When decoding all variants are supported.
-     * </p>
      *
      * @param urlSafe if {@code true}, URL-safe encoding is used. In most cases this should be set to {@code false}.
      * @since 1.4
@@ -162,7 +152,7 @@ public class Base64 extends BaseNCodec {
      * </p>
      *
      * @param lineLength Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
-     *                   4). If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when
+     *                   4). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
      *                   decoding.
      * @since 1.4
      */
@@ -184,7 +174,7 @@ public class Base64 extends BaseNCodec {
      * </p>
      *
      * @param lineLength    Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
-     *                      4). If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when
+     *                      4). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
      *                      decoding.
      * @param lineSeparator Each line of encoded data will end with this sequence of bytes.
      * @throws IllegalArgumentException Thrown when the provided lineSeparator included some base64 characters.
@@ -208,7 +198,7 @@ public class Base64 extends BaseNCodec {
      * </p>
      *
      * @param lineLength    Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
-     *                      4). If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when
+     *                      4). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
      *                      decoding.
      * @param lineSeparator Each line of encoded data will end with this sequence of bytes.
      * @param urlSafe       Instead of emitting '+' and '/' we emit '-' and '_' respectively. urlSafe is only applied to encode
@@ -491,7 +481,6 @@ public class Base64 extends BaseNCodec {
 
     /**
      * Encodes binary data using the base64 algorithm but does not chunk the output.
-     * <p/>
      * NOTE:  We changed the behaviour of this method from multi-line chunking (commons-codec-1.4) to
      * single-line non-chunking (commons-codec-1.5).
      *

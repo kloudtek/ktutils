@@ -24,6 +24,8 @@ public class ExceptionUtils {
      *
      * @param exceptionClass Exception class
      * @param msg            Optional message (in which case the exception must have a constructor with a single parameter that is the message)
+     * @param <E> Exception type to throw
+     * @throws E exception
      */
     public static <E extends Exception> void throwException(Class<E> exceptionClass, String msg) throws E {
         E exception;
@@ -61,6 +63,7 @@ public class ExceptionUtils {
      * @param exception Exception that contains the message to log.
      * @param logger    Logger to use for logging.
      * @param level     Logging level to use.
+     * @param <X> Exception returned
      * @return The exception passed as parameter
      */
     public static <X extends Exception> X log(X exception, Logger logger, Level level) {

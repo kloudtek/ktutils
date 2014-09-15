@@ -4,8 +4,6 @@
 
 package com.kloudtek.util;
 
-import org.jetbrains.annotations.Nullable;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -199,6 +197,7 @@ public class JSFUtils {
     /**
      * Return an absolute URL under the context path.
      *
+     * @param path Path
      * @return absolute URL
      */
     public static String getContextURL(String path) {

@@ -405,7 +405,6 @@ public class XmlUtils {
      * @param node       The node which will serve as the root for the TreeWalker. The whatToShow flags and the NodeFilter are not considered when setting this value; any node type will be accepted as the root. The currentNode of the TreeWalker is initialized to this node, whether or not it is visible. The root functions as a stopping point for traversal methods that look upward in the document structure, such as parentNode and nextNode. The root must not be null.
      * @param whatToShow This flag specifies which node types may appear in the logical view of the tree presented by the TreeWalker. See the description of NodeFilter for the set of possible SHOW_ values.These flags can be combined using OR.
      * @return TreeWalker
-     * @see {@link #createTreeWalker(org.w3c.dom.Node, int, org.w3c.dom.traversal.NodeFilter, boolean)}
      */
     public static TreeWalker createTreeWalker(Node node, int whatToShow) {
         return createTreeWalker(node, whatToShow, null, true);

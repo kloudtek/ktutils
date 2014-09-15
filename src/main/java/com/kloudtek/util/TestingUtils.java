@@ -37,7 +37,6 @@ public class TestingUtils {
      *
      * @param data   Original data
      * @param amount How many bytes to change
-     * @return Data with byte(s) changed
      */
     public static void corruptData(byte[] data, int amount) {
         Random rng = new Random();

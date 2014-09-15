@@ -137,7 +137,6 @@ public class Hex {
      * @param ch    A character to convert to an integer digit
      * @param index The index of the character in the source
      * @return An integer
-     * @throws DecoderException Thrown if ch is an illegal hex character
      */
     protected static int toDigit(final char ch, final int index) throws IllegalArgumentException {
         final int digit = Character.digit(ch, 16);
@@ -185,7 +184,6 @@ public class Hex {
      *
      * @param array An array of character bytes containing hexadecimal digits
      * @return A byte array containing binary data decoded from the supplied byte array (representing characters).
-     * @throws DecoderException Thrown if an odd number of characters is supplied to this function
      * @see #decodeHex(char[])
      */
 
@@ -243,7 +241,7 @@ public class Hex {
      *
      * @param object a String, or byte[] to convert to Hex characters
      * @return A char[] containing hexadecimal characters
-     * @throws EncoderException Thrown if the given object is not a String or byte[]
+     * @throws IllegalArgumentException Thrown if the given object is not a String or byte[]
      * @see #encodeHex(byte[])
      */
 

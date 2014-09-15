@@ -45,7 +45,7 @@ public class SystemUtils {
      * and configure your application appropriately.
      * </p>
      *
-     * @return
+     * @return server type
      */
     public static String getServerType() {
         String type = System.getProperty("server-type");

@@ -43,7 +43,7 @@ public class ParamComboBuilder {
      * Add all the parameters specified in the array, and a null object
      *
      * @param p parameters
-     * @return
+     * @return ParamComboBuilder object
      */
     public ParamComboBuilder addAllAndNull(Object... p) {
         Object[] copy = Arrays.copyOf(p, p.length + 1);

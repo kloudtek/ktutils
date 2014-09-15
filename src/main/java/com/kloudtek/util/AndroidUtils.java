@@ -26,7 +26,8 @@ public class AndroidUtils {
      * Create and display an error dialog for an unexpected exception
      *
      * @param context Context
-     * @param e       Exception to display
+     * @param title   Title
+     * @param message Message to display
      */
     public static void showErrorDialog(Context context, String title, String message) {
         createDialogBuilder(context, title, message).create().show();
@@ -47,6 +48,7 @@ public class AndroidUtils {
      *
      * @param context Context
      * @param e       Exception to display
+     * @return Dialog builder
      */
     public static AlertDialog.Builder createErrorDialogBuilder(Context context, Exception e) {
         return createDialogBuilder(context, "Unexpected error", "An unexpected error has occurred: " + e.getMessage());
@@ -56,7 +58,9 @@ public class AndroidUtils {
      * Create an error dialog for an unexpected exception
      *
      * @param context Context
-     * @param e       Exception to display
+     * @param title   dialog title
+     * @param message Message to display
+     * @return Dialog builder
      */
     public static AlertDialog.Builder createDialogBuilder(Context context, String title, String message) {
         return new AlertDialog.Builder(context)

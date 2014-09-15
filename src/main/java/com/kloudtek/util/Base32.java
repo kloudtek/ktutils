@@ -142,7 +142,7 @@ public class Base32 extends BaseNCodec {
      * </p>
      *
      * @param lineLength Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
-     *                   8). If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when
+     *                   8). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
      *                   decoding.
      */
     public Base32(final int lineLength) {
@@ -159,7 +159,7 @@ public class Base32 extends BaseNCodec {
      * </p>
      *
      * @param lineLength    Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
-     *                      8). If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when
+     *                      8). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
      *                      decoding.
      * @param lineSeparator Each line of encoded data will end with this sequence of bytes.
      * @throws IllegalArgumentException The provided lineSeparator included some Base32 characters. That's not going to work!
@@ -178,12 +178,12 @@ public class Base32 extends BaseNCodec {
      * </p>
      *
      * @param lineLength    Each line of encoded data will be at most of the given length (rounded down to nearest multiple of
-     *                      8). If lineLength <= 0, then the output will not be divided into lines (chunks). Ignored when
+     *                      8). If lineLength &lt;= 0, then the output will not be divided into lines (chunks). Ignored when
      *                      decoding.
      * @param lineSeparator Each line of encoded data will end with this sequence of bytes.
      * @param useHex        if {@code true}, then use Base32 Hex alphabet, otherwise use Base32 alphabet
      * @throws IllegalArgumentException The provided lineSeparator included some Base32 characters. That's not going to work! Or the
-     *                                  lineLength > 0 and lineSeparator is null.
+     *                                  lineLength &gt; 0 and lineSeparator is null.
      */
     public Base32(final int lineLength, final byte[] lineSeparator, final boolean useHex) {
         super(BYTES_PER_UNENCODED_BLOCK, BYTES_PER_ENCODED_BLOCK,
