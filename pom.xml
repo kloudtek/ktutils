@@ -95,9 +95,9 @@
     </build>
     <repositories>
         <repository>
-            <id>maven-s3-snapshot-repo</id>
+            <id>kloudtek-oss-release-http</id>
             <name>S3 Release Repository</name>
-            <url>s3://maven.kloudtek.com/release</url>
+            <url>https://s3.amazonaws.com/maven.kloudtek.com/release</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -106,9 +106,9 @@
             </snapshots>
         </repository>
         <repository>
-            <id>maven-s3-release-repo</id>
+            <id>kloudtek-oss-snapshot-http</id>
             <name>S3 Release Repository</name>
-            <url>s3://maven.kloudtek.com/snapshot</url>
+            <url>https://s3.amazonaws.com/maven.kloudtek.com/snapshot</url>
             <releases>
                 <enabled>false</enabled>
             </releases>
@@ -119,9 +119,9 @@
     </repositories>
     <pluginRepositories>
         <pluginRepository>
-            <id>maven-s3-snapshot-repo</id>
+            <id>kloudtek-oss-release-http</id>
             <name>S3 Release Repository</name>
-            <url>s3://maven.kloudtek.com/release</url>
+            <url>https://s3.amazonaws.com/maven.kloudtek.com/release</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -130,9 +130,9 @@
             </snapshots>
         </pluginRepository>
         <pluginRepository>
-            <id>maven-s3-release-repo</id>
+            <id>kloudtek-oss-snapshot-http</id>
             <name>S3 Release Repository</name>
-            <url>s3://maven.kloudtek.com/snapshot</url>
+            <url>https://s3.amazonaws.com/maven.kloudtek.com/snapshot</url>
             <releases>
                 <enabled>false</enabled>
             </releases>
