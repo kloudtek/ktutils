@@ -113,15 +113,15 @@
         </plugins>
         <extensions>
             <extension>
-                <groupId>org.springframework.build.aws</groupId>
-                <artifactId>org.springframework.build.aws.maven</artifactId>
-                <version>3.0.0.RELEASE</version>
+                <groupId>org.springframework.build</groupId>
+                <artifactId>aws-maven</artifactId>
+                <version>5.0.0.RELEASE</version>
             </extension>
         </extensions>
     </build>
     <repositories>
         <repository>
-            <id>maven-s3-release-repo</id>
+            <id>maven-s3-snapshot-repo</id>
             <name>S3 Release Repository</name>
             <url>s3://maven.kloudtek.com/release</url>
             <releases>
@@ -132,7 +132,7 @@
             </snapshots>
         </repository>
         <repository>
-            <id>maven-s3-snapshot-repo</id>
+            <id>maven-s3-release-repo</id>
             <name>S3 Release Repository</name>
             <url>s3://maven.kloudtek.com/snapshot</url>
             <releases>
@@ -145,7 +145,7 @@
     </repositories>
     <pluginRepositories>
         <pluginRepository>
-            <id>maven-s3-release-repo</id>
+            <id>maven-s3-snapshot-repo</id>
             <name>S3 Release Repository</name>
             <url>s3://maven.kloudtek.com/release</url>
             <releases>
@@ -156,7 +156,7 @@
             </snapshots>
         </pluginRepository>
         <pluginRepository>
-            <id>maven-s3-snapshot-repo</id>
+            <id>maven-s3-release-repo</id>
             <name>S3 Release Repository</name>
             <url>s3://maven.kloudtek.com/snapshot</url>
             <releases>
