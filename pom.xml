@@ -84,32 +84,6 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
-            <!--
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-javadoc-plugin</artifactId>
-                            <executions>
-                                <execution>
-                                    <id>attach-javadocs</id>
-                                    <goals>
-                                        <goal>jar</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-source-plugin</artifactId>
-                            <executions>
-                                <execution>
-                                    <id>attach-sources</id>
-                                    <goals>
-                                        <goal>jar</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
-            -->
         </plugins>
         <extensions>
             <extension>
@@ -169,12 +143,12 @@
     </pluginRepositories>
     <distributionManagement>
         <repository>
-            <id>maven-s3-release-repo</id>
+            <id>kloudtek-oss-release-s3</id>
             <name>S3 Release Repository</name>
             <url>s3://maven.kloudtek.com/release</url>
         </repository>
         <snapshotRepository>
-            <id>maven-s3-snapshot-repo</id>
+            <id>kloudtek-oss-snapshot-s3</id>
             <name>S3 Release Repository</name>
             <url>s3://maven.kloudtek.com/snapshot</url>
         </snapshotRepository>
