@@ -229,14 +229,14 @@
         </plugins>
         <extensions>
             <extension>
-                <!--
                                 <groupId>org.springframework.build</groupId>
                                 <artifactId>aws-maven</artifactId>
                                 <version>5.0.0.RELEASE</version>
+                <!--
+                                <groupId>org.kuali.maven.wagons</groupId>
+                                <artifactId>maven-s3-wagon</artifactId>
+                                <version>1.2.1</version>
                 -->
-                <groupId>org.kuali.maven.wagons</groupId>
-                <artifactId>maven-s3-wagon</artifactId>
-                <version>1.2.1</version>
             </extension>
         </extensions>
     </build>
@@ -289,11 +289,11 @@
         </pluginRepository>
     </pluginRepositories>
     <distributionManagement>
-        <site>
-            <id>kloudtek-oss</id>
-            <name>S3 Release Repository</name>
-            <url>s3://maven.kloudtek.com/sites/ktutils-snapshot</url>
-        </site>
+        <!--        <site>
+                    <id>kloudtek-oss</id>
+                    <name>S3 Release Repository</name>
+                    <url>s3://maven.kloudtek.com/sites/ktutils-snapshot</url>
+                </site>-->
         <repository>
             <id>kloudtek-oss</id>
             <name>S3 Release Repository</name>
