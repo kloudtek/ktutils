@@ -1,0 +1,38 @@
+<!--
+  ~ Copyright (c) 2014 Kloudtek Ltd
+  -->
+
+<project xmlns="http://maven.apache.org/DECORATION/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.1.0 http://maven.apache.org/xsd/decoration-1.1.0.xsd">
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-fluido-skin</artifactId>
+        <version>1.3.1</version>
+    </skin>
+    <bannerLeft>
+        <src>https://www.kloudtek.com/javax.faces.resource/img/logo-sm.png.xhtml?ln=kt</src>
+    </bannerLeft>
+    <googleAnalyticsAccountId>53593691</googleAnalyticsAccountId>
+    <custom>
+        <fluidoSkin>
+            <sideBarEnabled>false</sideBarEnabled>
+            <sourceLineNumbersEnabled>true</sourceLineNumbersEnabled>
+            <gitHub>
+                <projectId>kloudtek/ktutils</projectId>
+                <ribbonOrientation>right</ribbonOrientation>
+                <ribbonColor>black</ribbonColor>
+            </gitHub>
+            <topBarEnabled>true</topBarEnabled>
+            <topBarIcon>
+                <name>KTUtils</name>
+                <alt>KTUtils maven site</alt>
+                <href>/index.html</href>
+            </topBarIcon>
+        </fluidoSkin>
+    </custom>
+    <body>
+
+        <menu ref="parent"/>
+        <menu ref="reports"/>
+    </body>
+</project>
