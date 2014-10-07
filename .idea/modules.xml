@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ktutils.iml" filepath="$PROJECT_DIR$/ktutils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/all-pom/ktutils.iml" filepath="$PROJECT_DIR$/all-pom/ktutils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exceptions/ktutils-exceptions.iml" filepath="$PROJECT_DIR$/exceptions/ktutils-exceptions.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jetty/ktutils-jetty.iml" filepath="$PROJECT_DIR$/jetty/ktutils-jetty.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ktutils-parent.iml" filepath="$PROJECT_DIR$/ktutils-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/unsorted/ktutils-unsorted.iml" filepath="$PROJECT_DIR$/unsorted/ktutils-unsorted.iml" />
     </modules>
   </component>
 </project>

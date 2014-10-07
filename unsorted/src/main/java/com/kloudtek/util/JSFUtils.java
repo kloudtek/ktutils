@@ -230,7 +230,7 @@ public class JSFUtils {
         return severity != null && (severity.getOrdinal() == FacesMessage.SEVERITY_ERROR.getOrdinal() || severity.getOrdinal() == FacesMessage.SEVERITY_FATAL.getOrdinal());
     }
 
-    public static <X> X getManagedBean( String name, Class<X> classType) {
-        return FacesContext.getCurrentInstance().getApplication().evaluateExpressionGet(FacesContext.getCurrentInstance(), "#{"+name+"}", classType);
+    public static <X> X getManagedBean(String name, Class<X> classType) {
+        return FacesContext.getCurrentInstance().getApplication().evaluateExpressionGet(FacesContext.getCurrentInstance(), "#{" + name + "}", classType);
     }
 }

@@ -36,7 +36,11 @@ public class SwingUtils {
         int h = (int) ((screenSize.getHeight() / 100) * defHeight);
         int x = (int) ((screenSize.getWidth() - w) / 2);
         int y = (int) ((screenSize.getHeight() - h) / 2);
-        frame.setBounds(prefs.getInt("x", x), prefs.getInt("y", y), prefs.getInt("w", w), prefs.getInt("h", h));
+        if (prefs != null) {
+            frame.setBounds(prefs.getInt("x", x), prefs.getInt("y", y), prefs.getInt("w", w), prefs.getInt("h", h));
+        } else {
+            frame.setBounds(x, y, w, h);
+        }
     }
 
     public static class Frame extends JFrame {

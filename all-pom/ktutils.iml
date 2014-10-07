@@ -11,6 +11,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="ktutils-exceptions" />
+    <orderEntry type="module" module-name="ktutils-unsorted" />
+    <orderEntry type="module" module-name="ktutils-jetty" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax:javaee-api:7.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.sun.mail:javax.mail:1.5.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.activation:activation:1.1" level="project" />

@@ -22,7 +22,7 @@ public class ArrayUtils {
      *
      * @param array1 Original array
      * @param array2 Elements to add to array
-     * @param <X> array type
+     * @param <X>    array type
      * @return New array containing all specified elements
      */
     @NotNull
@@ -259,7 +259,7 @@ public class ArrayUtils {
         ByteBuffer byteBuffer = ByteBuffer.wrap(data);
         CharBuffer charBuffer = Charset.forName("UTF-8").decode(byteBuffer);
         char[] chars = Arrays.copyOfRange(charBuffer.array(), charBuffer.position(), charBuffer.limit());
-        if( zeroBuffer ) {
+        if (zeroBuffer) {
             zero(charBuffer);
         }
         return chars;

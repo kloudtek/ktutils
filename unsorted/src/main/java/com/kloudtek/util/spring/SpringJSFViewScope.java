@@ -12,8 +12,6 @@ import org.springframework.web.context.request.FacesRequestAttributes;
 import javax.faces.context.FacesContext;
 import java.util.Map;
 
-import static com.kloudtek.util.JSFUtils.getViewMap;
-
 /**
  * Spring view scope implementation for JSF 2 flash scope
  */

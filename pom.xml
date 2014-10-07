@@ -8,10 +8,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.kloudtek.ktutils</groupId>
-    <artifactId>ktutils</artifactId>
+    <artifactId>ktutils-parent</artifactId>
     <version>1.2-SNAPSHOT</version>
-    <packaging>jar</packaging>
-    <name>KTUtils</name>
+    <modules>
+        <module>all-pom</module>
+        <module>jetty</module>
+        <module>exceptions</module>
+        <module>unsorted</module>
+    </modules>
+    <packaging>pom</packaging>
     <description>KloudTek utilities</description>
     <url>https://github.com/Kloudtek/ktutils</url>
     <organization>
@@ -243,7 +248,7 @@
     </build>
     <repositories>
         <repository>
-            <id>kloudtek-oss-release-http</id>
+            <id>kloudtek-oss-releases</id>
             <name>S3 Release Repository</name>
             <url>https://s3.amazonaws.com/maven.kloudtek.com/release</url>
             <releases>
@@ -254,7 +259,7 @@
             </snapshots>
         </repository>
         <repository>
-            <id>kloudtek-oss-snapshot-http</id>
+            <id>kloudtek-oss-snapshots</id>
             <name>S3 Release Repository</name>
             <url>https://s3.amazonaws.com/maven.kloudtek.com/snapshot</url>
             <releases>
@@ -267,7 +272,7 @@
     </repositories>
     <pluginRepositories>
         <pluginRepository>
-            <id>kloudtek-oss-release-http</id>
+            <id>kloudtek-oss-releases</id>
             <name>S3 Release Repository</name>
             <url>https://s3.amazonaws.com/maven.kloudtek.com/release</url>
             <releases>
@@ -278,7 +283,7 @@
             </snapshots>
         </pluginRepository>
         <pluginRepository>
-            <id>kloudtek-oss-snapshot-http</id>
+            <id>kloudtek-oss-snapshots</id>
             <name>S3 Release Repository</name>
             <url>https://s3.amazonaws.com/maven.kloudtek.com/snapshot</url>
             <releases>
@@ -296,12 +301,12 @@
                     <url>s3://maven.kloudtek.com/sites/ktutils-snapshot</url>
                 </site>-->
         <repository>
-            <id>kloudtek-oss</id>
+            <id>kloudtek-oss-releases</id>
             <name>S3 Release Repository</name>
             <url>s3://maven.kloudtek.com/release</url>
         </repository>
         <snapshotRepository>
-            <id>kloudtek-oss</id>
+            <id>kloudtek-oss-snapshots</id>
             <name>S3 Release Repository</name>
             <url>s3://maven.kloudtek.com/snapshot</url>
         </snapshotRepository>

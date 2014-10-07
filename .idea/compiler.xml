@@ -4,16 +4,14 @@
     <option name="DEFAULT_COMPILER" value="Javac" />
     <resourceExtensions />
     <wildcardResourcePatterns>
-      <entry name="?*.properties" />
-      <entry name="?*.xml" />
-      <entry name="?*.gif" />
-      <entry name="?*.png" />
-      <entry name="?*.jpeg" />
-      <entry name="?*.jpg" />
-      <entry name="?*.html" />
-      <entry name="?*.dtd" />
-      <entry name="?*.tld" />
-      <entry name="?*.ftl" />
+      <entry name="!?*.java" />
+      <entry name="!?*.form" />
+      <entry name="!?*.class" />
+      <entry name="!?*.groovy" />
+      <entry name="!?*.scala" />
+      <entry name="!?*.flex" />
+      <entry name="!?*.kt" />
+      <entry name="!?*.clj" />
     </wildcardResourcePatterns>
     <annotationProcessing>
       <profile default="true" name="Default" enabled="false">
@@ -25,10 +23,17 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="ktutils" />
+        <module name="ktutils-exceptions" />
+        <module name="ktutils-jetty" />
+        <module name="ktutils-unsorted" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="ktutils" target="1.6" />
+      <module name="ktutils-exceptions" target="1.6" />
+      <module name="ktutils-jetty" target="1.6" />
+      <module name="ktutils-parent" target="1.6" />
+      <module name="ktutils-unsorted" target="1.6" />
     </bytecodeTargetLevel>
   </component>
 </project>
