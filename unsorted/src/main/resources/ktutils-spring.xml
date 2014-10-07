@@ -9,7 +9,7 @@
         <property name="scopes">
             <map>
                 <entry key="view">
-                    <bean class="com.kloudtek.util.spring.SpringJSFViewScope"/>
+                    <bean class="SpringJSFViewScope"/>
                 </entry>
             </map>
         </property>

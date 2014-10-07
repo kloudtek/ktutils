@@ -9,7 +9,6 @@ import com.kloudtek.util.SystemUtils;
 import com.kloudtek.util.UnexpectedException;
 
 import static com.kloudtek.util.ExceptionUtils.throwException;
-import static com.kloudtek.util.StringUtils.isEmpty;
 
 /**
  * Validation utilities
@@ -58,7 +57,7 @@ public class ValidationUtils {
     public static <E extends Exception> void notEmpty(Class<E> exceptionClass, String msg, String... values) throws E {
         if (values != null) {
             for (String value : values) {
-                if (isEmpty(value)) {
+                if (StringUtils.isEmpty(value)) {
                     throwException(exceptionClass, msg);
                 }
             }

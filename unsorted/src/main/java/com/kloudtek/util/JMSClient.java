@@ -44,7 +44,7 @@ public abstract class JMSClient implements Runnable {
         this.sessionType = sessionType;
         this.connectRetry = connectRetry;
         if (noCleanLogManager) {
-            System.setProperty("java.util.logging.manager", "com.kloudtek.util.logging.NoCleanLogManager");
+            System.setProperty("java.util.logging.manager", "NoCleanLogManager");
         }
         if (loggerName != null) {
             logger = Logger.getLogger(loggerName);

@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import static com.kloudtek.util.StringUtils.urlEncode;
-
 public class URLBuilder {
     private String baseUrl;
     private final List<Param> parameters = new ArrayList<Param>();
@@ -65,27 +63,27 @@ public class URLBuilder {
     }
 
     public URLBuilder add(String key, String value) {
-        addEncoded(urlEncode(key), urlEncode(value));
+        addEncoded(StringUtils.urlEncode(key), StringUtils.urlEncode(value));
         return this;
     }
 
     public URLBuilder add(String key, long value) {
-        addEncoded(urlEncode(key), Long.toString(value));
+        addEncoded(StringUtils.urlEncode(key), Long.toString(value));
         return this;
     }
 
     public URLBuilder add(String key, int value) {
-        addEncoded(urlEncode(key), Integer.toString(value));
+        addEncoded(StringUtils.urlEncode(key), Integer.toString(value));
         return this;
     }
 
     public URLBuilder add(String key, byte value) {
-        addEncoded(urlEncode(key), Byte.toString(value));
+        addEncoded(StringUtils.urlEncode(key), Byte.toString(value));
         return this;
     }
 
     public URLBuilder add(String key, boolean value) {
-        addEncoded(urlEncode(key), Boolean.toString(value));
+        addEncoded(StringUtils.urlEncode(key), Boolean.toString(value));
         return this;
     }
 

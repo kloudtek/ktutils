@@ -4,6 +4,7 @@
 
 package com.kloudtek.util.spring;
 
+import com.kloudtek.util.JSFUtils;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.config.Scope;
 import org.springframework.web.context.request.FacesRequestAttributes;
@@ -21,10 +22,10 @@ public class SpringJSFViewScope implements Scope {
 
     @Override
     public Object get(String name, ObjectFactory<?> factory) {
-        Object obj = getViewMap().get(name);
+        Object obj = JSFUtils.getViewMap().get(name);
         if (obj == null) {
             obj = factory.getObject();
-            getViewMap().put(name, obj);
+            JSFUtils.getViewMap().put(name, obj);
         }
         return obj;
     }
@@ -32,9 +33,9 @@ public class SpringJSFViewScope implements Scope {
     @Override
     @SuppressWarnings("unchecked")
     public Object remove(String name) {
-        Object instance = getViewMap().remove(name);
+        Object instance = JSFUtils.getViewMap().remove(name);
         if (instance != null) {
-            Map<String, Runnable> callbacks = (Map<String, Runnable>) getViewMap().get(CALLBACKS);
+            Map<String, Runnable> callbacks = (Map<String, Runnable>) JSFUtils.getViewMap().get(CALLBACKS);
             if (callbacks != null) {
                 callbacks.remove(name);
             }
@@ -45,7 +46,7 @@ public class SpringJSFViewScope implements Scope {
     @Override
     @SuppressWarnings("unchecked")
     public void registerDestructionCallback(String name, Runnable runnable) {
-        Map<String, Runnable> callbacks = (Map<String, Runnable>) getViewMap().get(CALLBACKS);
+        Map<String, Runnable> callbacks = (Map<String, Runnable>) JSFUtils.getViewMap().get(CALLBACKS);
         if (callbacks != null) {
             callbacks.put(name, runnable);
         }
