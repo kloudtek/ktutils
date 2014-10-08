@@ -11,10 +11,19 @@
     <artifactId>ktutils-parent</artifactId>
     <version>1.2-SNAPSHOT</version>
     <modules>
-        <module>all-pom</module>
+        <module>all</module>
         <module>jetty</module>
-        <module>exceptions</module>
-        <module>unsorted</module>
+        <module>core</module>
+        <module>jee</module>
+        <module>logging</module>
+        <module>xml</module>
+        <module>io</module>
+        <module>geo</module>
+        <module>spring</module>
+        <module>jsf</module>
+        <module>selenium</module>
+        <module>testing</module>
+        <module>android</module>
     </modules>
     <packaging>pom</packaging>
     <description>KloudTek utilities</description>

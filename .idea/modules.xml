@@ -2,11 +2,20 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/all-pom/ktutils.iml" filepath="$PROJECT_DIR$/all-pom/ktutils.iml" />
-      <module fileurl="file://$PROJECT_DIR$/exceptions/ktutils-exceptions.iml" filepath="$PROJECT_DIR$/exceptions/ktutils-exceptions.iml" />
+      <module fileurl="file://$PROJECT_DIR$/all/ktutils.iml" filepath="$PROJECT_DIR$/all/ktutils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/ktutils-android.iml" filepath="$PROJECT_DIR$/android/ktutils-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/ktutils-core.iml" filepath="$PROJECT_DIR$/core/ktutils-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/geo/ktutils-geo.iml" filepath="$PROJECT_DIR$/geo/ktutils-geo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/io/ktutils-io.iml" filepath="$PROJECT_DIR$/io/ktutils-io.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jee/ktutils-jee.iml" filepath="$PROJECT_DIR$/jee/ktutils-jee.iml" />
       <module fileurl="file://$PROJECT_DIR$/jetty/ktutils-jetty.iml" filepath="$PROJECT_DIR$/jetty/ktutils-jetty.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jsf/ktutils-jsf.iml" filepath="$PROJECT_DIR$/jsf/ktutils-jsf.iml" />
+      <module fileurl="file://$PROJECT_DIR$/logging/ktutils-logging.iml" filepath="$PROJECT_DIR$/logging/ktutils-logging.iml" />
       <module fileurl="file://$PROJECT_DIR$/ktutils-parent.iml" filepath="$PROJECT_DIR$/ktutils-parent.iml" />
-      <module fileurl="file://$PROJECT_DIR$/unsorted/ktutils-unsorted.iml" filepath="$PROJECT_DIR$/unsorted/ktutils-unsorted.iml" />
+      <module fileurl="file://$PROJECT_DIR$/selenium/ktutils-selenium.iml" filepath="$PROJECT_DIR$/selenium/ktutils-selenium.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring/ktutils-spring.iml" filepath="$PROJECT_DIR$/spring/ktutils-spring.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testing/ktutils-testing.iml" filepath="$PROJECT_DIR$/testing/ktutils-testing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xml/ktutils-xml.iml" filepath="$PROJECT_DIR$/xml/ktutils-xml.iml" />
     </modules>
   </component>
 </project>
