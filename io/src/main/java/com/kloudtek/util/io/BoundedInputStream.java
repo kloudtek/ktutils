@@ -12,7 +12,7 @@ import java.io.InputStream;
  * This stream puts a limit on how much data can be read from a wrapped stream.
  */
 public class BoundedInputStream extends FilterInputStream {
-    private final int maxLen;
+    private final long maxLen;
     private final boolean failOnTooMuchData;
     private long count = 0;
     private long mark;
@@ -25,7 +25,7 @@ public class BoundedInputStream extends FilterInputStream {
      * @param failOnTooMuchData If set to true, will throw a {@link DataLenghtLimitException} if it's possible read more data
      *                          than the maxLen
      */
-    public BoundedInputStream(InputStream in, int maxLen, boolean failOnTooMuchData) {
+    public BoundedInputStream(InputStream in, long maxLen, boolean failOnTooMuchData) {
         super(in);
         if (maxLen <= 0) {
             throw new IllegalArgumentException("maxLen smaller than 1");
