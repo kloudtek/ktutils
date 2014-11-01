@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/all/ktutils.iml" filepath="$PROJECT_DIR$/all/ktutils.iml" />
       <module fileurl="file://$PROJECT_DIR$/android/ktutils-android.iml" filepath="$PROJECT_DIR$/android/ktutils-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/core/ktutils-core.iml" filepath="$PROJECT_DIR$/core/ktutils-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dao/ktutils-dao.iml" filepath="$PROJECT_DIR$/dao/ktutils-dao.iml" />
       <module fileurl="file://$PROJECT_DIR$/geo/ktutils-geo.iml" filepath="$PROJECT_DIR$/geo/ktutils-geo.iml" />
       <module fileurl="file://$PROJECT_DIR$/io/ktutils-io.iml" filepath="$PROJECT_DIR$/io/ktutils-io.iml" />
       <module fileurl="file://$PROJECT_DIR$/jee/ktutils-jee.iml" filepath="$PROJECT_DIR$/jee/ktutils-jee.iml" />

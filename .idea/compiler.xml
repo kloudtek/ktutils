@@ -28,6 +28,7 @@
         <module name="ktutils" />
         <module name="ktutils-android" />
         <module name="ktutils-core" />
+        <module name="ktutils-dao" />
         <module name="ktutils-exceptions" />
         <module name="ktutils-geo" />
         <module name="ktutils-io" />
@@ -51,6 +52,7 @@
       <module name="ktutils" target="1.6" />
       <module name="ktutils-android" target="1.6" />
       <module name="ktutils-core" target="1.6" />
+      <module name="ktutils-dao" target="1.6" />
       <module name="ktutils-exceptions" target="1.6" />
       <module name="ktutils-geo" target="1.6" />
       <module name="ktutils-io" target="1.6" />
