@@ -7,19 +7,19 @@ package com.kloudtek.util.dao;
 /**
  * Thrown when an error accessing the backend storage (due to communication problem or backend system error)
  */
-public class DataAccessFailedException extends DAOException {
-    public DataAccessFailedException() {
+public class DataAccessException extends DAOException {
+    public DataAccessException() {
     }
 
-    public DataAccessFailedException(String message) {
+    public DataAccessException(String message) {
         super(message);
     }
 
-    public DataAccessFailedException(String message, Throwable cause) {
+    public DataAccessException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public DataAccessFailedException(Throwable cause) {
+    public DataAccessException(Throwable cause) {
         super(cause);
     }
 }
