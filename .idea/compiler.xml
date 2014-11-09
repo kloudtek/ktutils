@@ -36,6 +36,7 @@
         <module name="ktutils-jetty" />
         <module name="ktutils-jsf" />
         <module name="ktutils-logging" />
+        <module name="ktutils-security" />
         <module name="ktutils-selenium" />
         <module name="ktutils-spring" />
         <module name="ktutils-testing" />
@@ -61,6 +62,7 @@
       <module name="ktutils-jsf" target="1.6" />
       <module name="ktutils-logging" target="1.6" />
       <module name="ktutils-parent" target="1.6" />
+      <module name="ktutils-security" target="1.6" />
       <module name="ktutils-selenium" target="1.6" />
       <module name="ktutils-spring" target="1.6" />
       <module name="ktutils-testing" target="1.6" />
