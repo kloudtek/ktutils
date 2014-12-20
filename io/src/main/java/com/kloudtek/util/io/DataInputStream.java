@@ -30,6 +30,17 @@ public class DataInputStream extends java.io.DataInputStream {
         return readUUID(this);
     }
 
+    /**
+     * Create a new byte array of specified size, and read data using {@link java.io.DataInput#readFully(byte[])}
+     *
+     * @param dataLen new buffer size
+     * @return data read
+     * @throws IOException If an error occured reading the data
+     */
+    public byte[] readFully(int dataLen) throws IOException {
+        return readFully(this, dataLen);
+    }
+
     public byte[] readData() throws IOException {
         return readData(false, DEFAULT_MAX_LEN);
     }
@@ -84,6 +95,20 @@ public class DataInputStream extends java.io.DataInputStream {
 
     public static UUID readUUID(DataInput in) throws IOException {
         return new UUID(in.readLong(), in.readLong());
+    }
+
+    /**
+     * Create a new byte array of specified size, and read data using {@link java.io.DataInput#readFully(byte[])}
+     *
+     * @param in      {@link java.io.DataInput} to read from
+     * @param dataLen new buffer size
+     * @return data read
+     * @throws IOException If an error occured reading the data
+     */
+    public static byte[] readFully(DataInput in, int dataLen) throws IOException {
+        byte[] data = new byte[dataLen];
+        in.readFully(data);
+        return data;
     }
 
     public static byte[] readData(DataInput in) throws IOException {
