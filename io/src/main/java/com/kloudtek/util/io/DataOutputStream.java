@@ -14,8 +14,9 @@ import java.util.UUID;
  * Extends JDK DataOutputStream to provide some extra methods.
  */
 public class DataOutputStream extends java.io.DataOutputStream {
-    public static final long MAX = 34359738367L;
-    public static final long[] BOUNDS = new long[]{127L, 16383L, 2097151L, 268435455L, 34359738367L};
+    public static final long MAX = 9223372036854775807L;
+    public static final long[] BOUNDS = new long[]{127L, 16383L, 2097151L, 268435455L, 34359738367L, 4398046511103L,
+            562949953421311L, 72057594037927935L, 9223372036854775807L};
 
     public DataOutputStream(OutputStream out) {
         super(out);
