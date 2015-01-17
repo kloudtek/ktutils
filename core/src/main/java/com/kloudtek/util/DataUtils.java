@@ -1,11 +1,9 @@
 /*
- * Copyright (c) 2014 Kloudtek Ltd
+ * Copyright (c) 2015 Kloudtek Ltd
  */
 
 package com.kloudtek.util;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.util.UUID;
 
 /**
@@ -27,30 +25,50 @@ public class DataUtils {
     }
 
     public static byte[] longToByteArray(long value) {
-        byte[] data = new byte[8];
-        data[0] = (byte) (value >>> 56);
-        data[1] = (byte) (value >>> 48);
-        data[2] = (byte) (value >>> 40);
-        data[3] = (byte) (value >>> 32);
-        data[4] = (byte) (value >>> 24);
-        data[5] = (byte) (value >>> 16);
-        data[6] = (byte) (value >>> 8);
-        data[7] = (byte) (value);
-        return data;
+        return new byte[]{
+                (byte) (value >>> 56),
+                (byte) (value >>> 48),
+                (byte) (value >>> 40),
+                (byte) (value >>> 32),
+                (byte) (value >>> 24),
+                (byte) (value >>> 16),
+                (byte) (value >>> 8),
+                (byte) (value)
+        };
     }
 
-    public static short byteArrayToShort(byte[] bytes) {
-        if (bytes.length != 2) {
+    public static short byteArrayToShort(byte[] data) {
+        if (data.length != 2) {
             throw new IllegalArgumentException();
         }
-        return ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getShort();
+        return (short) (
+                ((data[0] & 255) << 8) +
+                        ((data[1] & 255)));
     }
 
     public static byte[] shortToByteArray(short value) {
         byte[] returnByteArray = new byte[2];
-        returnByteArray[0] = (byte) (value & 0xff);
-        returnByteArray[1] = (byte) ((value >>> 8) & 0xff);
+        returnByteArray[0] = (byte) ((value >>> 8) & 0xff);
+        returnByteArray[1] = (byte) (value & 0xff);
         return returnByteArray;
+    }
+
+    public static long byteArrayToInt(byte[] data) {
+        if (data == null || data.length != 4) {
+            throw new IllegalArgumentException();
+        }
+        return (((data[0] & 255) << 24) +
+                ((data[1] & 255) << 16) +
+                ((data[2] & 255) << 8) +
+                ((data[3] & 255)));
+    }
+
+    public static byte[] intToByteArray(long value) {
+        return new byte[]{
+                (byte) (value >>> 24),
+                (byte) (value >>> 16),
+                (byte) (value >>> 8),
+                (byte) value};
     }
 
     public static byte[] uuidToByteArray(UUID uuid) {

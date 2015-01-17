@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Kloudtek Ltd
+ * Copyright (c) 2015 Kloudtek Ltd
  */
 
 package com.kloudtek.util.io;
@@ -15,7 +15,6 @@ import java.util.UUID;
  * Extends JDK DataInputStream to provide some extra methods.
  */
 public class DataInputStream extends java.io.DataInputStream {
-
     public static final int DEFAULT_MAX_LEN = 10240;
 
     public DataInputStream(InputStream in) {
@@ -28,6 +27,22 @@ public class DataInputStream extends java.io.DataInputStream {
 
     public UUID readUUID() throws IOException {
         return readUUID(this);
+    }
+
+    public long readUnsignedNumber() throws IOException {
+        long number = 0;
+        int shift = 0;
+        boolean more;
+        do {
+            int i = read();
+            if (i == -1) {
+                break;
+            }
+            more = (i & 128L) > 0;
+            number = number | ((i & 127L) << shift);
+            shift += 7;
+        } while (more);
+        return number;
     }
 
     /**

@@ -1,17 +1,19 @@
 /*
- * Copyright (c) 2014 Kloudtek Ltd
+ * Copyright (c) 2015 Kloudtek Ltd
  */
 
 package com.kloudtek.util;
 
-import junit.framework.TestCase;
 import org.testng.annotations.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.util.UUID;
 
 import static com.kloudtek.util.DataUtils.*;
+import static org.testng.Assert.assertEquals;
 
-public class DataUtilsTest extends TestCase {
+public class DataUtilsTest {
     @Test
     public void testLongConversion() throws Exception {
         testLongConversion(Long.MIN_VALUE);
@@ -20,8 +22,13 @@ public class DataUtilsTest extends TestCase {
     }
 
     private void testLongConversion(long val) throws Exception {
-        long val2 = byteArrayToLong(longToByteArray(val));
-        assertEquals(val, val2);
+        ByteArrayOutputStream data = new ByteArrayOutputStream();
+        DataOutputStream os = new DataOutputStream(data);
+        os.writeLong(val);
+        byte[] expected = data.toByteArray();
+        byte[] actual = longToByteArray(val);
+        assertEquals(expected, actual);
+        assertEquals(val, byteArrayToLong(actual));
     }
 
     @Test
@@ -32,8 +39,30 @@ public class DataUtilsTest extends TestCase {
     }
 
     private void testShortConversion(short val) throws Exception {
-        short val2 = byteArrayToShort(shortToByteArray(val));
-        assertEquals(val, val2);
+        ByteArrayOutputStream data = new ByteArrayOutputStream();
+        DataOutputStream os = new DataOutputStream(data);
+        os.writeShort(val);
+        byte[] expected = data.toByteArray();
+        byte[] actual = shortToByteArray(val);
+        assertEquals(expected, actual);
+        assertEquals(val, byteArrayToShort(actual));
+    }
+
+    @Test
+    public void testIntConversion() throws Exception {
+        testIntConversion(Integer.MIN_VALUE);
+        testIntConversion(0);
+        testIntConversion(Integer.MAX_VALUE);
+    }
+
+    private void testIntConversion(int val) throws Exception {
+        ByteArrayOutputStream data = new ByteArrayOutputStream();
+        DataOutputStream os = new DataOutputStream(data);
+        os.writeInt(val);
+        byte[] expected = data.toByteArray();
+        byte[] actual = intToByteArray(val);
+        assertEquals(expected, actual);
+        assertEquals(val, byteArrayToInt(actual));
     }
 
     @Test

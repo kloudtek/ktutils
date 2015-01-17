@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Kloudtek Ltd
+ * Copyright (c) 2015 Kloudtek Ltd
  */
 
 package com.kloudtek.util.io;
@@ -14,6 +14,9 @@ import java.util.UUID;
  * Extends JDK DataOutputStream to provide some extra methods.
  */
 public class DataOutputStream extends java.io.DataOutputStream {
+    public static final long MAX = 34359738367L;
+    public static final long[] BOUNDS = new long[]{127L, 16383L, 2097151L, 268435455L, 34359738367L};
+
     public DataOutputStream(OutputStream out) {
         super(out);
     }
@@ -26,6 +29,23 @@ public class DataOutputStream extends java.io.DataOutputStream {
      */
     public void writeString(String str) throws IOException {
         writeString(this, str);
+    }
+
+    public void writeUnsignedNumber(long number) throws IOException {
+        if (number > MAX) {
+            throw new IllegalArgumentException("Number too large");
+        }
+        int shift = 0;
+        final int maxBounds = BOUNDS.length;
+        for (int i = 0; i < maxBounds; i++) {
+            long bound = BOUNDS[i];
+            boolean more = number > bound;
+            write((int) ((number & bound) >> shift) | (more ? 128 : 0));
+            if (!more) {
+                break;
+            }
+            shift += 7;
+        }
     }
 
     /**
