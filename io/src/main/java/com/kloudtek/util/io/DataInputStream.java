@@ -89,15 +89,19 @@ public class DataInputStream extends java.io.DataInputStream {
     }
 
     public <X> X readByteEnum(Class<X> enumClass) throws IOException {
-        return readByteEnum(enumClass, this);
+        return readEnum(enumClass, readByte());
     }
 
     public <X> X readShortEnum(Class<X> enumClass) throws IOException {
-        return readShortEnum(enumClass, this);
+        return readEnum(enumClass, readShort());
     }
 
     public <X> X readIntEnum(Class<X> enumClass) throws IOException {
-        return readIntEnum(enumClass, this);
+        return readEnum(enumClass, readInt());
+    }
+
+    public <X> X readEnum(Class<X> enumClass) throws IOException {
+        return readEnum(enumClass, (int) readUnsignedNumber());
     }
 
     public static String readString(DataInput in) throws IOException {
@@ -180,18 +184,6 @@ public class DataInputStream extends java.io.DataInputStream {
             list.add(in.readUTF());
         }
         return list;
-    }
-
-    public static <X> X readByteEnum(Class<X> enumClass, DataInput in) throws IOException {
-        return readEnum(enumClass, in.readByte());
-    }
-
-    public static <X> X readShortEnum(Class<X> enumClass, DataInput in) throws IOException {
-        return readEnum(enumClass, in.readShort());
-    }
-
-    public static <X> X readIntEnum(Class<X> enumClass, DataInput in) throws IOException {
-        return readEnum(enumClass, in.readInt());
     }
 
     private static <X> X readEnum(Class<X> enumClass, int idx) throws IOException {

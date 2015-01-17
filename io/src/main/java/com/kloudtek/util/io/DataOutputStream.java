@@ -64,15 +64,19 @@ public class DataOutputStream extends java.io.DataOutputStream {
     }
 
     public void writeByteEnum(Enum<?> enumeration) throws IOException {
-        writeByteEnum(this, enumeration);
+        writeByte(enumValue(enumeration));
     }
 
     public void writeShortEnum(Enum<?> enumeration) throws IOException {
-        writeShortEnum(this, enumeration);
+        writeShort(enumValue(enumeration));
     }
 
     public void writeIntEnum(Enum<?> enumeration) throws IOException {
-        writeIntEnum(this, enumeration);
+        writeInt(enumValue(enumeration));
+    }
+
+    public void writeEnum(Enum<?> enumeration) throws IOException {
+        writeUnsignedNumber(enumValue(enumeration));
     }
 
     public void writeLongList(List<Long> list) throws IOException {
@@ -121,18 +125,6 @@ public class DataOutputStream extends java.io.DataOutputStream {
     public static void writeUUID(DataOutput out, UUID uuid) throws IOException {
         out.writeLong(uuid.getMostSignificantBits());
         out.writeLong(uuid.getLeastSignificantBits());
-    }
-
-    public static void writeByteEnum(DataOutput out, Enum<?> enumeration) throws IOException {
-        out.writeByte(enumValue(enumeration));
-    }
-
-    public static void writeShortEnum(DataOutput out, Enum<?> enumeration) throws IOException {
-        out.writeShort(enumValue(enumeration));
-    }
-
-    public static void writeIntEnum(DataOutput out, Enum<?> enumeration) throws IOException {
-        out.writeInt(enumValue(enumeration));
     }
 
     protected static int enumValue(Enum<?> enumeration) {
