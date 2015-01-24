@@ -4,6 +4,8 @@
 
 package com.kloudtek.util.io;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.DataOutput;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -75,7 +77,7 @@ public class DataOutputStream extends java.io.DataOutputStream {
         writeInt(enumValue(enumeration));
     }
 
-    public void writeEnum(Enum<?> enumeration) throws IOException {
+    public void writeEnum(@Nullable Enum<?> enumeration) throws IOException {
         writeUnsignedNumber(enumValue(enumeration));
     }
 
@@ -128,6 +130,6 @@ public class DataOutputStream extends java.io.DataOutputStream {
     }
 
     protected static int enumValue(Enum<?> enumeration) {
-        return enumeration != null ? enumeration.ordinal() : -1;
+        return enumeration != null ? enumeration.ordinal() + 1 : 0;
     }
 }
