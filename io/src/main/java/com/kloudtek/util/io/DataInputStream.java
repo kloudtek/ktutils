@@ -113,7 +113,13 @@ public class DataInputStream extends java.io.DataInputStream {
     }
 
     public static UUID readUUID(DataInput in) throws IOException {
-        return new UUID(in.readLong(), in.readLong());
+        final long mostSigBits = in.readLong();
+        final long leastSigBits = in.readLong();
+        if (mostSigBits != 0 && leastSigBits != 0) {
+            return new UUID(mostSigBits, leastSigBits);
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -163,7 +169,7 @@ public class DataInputStream extends java.io.DataInputStream {
         int nb = in.readInt();
         ArrayList<UUID> list = new ArrayList<UUID>(nb);
         for (int i = 0; i < nb; i++) {
-            list.add(new UUID(in.readLong(), in.readLong()));
+            list.add(readUUID(in));
         }
         return list;
     }

@@ -125,8 +125,13 @@ public class DataOutputStream extends java.io.DataOutputStream {
     }
 
     public static void writeUUID(DataOutput out, UUID uuid) throws IOException {
-        out.writeLong(uuid.getMostSignificantBits());
-        out.writeLong(uuid.getLeastSignificantBits());
+        if (uuid != null) {
+            out.writeLong(uuid.getMostSignificantBits());
+            out.writeLong(uuid.getLeastSignificantBits());
+        } else {
+            out.writeLong(0);
+            out.writeLong(0);
+        }
     }
 
     protected static int enumValue(Enum<?> enumeration) {
