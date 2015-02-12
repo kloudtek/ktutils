@@ -95,6 +95,9 @@ public class DataUtils {
     }
 
     public static UUID byteArrayToUuid(byte[] data) {
+        if (data == null || data.length != 16) {
+            throw new IllegalArgumentException();
+        }
         long m = (((long) data[0] << 56) +
                 ((long) (data[1] & 255) << 48) +
                 ((long) (data[2] & 255) << 40) +
