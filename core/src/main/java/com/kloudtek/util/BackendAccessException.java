@@ -7,7 +7,7 @@ package com.kloudtek.util;
 /**
  * Exception to indicate that an unexpected error occured while accessing a backend system (communication or system error)
  */
-public class BackendAccessException extends Exception {
+public class BackendAccessException extends RuntimeException {
     private static final long serialVersionUID = -3391930958801134924L;
 
     public BackendAccessException() {

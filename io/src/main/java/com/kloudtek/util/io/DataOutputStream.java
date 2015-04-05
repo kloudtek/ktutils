@@ -35,8 +35,8 @@ public class DataOutputStream extends java.io.DataOutputStream {
     }
 
     public void writeUnsignedNumber(long number) throws IOException {
-        if (number > MAX) {
-            throw new IllegalArgumentException("Number too large");
+        if (number < 0) {
+            throw new IllegalArgumentException("Number isn't unsigned");
         }
         int shift = 0;
         final int maxBounds = BOUNDS.length;
