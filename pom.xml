@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2014 Kloudtek Ltd
+  ~ Copyright (c) 2015 Kloudtek Ltd
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -306,11 +306,6 @@
         </pluginRepository>
     </pluginRepositories>
     <distributionManagement>
-        <!--        <site>
-                    <id>kloudtek-oss</id>
-                    <name>S3 Release Repository</name>
-                    <url>s3://maven.kloudtek.com/sites/ktutils-snapshot</url>
-                </site>-->
         <repository>
             <id>kloudtek-oss-releases</id>
             <name>S3 Release Repository</name>

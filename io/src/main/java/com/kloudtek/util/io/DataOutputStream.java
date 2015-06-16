@@ -109,6 +109,62 @@ public class DataOutputStream extends java.io.DataOutputStream {
         }
     }
 
+    public void writeNullableBoolean(Boolean value) throws IOException {
+        final boolean isNotNull = value != null;
+        writeBoolean(isNotNull);
+        if (isNotNull) {
+            writeBoolean(value);
+        }
+    }
+
+    public void writeNullableByte(Byte value) throws IOException {
+        final boolean isNotNull = value != null;
+        writeBoolean(isNotNull);
+        if (isNotNull) {
+            writeByte(value);
+        }
+    }
+
+    public void writeNullableShort(Short value) throws IOException {
+        final boolean isNotNull = value != null;
+        writeBoolean(isNotNull);
+        if (isNotNull) {
+            writeShort(value);
+        }
+    }
+
+    public void writeNullableInt(Integer value) throws IOException {
+        final boolean isNotNull = value != null;
+        writeBoolean(isNotNull);
+        if (isNotNull) {
+            writeInt(value);
+        }
+    }
+
+    public void writeNullableLong(Long value) throws IOException {
+        final boolean isNotNull = value != null;
+        writeBoolean(isNotNull);
+        if (isNotNull) {
+            writeLong(value);
+        }
+    }
+
+    public void writeNullableFloat(Float value) throws IOException {
+        final boolean isNotNull = value != null;
+        writeBoolean(isNotNull);
+        if (isNotNull) {
+            writeFloat(value);
+        }
+    }
+
+    public void writeNullableDouble(Float value) throws IOException {
+        final boolean isNotNull = value != null;
+        writeBoolean(isNotNull);
+        if (isNotNull) {
+            writeDouble(value);
+        }
+    }
+
     public static void writeString(DataOutput out, String str) throws IOException {
         out.writeBoolean(str != null);
         if (str != null) {

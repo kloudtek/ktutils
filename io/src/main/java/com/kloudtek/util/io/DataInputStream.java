@@ -104,6 +104,62 @@ public class DataInputStream extends java.io.DataInputStream {
         return readEnum(enumClass, (int) readUnsignedNumber());
     }
 
+    public Boolean readNullableBoolean() throws IOException {
+        if (readBoolean()) {
+            return readBoolean();
+        } else {
+            return null;
+        }
+    }
+
+    public Byte readNullableByte() throws IOException {
+        if (readBoolean()) {
+            return readByte();
+        } else {
+            return null;
+        }
+    }
+
+    public Short readNullableShort() throws IOException {
+        if (readBoolean()) {
+            return readShort();
+        } else {
+            return null;
+        }
+    }
+
+    public Integer readNullableInt() throws IOException {
+        if (readBoolean()) {
+            return readInt();
+        } else {
+            return null;
+        }
+    }
+
+    public Long readNullableLong() throws IOException {
+        if (readBoolean()) {
+            return readLong();
+        } else {
+            return null;
+        }
+    }
+
+    public Float readNullableFloat() throws IOException {
+        if (readBoolean()) {
+            return readFloat();
+        } else {
+            return null;
+        }
+    }
+
+    public Double readNullableDouble() throws IOException {
+        if (readBoolean()) {
+            return readDouble();
+        } else {
+            return null;
+        }
+    }
+
     public static String readString(DataInput in) throws IOException {
         if (in.readBoolean()) {
             return in.readUTF();

@@ -25,25 +25,115 @@
         <module name="geo" />
         <module name="io" />
         <module name="jee" />
-        <module name="ktutils" />
-        <module name="ktutils-android" />
-        <module name="ktutils-core" />
-        <module name="ktutils-dao" />
         <module name="ktutils-exceptions" />
-        <module name="ktutils-geo" />
-        <module name="ktutils-io" />
-        <module name="ktutils-jee" />
-        <module name="ktutils-jetty" />
-        <module name="ktutils-jsf" />
-        <module name="ktutils-logging" />
-        <module name="ktutils-security" />
-        <module name="ktutils-selenium" />
-        <module name="ktutils-spring" />
-        <module name="ktutils-testing" />
-        <module name="ktutils-xml" />
         <module name="logging" />
         <module name="spring" />
         <module name="xml" />
+      </profile>
+      <profile default="false" name="Annotation profile for ktutils-core" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ktutils-core" />
+      </profile>
+      <profile default="false" name="Annotation profile for ktutils-jetty" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ktutils-jetty" />
+      </profile>
+      <profile default="false" name="Annotation profile for ktutils" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ktutils" />
+      </profile>
+      <profile default="false" name="Annotation profile for ktutils-io" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ktutils-io" />
+      </profile>
+      <profile default="false" name="Annotation profile for ktutils-xml" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ktutils-xml" />
+      </profile>
+      <profile default="false" name="Annotation profile for ktutils-logging" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ktutils-logging" />
+      </profile>
+      <profile default="false" name="Annotation profile for ktutils-jee" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ktutils-jee" />
+      </profile>
+      <profile default="false" name="Annotation profile for ktutils-selenium" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ktutils-selenium" />
+      </profile>
+      <profile default="false" name="Annotation profile for ktutils-jsf" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ktutils-jsf" />
+      </profile>
+      <profile default="false" name="Annotation profile for ktutils-spring" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ktutils-spring" />
+      </profile>
+      <profile default="false" name="Annotation profile for ktutils-geo" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ktutils-geo" />
+      </profile>
+      <profile default="false" name="Annotation profile for ktutils-security" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ktutils-security" />
+      </profile>
+      <profile default="false" name="Annotation profile for ktutils-dao" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ktutils-dao" />
+      </profile>
+      <profile default="false" name="Annotation profile for ktutils-android" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ktutils-android" />
+      </profile>
+      <profile default="false" name="Annotation profile for ktutils-testing" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="ktutils-testing" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -74,4 +164,3 @@
     </bytecodeTargetLevel>
   </component>
 </project>
-
