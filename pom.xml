@@ -256,14 +256,14 @@
     </build>
     <distributionManagement>
         <repository>
-            <id>kloudtek-oss-snapshots</id>
-            <name>Kloudtek OSS Snapshots Repository</name>
-            <url>${repo.oss.snapshot.url}</url>
-        </repository>
-        <snapshotRepository>
             <id>kloudtek-oss-releases</id>
             <name>Kloudtek OSS Releases Repository</name>
             <url>${repo.oss.release.url}</url>
+        </repository>
+        <snapshotRepository>
+            <id>kloudtek-oss-snapshots</id>
+            <name>Kloudtek OSS Snapshots Repository</name>
+            <url>${repo.oss.snapshot.url}</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
