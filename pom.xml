@@ -43,6 +43,10 @@
         <connection>scm:git:git@github.com:Kloudtek/ktutils.git</connection>
         <developerConnection>scm:git:git@github.com:Kloudtek/ktutils.git</developerConnection>
     </scm>
+    <properties>
+        <repo.oss.snapshot.url/>
+        <repo.oss.release.url/>
+    </properties>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
@@ -250,4 +254,16 @@
             </plugin>
         </plugins>
     </build>
+    <distributionManagement>
+        <repository>
+            <id>kloudtek-oss-releases</id>
+            <name>Kloudtek OSS Snapshots Repository</name>
+            <url>${repo.oss.release.url}</url>
+        </repository>
+        <snapshotRepository>
+            <id>kloudtek-oss-snapshots</id>
+            <name>Kloudtek OSS Releases Repository</name>
+            <url>${repo.oss.snapshot.url}</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
