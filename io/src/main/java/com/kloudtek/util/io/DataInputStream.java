@@ -4,6 +4,7 @@
 
 package com.kloudtek.util.io;
 
+import java.io.ByteArrayOutputStream;
 import java.io.DataInput;
 import java.io.IOException;
 import java.io.InputStream;
@@ -62,6 +63,10 @@ public class DataInputStream extends java.io.DataInputStream {
 
     public byte[] readData(boolean nonNull) throws IOException {
         return readData(nonNull, DEFAULT_MAX_LEN);
+    }
+
+    public byte[] readRemainingData() throws IOException {
+        return readRemainingData(this);
     }
 
     public byte[] readData(boolean nonNull, int maxLen) throws IOException {
@@ -209,6 +214,48 @@ public class DataInputStream extends java.io.DataInputStream {
             return new byte[0];
         } else {
             return null;
+        }
+    }
+
+    public static byte[] readRemainingData(java.io.DataInputStream in) throws IOException {
+        return readRemainingData(in, DEFAULT_MAX_LEN);
+    }
+
+    public static byte[] readRemainingData(java.io.DataInputStream in, int maxLen) throws IOException {
+        int available = in.available();
+        if (available > maxLen) {
+            throw new IOException("Data block larger than max " + maxLen + ": " + available);
+        }
+        byte[] block = null;
+        if (available > 0) {
+            block = readFully(in, available);
+        }
+        int v = in.read();
+        if (v == -1) {
+            return block != null ? block : new byte[0];
+        } else {
+            final ByteArrayOutputStream buf = new ByteArrayOutputStream();
+            if (block != null) {
+                buf.write(block);
+            }
+            buf.write(v);
+            while (v != -1) {
+                available = in.available();
+                if (available > 0) {
+                    if (buf.size() + available > maxLen) {
+                        throw new IOException("Data block larger than max " + maxLen + ": " + buf.size() + available);
+                    }
+                    buf.write(readFully(in, available));
+                }
+                v = in.read();
+                if (buf.size() + 1 > maxLen) {
+                    throw new IOException("Data block larger than max " + maxLen + ": " + buf.size() + 1);
+                }
+                if (v != -1) {
+                    buf.write(v);
+                }
+            }
+            return buf.toByteArray();
         }
     }
 
