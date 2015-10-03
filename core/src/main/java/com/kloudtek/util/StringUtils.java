@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Kloudtek Ltd
+ * Copyright (c) 2015 Kloudtek Ltd
  */
 
 package com.kloudtek.util;
@@ -7,6 +7,9 @@ package com.kloudtek.util;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+
+import static java.lang.Character.isWhitespace;
+import static java.lang.Character.toTitleCase;
 
 /**
  * <p>Various string manipulation utility functions</p>
@@ -21,7 +24,16 @@ public class StringUtils {
     }
 
     public static boolean isBlank(String txt) {
-        return txt == null || txt.isEmpty();
+        int strLen;
+        if (txt == null || (strLen = txt.length()) == 0) {
+            return true;
+        }
+        for (int i = 0; i < strLen; i++) {
+            if ((!isWhitespace(txt.charAt(i)))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static boolean isNotBlank(String txt) {
@@ -62,7 +74,7 @@ public class StringUtils {
             return txt;
         }
         final StringBuilder tmp = new StringBuilder(len);
-        tmp.append(Character.toTitleCase(txt.charAt(0)));
+        tmp.append(toTitleCase(txt.charAt(0)));
         tmp.append(txt.substring(1));
         return tmp.toString();
     }
