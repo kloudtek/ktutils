@@ -10,6 +10,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.StrictMode;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,7 +35,7 @@ public class AndroidUtils {
      * @param title   Title
      * @param message Message to display
      */
-    public static void showErrorDialog(Context context, String title, String message) {
+    public static void showErrorDialog(@NotNull Context context, @Nullable String title, @NotNull String message) {
         createDialogBuilder(context, title, message).create().show();
     }
 
@@ -43,7 +45,7 @@ public class AndroidUtils {
      * @param context Context
      * @param e       Exception to display
      */
-    public static void showErrorDialog(Context context, Exception e) {
+    public static void showErrorDialog(@NotNull Context context, @NotNull Exception e) {
         createErrorDialogBuilder(context, e).create().show();
     }
 
@@ -54,7 +56,7 @@ public class AndroidUtils {
      * @param e       Exception to display
      * @return Dialog builder
      */
-    public static AlertDialog.Builder createErrorDialogBuilder(Context context, Exception e) {
+    public static AlertDialog.Builder createErrorDialogBuilder(@NotNull Context context, @NotNull Exception e) {
         return createDialogBuilder(context, "Unexpected error", "An unexpected error has occurred: " + e.getMessage());
     }
 
@@ -66,9 +68,8 @@ public class AndroidUtils {
      * @param message Message to display
      * @return Dialog builder
      */
-    public static AlertDialog.Builder createDialogBuilder(Context context, String title, String message) {
-        return new AlertDialog.Builder(context)
-                .setTitle(title)
+    public static AlertDialog.Builder createDialogBuilder(@NotNull Context context, @Nullable String title, @NotNull String message) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context)
                 .setMessage(message)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
@@ -76,6 +77,10 @@ public class AndroidUtils {
                         dialog.dismiss();
                     }
                 });
+        if (title != null) {
+            builder.setTitle(title);
+        }
+        return builder;
     }
 
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
