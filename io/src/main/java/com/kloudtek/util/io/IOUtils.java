@@ -93,7 +93,8 @@ public class IOUtils {
         if (closeable != null) {
             try {
                 closeable.close();
-            } catch (Exception e) {
+            } catch (Throwable e) {
+                // needs to be throwable because in some cases closing a classpath resource jar throws ExceptionInInitializerError ?!?!?!?!?!?
             }
         }
     }
