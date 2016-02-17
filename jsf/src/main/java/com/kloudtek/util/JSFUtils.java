@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Kloudtek Ltd
+ * Copyright (c) 2016 Kloudtek Ltd
  */
 
 package com.kloudtek.util;
@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -146,12 +147,24 @@ public class JSFUtils {
         addMessage(clientId, FacesMessage.SEVERITY_INFO, summary, null);
     }
 
+    public static void addInfoMessage(String summary) {
+        addInfoMessage(null, summary);
+    }
+
     public static void addWarnMessage(String clientId, String summary) {
         addMessage(clientId, FacesMessage.SEVERITY_WARN, summary, null);
     }
 
+    public static void addWarnMessage(String summary) {
+        addWarnMessage(null, summary);
+    }
+
     public static void addFatalMessage(String clientId, String summary) {
         addMessage(clientId, FacesMessage.SEVERITY_FATAL, summary, null);
+    }
+
+    public static void addFatalMessage(String summary) {
+        addFatalMessage(null, summary);
     }
 
     public static String getForwardRequestUri() {
@@ -232,5 +245,9 @@ public class JSFUtils {
 
     public static <X> X getManagedBean(String name, Class<X> classType) {
         return FacesContext.getCurrentInstance().getApplication().evaluateExpressionGet(FacesContext.getCurrentInstance(), "#{" + name + "}", classType);
+    }
+
+    public static void redirect(String url) throws IOException {
+        getExternalContext().redirect(url);
     }
 }
