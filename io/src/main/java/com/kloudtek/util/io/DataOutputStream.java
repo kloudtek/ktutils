@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Kloudtek Ltd
+ * Copyright (c) 2016 Kloudtek Ltd
  */
 
 package com.kloudtek.util.io;
@@ -24,14 +24,9 @@ public class DataOutputStream extends java.io.DataOutputStream {
         super(out);
     }
 
-    /**
-     * Will write a boolean to indicate if the string is not null, and if it isn't then write the string using writeUTF
-     *
-     * @param str
-     * @throws IOException
-     */
+    @Deprecated
     public void writeString(String str) throws IOException {
-        writeString(this, str);
+        writeNullableUTF(this, str);
     }
 
     public void writeUnsignedNumber(long number) throws IOException {
@@ -165,11 +160,20 @@ public class DataOutputStream extends java.io.DataOutputStream {
         }
     }
 
-    public static void writeString(DataOutput out, String str) throws IOException {
+    public void writeNullableUTF(String str) throws IOException {
+        writeNullableUTF(this, str);
+    }
+
+    public static void writeNullableUTF(DataOutput out, String str) throws IOException {
         out.writeBoolean(str != null);
         if (str != null) {
             out.writeUTF(str);
         }
+    }
+
+    @Deprecated
+    public static void writeString(DataOutput out, String str) throws IOException {
+        writeNullableUTF(out, str);
     }
 
     public static void writeData(DataOutput out, byte[] data) throws IOException {

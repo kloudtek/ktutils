@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Kloudtek Ltd
+ * Copyright (c) 2016 Kloudtek Ltd
  */
 
 package com.kloudtek.util.io;
@@ -22,8 +22,9 @@ public class DataInputStream extends java.io.DataInputStream {
         super(in);
     }
 
+    @Deprecated
     public String readString() throws IOException {
-        return readString(this);
+        return readNullableUTF(this);
     }
 
     public UUID readUUID() throws IOException {
@@ -165,12 +166,21 @@ public class DataInputStream extends java.io.DataInputStream {
         }
     }
 
-    public static String readString(DataInput in) throws IOException {
+    public String readNullableUTF() throws IOException {
+        return readNullableUTF(this);
+    }
+
+    public static String readNullableUTF(DataInput in) throws IOException {
         if (in.readBoolean()) {
             return in.readUTF();
         } else {
             return null;
         }
+    }
+
+    @Deprecated
+    public static String readString(DataInput in) throws IOException {
+        return readNullableUTF(in);
     }
 
     public static UUID readUUID(DataInput in) throws IOException {
