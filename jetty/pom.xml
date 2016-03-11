@@ -14,6 +14,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>ktutils-jetty</artifactId>
+    <name>KTUtils Jetty</name>
 
     <dependencies>
         <dependency>
