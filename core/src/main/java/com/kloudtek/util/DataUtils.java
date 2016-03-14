@@ -125,7 +125,7 @@ public class DataUtils {
      * @return base32 string for the uuid
      */
     @NotNull
-    public static String toB32String(@NotNull UUID uuid) {
+    public static String uuidToB32Str(@NotNull UUID uuid) {
         return StringUtils.base32Encode(uuidToByteArray(uuid),true).replace("=","");
     }
 
@@ -136,6 +136,6 @@ public class DataUtils {
      */
     @NotNull
     public static UUID b32StrToUuid( @NotNull  String base32Uuid ) {
-        return byteArrayToUuid(StringUtils.base32Decode(base32Uuid));
+        return byteArrayToUuid(StringUtils.base32Decode(base32Uuid,true));
     }
 }

@@ -71,4 +71,12 @@ public class DataUtilsTest {
         UUID uuid2 = byteArrayToUuid(uuidToByteArray(uuid));
         assertEquals(uuid, uuid2);
     }
+
+    @Test
+    public void testB32UuidConversion() throws Exception {
+        UUID uuid = UUID.randomUUID();
+        String base32Uuid = DataUtils.uuidToB32Str(uuid);
+        UUID uuid2 = b32StrToUuid(base32Uuid);
+        assertEquals(uuid, uuid2);
+    }
 }
