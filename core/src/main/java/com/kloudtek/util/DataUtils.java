@@ -4,6 +4,8 @@
 
 package com.kloudtek.util;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.UUID;
 
 /**
@@ -115,5 +117,25 @@ public class DataUtils {
                 ((data[14] & 255) << 8) +
                 ((data[15] & 255)));
         return new UUID(m, l);
+    }
+
+    /**
+     * Convert a UUID to a base 32 string (without padding)
+     * @param uuid UUID
+     * @return base32 string for the uuid
+     */
+    @NotNull
+    public static String toB32String(@NotNull UUID uuid) {
+        return StringUtils.base32Encode(uuidToByteArray(uuid),true).replace("=","");
+    }
+
+    /**
+     * Convert a UUID in base 32 string format into a {@link UUID} object
+     * @param base32Uuid uuid in base 32 format
+     * @return UUID object
+     */
+    @NotNull
+    public static UUID b32StrToUuid( @NotNull  String base32Uuid ) {
+        return byteArrayToUuid(StringUtils.base32Decode(base32Uuid));
     }
 }
