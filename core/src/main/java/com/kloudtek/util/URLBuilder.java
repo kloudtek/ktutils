@@ -32,7 +32,11 @@ public class URLBuilder {
             userInfo = u.getUserInfo();
             host = u.getHost();
             port = u.getPort();
-            path = new StringBuilder(u.getPath());
+            if( u.getPath() != null ) {
+                path = new StringBuilder(u.getPath());
+            } else {
+                path = new StringBuilder();
+            }
             if (!StringUtils.isEmpty(u.getQuery())) {
                 StringTokenizer tok = new StringTokenizer(u.getQuery(), "&");
                 while (tok.hasMoreElements()) {
