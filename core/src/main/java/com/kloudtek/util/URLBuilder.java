@@ -101,7 +101,7 @@ public class URLBuilder {
                 this.path.append(path);
             }
         }
-        boolean leftHasSlash = this.path.charAt(this.path.length() - 1) == '/';
+        boolean leftHasSlash = this.path.length() > 0 && this.path.charAt(this.path.length() - 1) == '/';
         boolean rightHasSlash = path.startsWith("/");
         if (!leftHasSlash && !rightHasSlash) {
             this.path.append('/');
