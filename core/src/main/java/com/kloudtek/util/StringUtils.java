@@ -15,6 +15,8 @@ import static java.lang.Character.toTitleCase;
  * <p>Various string manipulation utility functions</p>
  */
 public class StringUtils {
+    public static final String UNSAFE_URLPATH = " %$&+,/:;=?@<>#%";
+
     public static boolean isEmpty(String txt) {
         return txt == null || txt.isEmpty();
     }
@@ -109,6 +111,27 @@ public class StringUtils {
 
     public static byte[] base32Decode(String data, boolean useHex) {
         return new Base32(0, Base64.CHUNK_SEPARATOR, useHex).decode(data);
+    }
+
+    public static String urlPathEncode( String path ) {
+        StringBuilder buffer = new StringBuilder();
+        for (char c : path.toCharArray()) {
+            if (UNSAFE_URLPATH.indexOf(c) >= 0) {
+                buffer.append('%');
+                buffer.append(toHex(c / 16));
+                buffer.append(toHex(c % 16));
+            } else if( c < 32 && c > 128 ) {
+                buffer.append(urlEncode(Character.toString(c)));
+            } else {
+                buffer.append(c);
+            }
+        }
+        return buffer.toString();
+    }
+
+
+    private static char toHex(int ch) {
+        return (char) (ch < 10 ? '0' + ch : 'A' + ch - 10);
     }
 
     /**

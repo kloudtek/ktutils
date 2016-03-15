@@ -15,4 +15,17 @@
 
     <artifactId>ktutils-core</artifactId>
     <name>KTUtils Core</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>9.3.3.v20150827</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-webapp</artifactId>
+            <version>9.3.3.v20150827</version>
+        </dependency>
+    </dependencies>
 </project>
