@@ -94,7 +94,7 @@ public class URLBuilder {
         if (encode) {
             this.path.append(StringUtils.urlPathEncode(path));
         } else {
-            boolean leftHasSlash = this.path.charAt(this.path.length() - 1) == '/';
+            boolean leftHasSlash = this.path.length() > 0 && this.path.charAt(this.path.length() - 1) == '/';
             boolean rightHasSlash = path.startsWith("/");
             if (!leftHasSlash && !rightHasSlash) {
                 this.path.append('/');
@@ -104,16 +104,6 @@ public class URLBuilder {
             } else {
                 this.path.append(path);
             }
-        }
-        boolean leftHasSlash = this.path.length() > 0 && this.path.charAt(this.path.length() - 1) == '/';
-        boolean rightHasSlash = path.startsWith("/");
-        if (!leftHasSlash && !rightHasSlash) {
-            this.path.append('/');
-        }
-        if (leftHasSlash && rightHasSlash) {
-            this.path.append(path.substring(1, path.length()));
-        } else {
-            this.path.append(path);
         }
         return this;
     }
@@ -187,17 +177,22 @@ public class URLBuilder {
     }
 
     public URI toUri() {
-        StringBuilder query = new StringBuilder();
-        Iterator<Param> i = parameters.iterator();
-        while (i.hasNext()) {
-            Param p = i.next();
-            query.append(p.key).append("=").append(p.value);
-            if (i.hasNext()) {
-                query.append("&");
+        final StringBuilder query;
+        if( ! parameters.isEmpty() ) {
+            query = new StringBuilder();
+            Iterator<Param> i = parameters.iterator();
+            while (i.hasNext()) {
+                Param p = i.next();
+                query.append(p.key).append("=").append(p.value);
+                if (i.hasNext()) {
+                    query.append("&");
+                }
             }
+        } else {
+            query = null;
         }
         try {
-            return new URI(protocol, userInfo, host, port, path.toString(), query.toString(), ref);
+            return new URI(protocol, userInfo, host, port, path.toString(), query != null ? query.toString() : null, ref);
         } catch (URISyntaxException e) {
             throw new IllegalArgumentException("Invalid url", e);
         }

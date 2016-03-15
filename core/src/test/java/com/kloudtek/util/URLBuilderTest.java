@@ -19,50 +19,17 @@ import java.net.URL;
  * Created by yannick on 14/3/16.
  */
 public class URLBuilderTest {
-//    public static final String PATH = "/\\!@#$%^&*(){}'\"`§てすとｽｾｿﾀ %$&+,/:;=?@<>#%";
-    public static final String PATH =   "/ ";
     private String path;
 
     @Test
-    public void testURLBuilder() throws Exception {
-        String path = decodeUrl("/test/"+StringUtils.urlPathEncode(PATH));
-        Assert.assertEquals(path,"/test/"+PATH);
+    public void testBuildUrlNoQuery() {
+        String url = new URLBuilder("http://site").path("foo").path("bar").path("/buz/").path("baz/").path("/boz").toString();
+        Assert.assertEquals(url,"http://site/foo/bar/buz/baz/boz");
     }
 
-    public String decodeUrl(final String path) throws Exception {
-        ServerSocket serverSocket = new ServerSocket(0);
-        final int port = serverSocket.getLocalPort();
-        serverSocket.close();
-        Server server = new Server(port);
-        server.setStopAtShutdown(true);
-        ServletContextHandler ctx = new ServletContextHandler(server, "/", true, false);
-        ctx.addServlet(new ServletHolder(new DecodeServlet()), "/*");
-        server.start();
-        ThreadUtils.sleep(500);
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    ThreadUtils.sleep(500);
-                    InputStream is = new URL("http://localhost:" + port + path).openStream();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }.start();
-        synchronized (this) {
-            wait();
-        }
-        return this.path;
-    }
-
-    public class DecodeServlet extends HttpServlet {
-        @Override
-        protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            path = req.getPathInfo();
-            synchronized (URLBuilderTest.this) {
-                URLBuilderTest.this.notifyAll();
-            }
-        }
+    @Test
+    public void testBuildUrlWithQuery() {
+        String url = new URLBuilder("http://site/foo").path("bar").param("key1","val1").param("key2","val2").toString();
+        Assert.assertEquals(url,"http://site/foo/bar?key1=val1&key2=val2");
     }
 }
