@@ -4,14 +4,13 @@
 
 package com.kloudtek.util;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class URLBuilder {
     private String protocol;
@@ -37,19 +36,24 @@ public class URLBuilder {
             } else {
                 path = new StringBuilder();
             }
-            if (!StringUtils.isEmpty(u.getQuery())) {
-                StringTokenizer tok = new StringTokenizer(u.getQuery(), "&");
-                while (tok.hasMoreElements()) {
-                    String[] kv = tok.nextToken().split("=");
-                    if (kv.length != 2) {
-                        throw new IllegalArgumentException("Invalid URL query params: " + url);
-                    }
-                    parameters.add(new Param(kv[0], kv[1]));
-                }
+            if (StringUtils.isNotEmpty(u.getQuery())) {
+                parseQueryParams(u.getQuery());
             }
             ref = u.getRef();
         } catch (MalformedURLException e) {
             throw new IllegalArgumentException("Invalid url");
+        }
+    }
+
+    @NotNull
+    private void parseQueryParams(String query) {
+        StringTokenizer tok = new StringTokenizer(query, "&");
+        while (tok.hasMoreElements()) {
+            String[] kv = tok.nextToken().split("=");
+            if (kv.length != 2) {
+                throw new IllegalArgumentException("Invalid URL query params: "+ Arrays.toString(kv) );
+            }
+            parameters.add(new Param(kv[0], kv[1]));
         }
     }
 
@@ -94,6 +98,11 @@ public class URLBuilder {
         if (encode) {
             this.path.append(StringUtils.urlPathEncode(path));
         } else {
+            int qidx = path.indexOf("?");
+            if( qidx != -1 ) {
+                parseQueryParams(path.substring(qidx+1,path.length()));
+                path = path.substring(0,qidx);
+            }
             boolean leftHasSlash = this.path.length() > 0 && this.path.charAt(this.path.length() - 1) == '/';
             boolean rightHasSlash = path.startsWith("/");
             if (!leftHasSlash && !rightHasSlash) {

@@ -28,8 +28,14 @@ public class URLBuilderTest {
     }
 
     @Test
-    public void testBuildUrlWithQuery() {
+    public void testBuildUrlWithQueryParams() {
         String url = new URLBuilder("http://site/foo").path("bar").param("key1","val1").param("key2","val2").toString();
         Assert.assertEquals(url,"http://site/foo/bar?key1=val1&key2=val2");
+    }
+
+    @Test
+    public void testBuildUrlWithInlineQuery() {
+        String url = new URLBuilder("http://site/foo").param("key1","val1").path("bar?key2=val2&key3=val3").param("key4","val4").path("baz").toString();
+        Assert.assertEquals(url,"http://site/foo/bar/baz?key1=val1&key2=val2&key3=val3&key4=val4");
     }
 }
