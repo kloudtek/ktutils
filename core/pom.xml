@@ -21,11 +21,13 @@
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
             <version>9.3.3.v20150827</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-webapp</artifactId>
             <version>9.3.3.v20150827</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>
