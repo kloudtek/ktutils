@@ -19,8 +19,6 @@ import java.net.URL;
  * Created by yannick on 14/3/16.
  */
 public class URLBuilderTest {
-    private String path;
-
     @Test
     public void testBuildUrlNoQuery() {
         String url = new URLBuilder("http://site").path("foo").path("bar").path("/buz/").path("baz/").path("/boz").toString();
@@ -37,5 +35,11 @@ public class URLBuilderTest {
     public void testBuildUrlWithInlineQuery() {
         String url = new URLBuilder("http://site/foo").param("key1","val1").path("bar?key2=val2&key3=val3").param("key4","val4").path("baz").toString();
         Assert.assertEquals(url,"http://site/foo/bar/baz?key1=val1&key2=val2&key3=val3&key4=val4");
+    }
+
+    @Test
+    public void testBuildRelative() {
+        String url = new URLBuilder("/foo").param("key1","val1").path("bar?key2=val2&key3=val3").param("key4","val4").path("baz").toString();
+        Assert.assertEquals(url,"/foo/bar/baz?key1=val1&key2=val2&key3=val3&key4=val4");
     }
 }

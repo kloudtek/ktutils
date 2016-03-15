@@ -4,8 +4,6 @@
 
 package com.kloudtek.util;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -25,33 +23,28 @@ public class URLBuilder {
         if (url == null) {
             throw new IllegalArgumentException("url mustn't be null");
         }
-        try {
-            URL u = new URL(url);
-            protocol = u.getProtocol();
-            userInfo = u.getUserInfo();
-            host = u.getHost();
-            port = u.getPort();
-            if( u.getPath() != null ) {
-                path = new StringBuilder(u.getPath());
-            } else {
-                path = new StringBuilder();
-            }
-            if (StringUtils.isNotEmpty(u.getQuery())) {
-                parseQueryParams(u.getQuery());
-            }
-            ref = u.getRef();
-        } catch (MalformedURLException e) {
-            throw new IllegalArgumentException("Invalid url");
+        URI u = URI.create(url);
+        protocol = u.getScheme();
+        userInfo = u.getUserInfo();
+        host = u.getHost();
+        port = u.getPort();
+        if (u.getPath() != null) {
+            path = new StringBuilder(u.getPath());
+        } else {
+            path = new StringBuilder();
         }
+        if (StringUtils.isNotEmpty(u.getQuery())) {
+            parseQueryParams(u.getQuery());
+        }
+        ref = u.getFragment();
     }
 
-    @NotNull
     private void parseQueryParams(String query) {
         StringTokenizer tok = new StringTokenizer(query, "&");
         while (tok.hasMoreElements()) {
             String[] kv = tok.nextToken().split("=");
             if (kv.length != 2) {
-                throw new IllegalArgumentException("Invalid URL query params: "+ Arrays.toString(kv) );
+                throw new IllegalArgumentException("Invalid URL query params: " + Arrays.toString(kv));
             }
             parameters.add(new Param(kv[0], kv[1]));
         }
@@ -80,30 +73,32 @@ public class URLBuilder {
     /**
      * Add a path element to the URL being built. It will add (or remove) / symbols as needed
      *
-     * @param path   path
+     * @param path path
      * @return URLBuilder
      */
     public URLBuilder path(String path) {
-        return path(path,false);
+        return path(path, false);
     }
 
     /**
-     * Add a path element to the URL being built. It will add (or remove) / symbols as needed (unless encode is true)
-     *
+     * Add a path element to the URL being built separate by a /. It will also parse and add any query parameters present.
      * @param path   path
-     * @param encode If true then the any path will be encoded
+     * @param encode If true then the any path will be encoded, query parameters won't be parsed and a starting / will not be remove should there be a slash at end of current path.
      * @return URLBuilder
      */
     public URLBuilder path(String path, boolean encode) {
+        boolean leftHasSlash = this.path.length() > 0 && this.path.charAt(this.path.length() - 1) == '/';
         if (encode) {
+            if( ! leftHasSlash ) {
+                this.path.append('/');
+            }
             this.path.append(StringUtils.urlPathEncode(path));
         } else {
             int qidx = path.indexOf("?");
-            if( qidx != -1 ) {
-                parseQueryParams(path.substring(qidx+1,path.length()));
-                path = path.substring(0,qidx);
+            if (qidx != -1) {
+                parseQueryParams(path.substring(qidx + 1, path.length()));
+                path = path.substring(0, qidx);
             }
-            boolean leftHasSlash = this.path.length() > 0 && this.path.charAt(this.path.length() - 1) == '/';
             boolean rightHasSlash = path.startsWith("/");
             if (!leftHasSlash && !rightHasSlash) {
                 this.path.append('/');
@@ -187,7 +182,7 @@ public class URLBuilder {
 
     public URI toUri() {
         final StringBuilder query;
-        if( ! parameters.isEmpty() ) {
+        if (!parameters.isEmpty()) {
             query = new StringBuilder();
             Iterator<Param> i = parameters.iterator();
             while (i.hasNext()) {
