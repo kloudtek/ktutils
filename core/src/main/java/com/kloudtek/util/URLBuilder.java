@@ -47,10 +47,13 @@ public class URLBuilder {
         StringTokenizer tok = new StringTokenizer(query, "&");
         while (tok.hasMoreElements()) {
             String[] kv = tok.nextToken().split("=");
-            if (kv.length != 2) {
+            if (kv.length > 2) {
                 throw new IllegalArgumentException("Invalid URL query params: " + Arrays.toString(kv));
+            } else if( kv.length == 1 ) {
+                parameters.add(new Param(kv[0], ""));
+            } else {
+                parameters.add(new Param(kv[0], kv[1]));
             }
-            parameters.add(new Param(kv[0], kv[1]));
         }
     }
 
