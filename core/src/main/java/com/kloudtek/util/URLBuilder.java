@@ -6,9 +6,10 @@ package com.kloudtek.util;
 
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
+
+import static com.kloudtek.util.StringUtils.isNotEmpty;
 
 public class URLBuilder {
     private String protocol;
@@ -28,12 +29,15 @@ public class URLBuilder {
         userInfo = u.getUserInfo();
         host = u.getHost();
         port = u.getPort();
-        if (u.getPath() != null) {
-            path = new StringBuilder(u.getPath());
-        } else {
-            path = new StringBuilder();
+        path = new StringBuilder();
+        String uPath = u.getPath();
+        if (uPath != null) {
+            if (!uPath.startsWith("/")) {
+                path.append('/');
+            }
+            this.path.append(uPath);
         }
-        if (StringUtils.isNotEmpty(u.getQuery())) {
+        if (isNotEmpty(u.getQuery())) {
             parseQueryParams(u.getQuery());
         }
         ref = u.getFragment();
@@ -82,6 +86,7 @@ public class URLBuilder {
 
     /**
      * Add a path element to the URL being built separate by a /. It will also parse and add any query parameters present.
+     *
      * @param path   path
      * @param encode If true then the any path will be encoded, query parameters won't be parsed and a starting / will not be remove should there be a slash at end of current path.
      * @return URLBuilder
@@ -89,7 +94,7 @@ public class URLBuilder {
     public URLBuilder path(String path, boolean encode) {
         boolean leftHasSlash = this.path.length() > 0 && this.path.charAt(this.path.length() - 1) == '/';
         if (encode) {
-            if( ! leftHasSlash ) {
+            if (!leftHasSlash) {
                 this.path.append('/');
             }
             this.path.append(StringUtils.urlPathEncode(path));
@@ -172,39 +177,74 @@ public class URLBuilder {
         return this;
     }
 
+    public URLBuilder setUserInfo(String userInfo) {
+        this.userInfo = StringUtils.urlEncode(userInfo);
+        return this;
+    }
+
+    public URLBuilder setProtocol( String protocol ) {
+        this.protocol = protocol;
+        return this;
+    }
+
+    public URLBuilder setRef(String ref) {
+        this.ref = StringUtils.urlEncode(ref);
+        return this;
+    }
+
+    public URLBuilder setHost(String host) {
+        this.host = host;
+        return this;
+    }
+
+    public URLBuilder setPort(int port) {
+        this.port = port;
+        return this;
+    }
+
     public URL toUrl() {
         try {
-            return toUri().toURL();
+            return new URL(toString());
         } catch (MalformedURLException e) {
-            throw new IllegalArgumentException("Invalid url", e);
+            throw new IllegalArgumentException(e);
         }
     }
 
     public URI toUri() {
-        final StringBuilder query;
-        if (!parameters.isEmpty()) {
-            query = new StringBuilder();
-            Iterator<Param> i = parameters.iterator();
-            while (i.hasNext()) {
-                Param p = i.next();
-                query.append(p.key).append("=").append(p.value);
-                if (i.hasNext()) {
-                    query.append("&");
-                }
-            }
-        } else {
-            query = null;
-        }
-        try {
-            return new URI(protocol, userInfo, host, port, path.toString(), query != null ? query.toString() : null, ref);
-        } catch (URISyntaxException e) {
-            throw new IllegalArgumentException("Invalid url", e);
-        }
+        return URI.create(toString());
     }
 
     @Override
     public String toString() {
-        return toUri().toString();
+        StringBuilder url = new StringBuilder();
+        if (isNotEmpty(protocol)) {
+            url.append(protocol).append("://");
+        }
+        if (isNotEmpty(userInfo)) {
+            url.append(StringUtils.urlEncode(userInfo)).append('@');
+        }
+        if (isNotEmpty(host)) {
+            url.append(host);
+        }
+        if (port != -1) {
+            url.append(':').append(port);
+        }
+        url.append(path.toString());
+        if (!parameters.isEmpty()) {
+            url.append('?');
+            Iterator<Param> i = parameters.iterator();
+            while (i.hasNext()) {
+                Param p = i.next();
+                url.append(p.key).append("=").append(p.value);
+                if (i.hasNext()) {
+                    url.append("&");
+                }
+            }
+        }
+        if( ref != null ) {
+            url.append('#').append(ref);
+        }
+        return url.toString();
     }
 
     public class Param {
