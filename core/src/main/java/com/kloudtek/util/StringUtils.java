@@ -39,7 +39,7 @@ public class StringUtils {
     }
 
     public static boolean isNotBlank(String txt) {
-        return !isEmpty(txt);
+        return !isBlank(txt);
     }
 
     /**
