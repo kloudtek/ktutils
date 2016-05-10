@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
     <name>KTUtils Mule</name>
 
-    <artifactId>ktutils-testing-mule</artifactId>
+    <artifactId>ktutils-mule</artifactId>
 
     <dependencies>
         <dependency>
@@ -31,15 +31,4 @@
             </snapshots>
         </repository>
     </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>mulesoft-release</id>
-            <name>mulesoft release repository</name>
-            <layout>default</layout>
-            <url>http://repository.mulesoft.org/releases/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
 </project>
