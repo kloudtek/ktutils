@@ -14,18 +14,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.mule</groupId>
-            <artifactId>mule-core</artifactId>
-            <version>3.7.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mule</groupId>
-            <artifactId>mule-extensions</artifactId>
-            <version>3.7.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>org.mule.transports</groupId>
             <artifactId>mule-transport-http</artifactId>
             <version>3.7.0</version>
