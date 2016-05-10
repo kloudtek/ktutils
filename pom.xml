@@ -27,6 +27,7 @@
         <module>android</module>
         <module>dao</module>
         <module>security</module>
+        <module>testing-mule</module>
     </modules>
     <packaging>pom</packaging>
     <description>KloudTek utilities</description>
