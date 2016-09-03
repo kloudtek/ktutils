@@ -14,14 +14,24 @@ import java.util.logging.Logger;
  */
 public class LoggingUtils {
     public static void setupSimpleLogging(Level lvl, boolean showLevel, boolean showTimestamp) {
-        for (final Handler handler : Logger.getLogger("").getHandlers()) {
+        Logger logger = Logger.getLogger("");
+        logger.setLevel(lvl);
+        for (final Handler handler : logger.getHandlers()) {
             if (handler instanceof ConsoleHandler) {
                 final SimpleLogFormatter logFormatter = new SimpleLogFormatter();
                 logFormatter.setShowLevel(showLevel);
                 logFormatter.setShowTimestamp(showTimestamp);
+                logFormatter.setSeparator(": ");
                 handler.setFormatter(logFormatter);
                 handler.setLevel(lvl);
             }
         }
+    }
+
+    public static void main(String[] args) {
+        setupSimpleLogging(Level.ALL, true, true);
+        Logger logger = Logger.getLogger(LoggingUtils.class.getName());
+        logger.fine("log fine");
+        logger.info("log info");
     }
 }
