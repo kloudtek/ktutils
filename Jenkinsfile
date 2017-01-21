@@ -12,4 +12,5 @@ node {
         archive 'target/*.jar'
     }
     milestone 1
+    input message: 'Release ?', ok: 'Release', submitter: 'ymenager'
 }
