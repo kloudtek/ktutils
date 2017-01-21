@@ -7,6 +7,7 @@ node {
     }
     milestone 2
     stage('Build CI') {
+        echo building continuous integration
         withMaven( maven: 'maven', mavenSettingsConfig: 'e37672cf-602b-476f-8ec4-da37669113e6') {
             sh "mvn -Dmaven.test.failure.ignore -U -P release clean deploy"
         }
@@ -17,5 +18,6 @@ node {
     input message: 'Release ?', ok: 'Release', submitter: 'ymenager'
     milestone 4
     stage('Build Release') {
+        echo building release
     }
 }
