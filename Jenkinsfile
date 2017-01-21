@@ -13,9 +13,11 @@ node {
         junit '**/target/surefire-reports/TEST-*.xml'
         archive 'target/*.jar'
     }
-    milestone 3
-    input message: 'Release ?', ok: 'Release', submitter: 'ymenager'
-    milestone 4
+}
+milestone 3
+input message: 'Release ?', ok: 'Release', submitter: 'ymenager'
+milestone 4
+node {
     stage('Build Release') {
         withMaven( maven: 'maven', mavenSettingsConfig: 'e37672cf-602b-476f-8ec4-da37669113e6') {
             sh "mvn -Dmaven.test.failure.ignore -U clean"
