@@ -11,5 +11,5 @@ node {
         junit '**/target/surefire-reports/TEST-*.xml'
         archive 'target/*.jar'
     }
-    milestone label: 'continuousintegration', ordinal: 1
+    milestone 1 continuousintegration
 }
