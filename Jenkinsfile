@@ -19,5 +19,8 @@ node {
     milestone 4
     stage('Build Release') {
         echo building release
+        withMaven( maven: 'maven', mavenSettingsConfig: 'e37672cf-602b-476f-8ec4-da37669113e6') {
+            sh "mvn -Dmaven.test.failure.ignore -U clean"
+        }
     }
 }
