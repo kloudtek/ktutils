@@ -1,6 +1,7 @@
 node {
     milestone 10
     stage('Continuous Integration') {
+        input message: 'Proceed'
         checkout scm
         mvnHome = tool name: 'maven', type: 'maven'
         echo "GIT Commit = ${env.GIT_COMMIT}"
