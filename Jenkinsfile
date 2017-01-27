@@ -21,6 +21,9 @@ node {
     stage('Release') {
         checkout scm
         withMaven( maven: 'maven', mavenSettingsConfig: 'e37672cf-602b-476f-8ec4-da37669113e6') {
+            sh "mvn --batch-mode release:update-versions -DdevelopmentVersion=${version}"
+        }
+        withMaven( maven: 'maven', mavenSettingsConfig: 'e37672cf-602b-476f-8ec4-da37669113e6') {
             sh "mvn -Dmaven.test.failure.ignore -U clean package"
         }
         junit '**/target/surefire-reports/TEST-*.xml'
