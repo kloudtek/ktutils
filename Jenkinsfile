@@ -8,7 +8,7 @@ node {
             sh "mvn -Dmaven.test.failure.ignore -U -P release clean deploy"
         }
         junit '**/target/surefire-reports/TEST-*.xml'
-        archive 'target/*.jar'
+        archive '**/target/*.jar'
     }
 }
 milestone 20
@@ -20,6 +20,8 @@ node {
         withMaven( maven: 'maven', mavenSettingsConfig: 'e37672cf-602b-476f-8ec4-da37669113e6') {
             sh "mvn -Dmaven.test.failure.ignore -U clean"
         }
+        junit '**/target/surefire-reports/TEST-*.xml'
+        archive '**/target/*.jar'
     }
     milestone 40
 }
