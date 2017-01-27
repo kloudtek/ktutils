@@ -1,12 +1,8 @@
 node {
-    def mvnHome
-    milestone 1
-    stage('Checkout code') { // for display purposes
-        git credentialsId: 'jenkins ssh', url: 'git@github.com:Kloudtek/ktutils.git'
+    milestone 10
+    stage('Continuous Integration') {
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jenkins ssh', url: 'git@github.com:Kloudtek/ktutils.git']]])
         mvnHome = tool name: 'maven', type: 'maven'
-    }
-    milestone 2
-    stage('Build CI') {
         withMaven( maven: 'maven', mavenSettingsConfig: 'e37672cf-602b-476f-8ec4-da37669113e6') {
             sh "mvn -Dmaven.test.failure.ignore -U -P release clean deploy"
         }
@@ -14,13 +10,14 @@ node {
         archive 'target/*.jar'
     }
 }
-milestone 3
+milestone 20
 input message: 'Release ?', ok: 'Release', submitter: 'ymenager'
-milestone 4
+milestone 30
 node {
-    stage('Build Release') {
+    stage('Release') {
         withMaven( maven: 'maven', mavenSettingsConfig: 'e37672cf-602b-476f-8ec4-da37669113e6') {
             sh "mvn -Dmaven.test.failure.ignore -U clean"
         }
     }
+    milestone 40
 }

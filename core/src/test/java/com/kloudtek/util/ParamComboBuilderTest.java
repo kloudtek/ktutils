@@ -14,7 +14,7 @@ public class ParamComboBuilderTest {
     public void testToArray() throws Exception {
         final ParamComboBuilder paramComboBuilder = new ParamComboBuilder(TestEnum.values())
                 .add(new Object[]{"111", "222", "333"}).add(new Object[]{"xxx", "yyy", "zzz"})
-                .add(Arrays.asList("OO", "UU", "II", "**", "@@")).addBoolean()
+                .add(Arrays.asList("OO", "UU", "@@")).addBoolean()
                 .addAll(55, 88, 11).addBoolean().add(TestEnum.values());
         final Object[][] r = paramComboBuilder.build();
         System.out.println(Arrays.deepToString(r));
