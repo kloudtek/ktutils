@@ -3,9 +3,6 @@ node {
     milestone 10
     stage('Continuous Integration') {
         checkout scm
-        def pom = readMavenPom file: 'pom.xml'
-        def version = pom.version.replace("-SNAPSHOT", "")
-        echo "Building CI snapshot for ${version}"
         withMaven( maven: 'maven', mavenSettingsConfig: 'e37672cf-602b-476f-8ec4-da37669113e6') {
             sh "mvn -Dmaven.test.failure.ignore -U -P release clean deploy"
         }
@@ -20,6 +17,9 @@ node {
     mvnHome = tool name: 'maven', type: 'maven'
     stage('Release') {
         checkout scm
+        def pom = readMavenPom file: 'pom.xml'
+        def version = pom.version.replace("-SNAPSHOT", "")
+        echo "Releasing version ${version}"
         withMaven( maven: 'maven', mavenSettingsConfig: 'e37672cf-602b-476f-8ec4-da37669113e6') {
             sh "mvn --batch-mode release:update-versions -DdevelopmentVersion=${version}"
         }
