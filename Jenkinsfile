@@ -18,7 +18,6 @@ node {
         echo "Releasing version ${version}"
         mvn 'release:update-versions -DdevelopmentVersion=${version}'
         mvn 'clean deploy'
-        archive '**/target/*.jar'
     }
     milestone 40
 }
