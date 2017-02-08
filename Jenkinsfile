@@ -1,17 +1,14 @@
-node {
-    mvnHome = tool name: 'maven', type: 'maven'
-    milestone 10
-    stage('Continuous Integration') {
+stage('Continuous Integration') {
+    node {
         checkout scm
         mvn '-P release clean deploy'
     }
 }
-milestone 20
+milestone 10
 input message: 'Release ?', ok: 'Release', submitter: 'ymenager'
-milestone 30
-node {
-    mvnHome = tool name: 'maven', type: 'maven'
-    stage('Release') {
+milestone 20
+stage('Release') {
+    node {
         checkout scm
         def pom = readMavenPom file: 'pom.xml'
         def version = pom.version.replace("-SNAPSHOT", "")
@@ -19,7 +16,7 @@ node {
         mvn 'release:update-versions -DdevelopmentVersion=${version}'
         mvn 'clean deploy'
     }
-    milestone 40
+    milestone 30
 }
 
 def mvn(args) {
