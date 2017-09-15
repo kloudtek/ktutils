@@ -28,6 +28,7 @@
         <module>dao</module>
         <module>security</module>
         <module>mule</module>
+        <module>httpclient</module>
     </modules>
     <packaging>pom</packaging>
     <description>KloudTek utilities</description>
