@@ -52,10 +52,6 @@
         <connection>scm:git:git@github.com:Kloudtek/ktutils.git</connection>
         <developerConnection>scm:git:git@github.com:Kloudtek/ktutils.git</developerConnection>
     </scm>
-    <properties>
-        <repo.oss.snapshot.url/>
-        <repo.oss.release.url/>
-    </properties>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
@@ -226,7 +222,7 @@
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.6</version>
+                <version>1.6.7</version>
                 <extensions>true</extensions>
                 <configuration>
                     <serverId>ossrh</serverId>

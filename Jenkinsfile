@@ -1,1 +1,1 @@
-releaseMavenJar()
+mavenRelease()
