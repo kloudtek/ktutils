@@ -17,6 +17,9 @@ import org.w3c.dom.traversal.TreeWalker;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -397,6 +400,42 @@ public class XmlUtils {
         for (int i = 0; i < attrs.length; i += 2) {
             element.setAttribute(attrs[i].toString(), attrs[i + 1].toString());
         }
+    }
+
+    /**
+     * Create a JAXB Unmarshaller for the specific object
+     * @param objClass Object Class
+     * @return JAXB Unmarshaller
+     * @throws JAXBException If an error occurs creating unmarshaller
+     */
+    public static <X> Unmarshaller createJAXBUnmarshaller(Class<X> objClass) throws JAXBException {
+        JAXBContext jaxbContext = JAXBContext.newInstance(objClass);
+        return jaxbContext.createUnmarshaller();
+    }
+
+    /**
+     * <p>Convert a XML document to an object using JAXB.</p>
+     * This will automatically convert a context based on the object's class package
+     * @param  objClass JAXB object class
+     * @param xmlInputStream xml input stream
+     * @return JAXB object
+     */
+    public static <X> X xmlToObj(Class<X> objClass, InputStream xmlInputStream ) throws JAXBException {
+        Unmarshaller unmarshaller = createJAXBUnmarshaller(objClass);
+        return objClass.cast(unmarshaller.unmarshal(xmlInputStream));
+    }
+
+    /**
+     * <p>Convert a XML document to an object using JAXB.</p>
+     * This will automatically convert a context based on the object's class package
+     * @param objClass JAXB object class
+     * @param xmlFile XML File
+     * @return JAXB object
+     */
+    public static <X> X xmlToObj(Class<X> objClass, File xmlFile ) throws JAXBException, IOException {
+        JAXBContext jaxbContext = JAXBContext.newInstance(objClass);
+        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+        return objClass.cast(unmarshaller.unmarshal(xmlFile));
     }
 
     /**
