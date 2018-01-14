@@ -14,6 +14,10 @@ import java.io.IOException;
 public class TempFile extends File implements Closeable {
     private static final long serialVersionUID = 3421025956189900097L;
 
+    public TempFile(String prefix, String suffix, File directory) throws IOException {
+        super(genPath(prefix, suffix, directory));
+    }
+
     public TempFile(String prefix, String suffix) throws IOException {
         super(genPath(prefix, suffix));
     }
@@ -23,7 +27,11 @@ public class TempFile extends File implements Closeable {
     }
 
     private static String genPath(String prefix, String suffix) throws IOException {
-        final File tmp = File.createTempFile(prefix, suffix);
+        return genPath(prefix, suffix, null);
+    }
+
+    private static String genPath(String prefix, String suffix, File dir) throws IOException {
+        final File tmp = File.createTempFile(prefix, suffix, dir);
         boolean permChange = tmp.setReadable(false, false);
         permChange = permChange && tmp.setWritable(false, false);
         permChange = permChange && tmp.setExecutable(false, false);

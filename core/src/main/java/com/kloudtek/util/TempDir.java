@@ -23,7 +23,7 @@ public class TempDir extends File implements Closeable {
     }
 
     /**
-     * Generate the temporary directory
+     * Generate the temporary directory in the system tmp dir
      *
      * @param prefix Directory prefix
      * @param suffix Directory suffix
@@ -31,7 +31,20 @@ public class TempDir extends File implements Closeable {
      * @throws IOException If an error occurs creating the temp directory
      */
     private static String create(String prefix, String suffix) throws IOException {
-        final File tmp = File.createTempFile(prefix, suffix);
+        return create(prefix, suffix, null);
+    }
+
+    /**
+     * Generate the temporary directory
+     *
+     * @param prefix    Directory prefix
+     * @param suffix    Directory suffix
+     * @param directory Directory where temp dir should be created in (null for system tmp dir)
+     * @return Path to the temporary directory
+     * @throws IOException If an error occurs creating the temp directory
+     */
+    private static String create(String prefix, String suffix, File directory) throws IOException {
+        final File tmp = File.createTempFile(prefix, suffix, directory);
         if (!tmp.delete()) {
             throw new IOException("Unable to delete temp file: " + tmp.getPath());
         }
@@ -52,17 +65,15 @@ public class TempDir extends File implements Closeable {
 
     /**
      * Deletes the directory and all files inside it. If any file delete fails, they will be scheduled for deletion using {@link java.io.File#deleteOnExit()}
-     *
-     * @throws IOException If an error occurs while deleting the directory.
      */
-    public void close() throws IOException {
+    public void close() {
         delete(this);
     }
 
     /**
      * Recursively delete all files
      *
-     * @param file
+     * @param file File to delete
      */
     private static void delete(File file) {
         if (file.isDirectory()) {
