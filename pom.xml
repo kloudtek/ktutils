@@ -17,8 +17,6 @@
         <module>core</module>
         <module>jee</module>
         <module>logging</module>
-        <module>xml</module>
-        <module>io</module>
         <module>geo</module>
         <module>spring</module>
         <module>jsf</module>

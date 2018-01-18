@@ -14,12 +14,16 @@ import java.io.IOException;
 public class TempDir extends File implements Closeable {
     private static final long serialVersionUID = -3906256837550665841L;
 
+    public TempDir(String prefix, String suffix, File directory) throws IOException {
+        super(create(prefix, suffix, directory));
+    }
+
     public TempDir(String prefix, String suffix) throws IOException {
         super(create(prefix, suffix));
     }
 
     public TempDir(String prefix) throws IOException {
-        super(create(prefix, "tmp"));
+        super(create(prefix, ".tmp"));
     }
 
     /**
@@ -44,48 +48,65 @@ public class TempDir extends File implements Closeable {
      * @throws IOException If an error occurs creating the temp directory
      */
     private static String create(String prefix, String suffix, File directory) throws IOException {
-        final File tmp = File.createTempFile(prefix, suffix, directory);
-        if (!tmp.delete()) {
-            throw new IOException("Unable to delete temp file: " + tmp.getPath());
+        File tmp = null;
+        try {
+            tmp = File.createTempFile(prefix, suffix, directory);
+            FileUtils.delete(tmp);
+            if (!tmp.mkdir()) {
+                throw new IOException("Unable to create temp dir: " + tmp.getPath());
+            }
+            boolean permChange = tmp.setReadable(false, false);
+            permChange = permChange && tmp.setWritable(false, false);
+            permChange = permChange && tmp.setExecutable(false, false);
+            permChange = permChange && tmp.setReadable(true, true);
+            permChange = permChange && tmp.setWritable(true, true);
+            permChange = permChange && tmp.setExecutable(true, true);
+            if (!permChange) {
+                throw new IOException("Unable to change permissions on temp dir: " + tmp.getPath());
+            }
+            return tmp.getPath();
+        } catch (IOException e) {
+            try {
+                FileUtils.delete(tmp);
+            } catch (IOException ex) {
+                throw new IOException("An error occured while creating temporary directory, and was unable to delete it afterwards",ex);
+            }
+            throw e;
+        } catch (RuntimeException e) {
+            try {
+                FileUtils.delete(tmp);
+            } catch (IOException ex) {
+                throw new IOException("An error occured while creating temporary directory, and was unable to delete it afterwards",ex);
+            }
+            throw e;
         }
-        if (!tmp.mkdir()) {
-            throw new IOException("Unable to create temp dir: " + tmp.getPath());
-        }
-        boolean permChange = tmp.setReadable(false, false);
-        permChange = permChange && tmp.setWritable(false, false);
-        permChange = permChange && tmp.setExecutable(false, false);
-        permChange = permChange && tmp.setReadable(true, true);
-        permChange = permChange && tmp.setWritable(true, true);
-        permChange = permChange && tmp.setExecutable(true, true);
-        if (!permChange) {
-            throw new IOException("Unable to change permissions on temp dir: " + tmp.getPath());
-        }
-        return tmp.getPath();
     }
 
     /**
      * Deletes the directory and all files inside it. If any file delete fails, they will be scheduled for deletion using {@link java.io.File#deleteOnExit()}
      */
     public void close() {
-        delete(this);
+        try {
+            FileUtils.delete(true,(File) this);
+        } catch (IOException e) {
+            //
+        }
     }
 
-    /**
-     * Recursively delete all files
-     *
-     * @param file File to delete
-     */
-    private static void delete(File file) {
-        if (file.isDirectory()) {
-            final File[] childs = file.listFiles();
-            if (childs != null) {
-                for (File child : childs) {
-                    delete(child);
-                }
+    public static TempDir createMavenTmpDir() throws IOException {
+        return createMavenTmpDir(null);
+    }
+
+    public static TempDir createMavenTmpDir(String altPath) throws IOException {
+        File dir = new File("target");
+        if (!dir.exists()) {
+            if (altPath != null) {
+                dir = new File(altPath.replace("/", File.separator) + File.separator + altPath);
+            }
+            if (altPath == null || !dir.exists()) {
+                dir = new File(".");
             }
         }
-        if (!file.delete()) {
-            file.deleteOnExit();
-        }
+        return new TempDir("_tmp",".tmp",dir);
     }
 }

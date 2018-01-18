@@ -4,6 +4,8 @@
 
 package com.kloudtek.util.io;
 
+import com.kloudtek.util.FileUtils;
+
 import java.io.*;
 import java.util.logging.Logger;
 
@@ -11,7 +13,6 @@ import java.util.logging.Logger;
  * Various I/O relation utilities
  */
 public class IOUtils {
-    private static final Logger logger = Logger.getLogger(IOUtils.class.getName());
     private static final int DEF_BUFF_SIZE = 10240;
     private static final int DEF_CHAR_BUFF_SIZE = 200;
 
@@ -22,19 +23,11 @@ public class IOUtils {
         return buffer.toByteArray();
     }
 
-    public static byte[] toByteArray(File file) throws IOException {
-        FileInputStream is = new FileInputStream(file);
-        try {
-            return toByteArray(is);
-        } finally {
-            close(is);
-        }
-    }
-
     public static long copy(final InputStream inputStream, final OutputStream outputStream) throws IOException {
         return copy(inputStream, outputStream, DEF_BUFF_SIZE);
     }
 
+    @SuppressWarnings("Duplicates")
     private static long copy(InputStream inputStream, OutputStream outputStream, int bufSize) throws IOException {
         byte[] buffer = new byte[bufSize];
         long count = 0;
@@ -53,6 +46,7 @@ public class IOUtils {
         return copy(reader, writer, DEF_CHAR_BUFF_SIZE);
     }
 
+    @SuppressWarnings("Duplicates")
     private static long copy(final Reader reader, final Writer writer, int bufSize) throws IOException {
         char[] buffer = new char[bufSize];
         long count = 0;
@@ -67,15 +61,12 @@ public class IOUtils {
         }
     }
 
-    public static String toString(File file) throws IOException {
-        StringWriter buffer = new StringWriter();
-        FileReader fileReader = new FileReader(file);
-        copy(fileReader, buffer);
-        return buffer.toString();
+    public static String toString(InputStream inputStream) throws IOException {
+        return toString(inputStream,"UTF-8");
     }
 
-    public static String toString(InputStream inputStream) throws IOException {
-        return toString(new InputStreamReader(inputStream));
+    public static String toString(InputStream inputStream, String encoding) throws IOException {
+        return toString(new InputStreamReader(inputStream,encoding));
     }
 
     public static String toString(Reader reader) throws IOException {
@@ -99,6 +90,14 @@ public class IOUtils {
         }
     }
 
+    public static String toString(File file) throws IOException {
+        return FileUtils.toString(file);
+    }
+
+    public static byte[] toByteArray(File file) throws IOException {
+        return FileUtils.toByteArray(file);
+    }
+
     /**
      * Write data to a file
      *
@@ -106,11 +105,6 @@ public class IOUtils {
      * @param data Data to write
      */
     public static void write(File file, byte[] data) throws IOException {
-        FileOutputStream fos = new FileOutputStream(file);
-        try {
-            fos.write(data);
-        } finally {
-            close(fos);
-        }
+        FileUtils.write(file,data);
     }
 }

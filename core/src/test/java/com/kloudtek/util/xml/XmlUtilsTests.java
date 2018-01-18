@@ -39,7 +39,7 @@ public class XmlUtilsTests {
 
     @BeforeClass
     public void loadDoc() throws IOException, SAXException {
-        doc = parse(getClass().getResourceAsStream("test.xml"));
+        doc = parse(getClass().getResourceAsStream("/test.xml"));
     }
 
     @Test
