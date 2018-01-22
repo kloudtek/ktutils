@@ -26,7 +26,7 @@
         <module>dao</module>
         <module>security</module>
         <module>mule</module>
-        <module>httpclient</module>
+        <module>http</module>
         <module>json</module>
     </modules>
     <packaging>pom</packaging>
