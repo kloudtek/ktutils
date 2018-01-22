@@ -43,7 +43,6 @@ public class FileUtilsTest {
         }
     }
 
-
     @NotNull
     private static HashSet<String> asSet(String... filenames) {
         return new HashSet<String>(Arrays.asList(filenames));

@@ -78,14 +78,16 @@ public class IOUtils {
     /**
      * Close a closeable object, suppressing any resulting exception
      *
-     * @param closeable Closeable object, can be null (in which case nothing will be done)
+     * @param closeables Closeable objects which can be null (in which case nothing will be done)
      */
-    public static void close(Closeable closeable) {
-        if (closeable != null) {
-            try {
-                closeable.close();
-            } catch (Throwable e) {
-                // needs to be throwable because in some cases closing a classpath resource jar throws ExceptionInInitializerError ?!?!?!?!?!?
+    public static void close(Closeable... closeables) {
+        for (Closeable closeable : closeables) {
+            if (closeable != null) {
+                try {
+                    closeable.close();
+                } catch (Throwable e) {
+                    // needs to be throwable because in some cases closing a classpath resource jar throws ExceptionInInitializerError ?!?!?!?!?!?
+                }
             }
         }
     }

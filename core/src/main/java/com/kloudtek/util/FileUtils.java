@@ -7,6 +7,47 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class FileUtils {
+    public static void mkdir(File file) throws IOException {
+        if( ! file.mkdir() ) {
+            throw new IOException("Unable to create directory: "+file.getPath());
+        }
+    }
+
+    public static void mkdirs(File file) throws IOException {
+        if( ! file.mkdirs() ) {
+            throw new IOException("Unable to create directory: "+file.getPath());
+        }
+    }
+
+    public static void copy( File src, File dst ) throws IOException {
+        FileInputStream is = null;
+        FileOutputStream os = null;
+        try {
+            is = new FileInputStream(src);
+            os = new FileOutputStream(dst);
+            IOUtils.copy(is,os);
+        } finally {
+            IOUtils.close(is,os);
+        }
+    }
+
+    /**
+     * Copy the files in the specified directory to another directory
+     * @param dir Source directory
+     * @param destination Destination Directory
+     */
+    public static void copyFilesInDir(File dir, File destination) throws IOException {
+        for (File file : listFileInDir(dir)) {
+            File destFile = new File(destination, file.getName());
+            if( file.isDirectory() ) {
+                mkdir(destFile);
+                copyFilesInDir(file,destFile);
+            } else {
+                copy(file,destFile);
+            }
+        }
+    }
+
     public static byte[] toByteArray(File file) throws IOException {
         FileInputStream is = new FileInputStream(file);
         try {
@@ -14,6 +55,25 @@ public class FileUtils {
         } finally {
             IOUtils.close(is);
         }
+    }
+
+    public static void checkFileIsDirectory(File... files) throws IOException {
+        for (File file : files) {
+            if( ! file.exists() ) {
+                throw new IOException("File "+file.getPath()+" doesn't exist");
+            }
+            if( ! file.isDirectory() ) {
+                throw new IOException("File "+file.getPath()+" isn't a directory");
+            }
+        }
+    }
+
+    public static File[] listFileInDir(File directory) throws IOException {
+        File[] files = directory.listFiles();
+        if( files == null ) {
+            throw new IOException("Unable to list files in directory: "+directory.getPath());
+        }
+        return files;
     }
 
     /**
@@ -27,9 +87,6 @@ public class FileUtils {
      * @throws IOException If an error listing the file occurs
      */
     public static Set<String> listAllFilesNames(File directory, boolean recursive, boolean includeFiles, boolean includeDirs) throws IOException {
-        if (!directory.isDirectory()) {
-            throw new IOException("File is not a directory: " + directory.getPath());
-        }
         HashSet<String> filepaths = new HashSet<String>();
         recursiveFileNameList(filepaths, directory, null, recursive, includeFiles, includeDirs);
         return filepaths;
