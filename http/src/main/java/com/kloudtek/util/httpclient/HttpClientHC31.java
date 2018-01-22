@@ -7,7 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HttpClientHC31 implements HttpClient {
+public class HttpClientHC31 implements HttpUtilsImpl {
     private org.apache.commons.httpclient.HttpClient client;
 
     public HttpClientHC31() {
