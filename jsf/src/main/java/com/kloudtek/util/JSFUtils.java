@@ -214,7 +214,7 @@ public class JSFUtils {
      * @return absolute URL
      */
     public static String getContextURL(String path) {
-        return createContextURLBuilder().addPath(path).toString();
+        return createContextURLBuilder().path(path).toString();
     }
 
     public static String getContextURL() {
@@ -225,7 +225,7 @@ public class JSFUtils {
         final ExternalContext ctx = JSFUtils.getExternalContext();
         URLBuilder urlBuilder = new URLBuilder(ctx.getRequestScheme() + "://" + ctx.getRequestServerName() + ":" + ctx.getRequestServerPort());
         if (!StringUtils.isEmpty(ctx.getRequestContextPath())) {
-            urlBuilder.addPath(ctx.getRequestContextPath());
+            urlBuilder.path(ctx.getRequestContextPath());
         }
         return urlBuilder;
     }

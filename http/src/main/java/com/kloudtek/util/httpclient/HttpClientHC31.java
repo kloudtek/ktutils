@@ -1,12 +1,12 @@
 package com.kloudtek.util.httpclient;
 
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * WORK IN PROGRESS
+ */
 public class HttpClientHC31 implements HttpUtilsImpl {
     private org.apache.commons.httpclient.HttpClient client;
 
@@ -31,23 +31,23 @@ public class HttpClientHC31 implements HttpUtilsImpl {
 
     @Override
     public byte[] post(String url, String json, Map<String, Object> headers) {
-        try {
-            HttpPost post = new HttpPost(url);
-            post.setEntity(new StringEntity(json));
-            if( headers != null ) {
-                for (Map.Entry<String, Object> headerEntry : headers.entrySet()) {
-                    if( headerEntry instanceof Iterable ) {
-                        for (String value : (Iterable<String>) headerEntry.getValue()) {
-                            post.addHeader(headerEntry.getKey(),value);
-                        }
-                    } else {
-                        post.addHeader(headerEntry.getKey(), headerEntry.getValue().toString());
-                    }
-                }
-            }
+//        try {
+//            HttpPost post = new HttpPost(url);
+//            post.setEntity(new StringEntity(json));
+//            if( headers != null ) {
+//                for (Map.Entry<String, Object> headerEntry : headers.entrySet()) {
+//                    if( headerEntry instanceof Iterable ) {
+//                        for (String value : (Iterable<String>) headerEntry.getValue()) {
+//                            post.addHeader(headerEntry.getKey(),value);
+//                        }
+//                    } else {
+//                        post.addHeader(headerEntry.getKey(), headerEntry.getValue().toString());
+//                    }
+//                }
+//            }
             return new byte[0];
-        } catch (UnsupportedEncodingException e) {
-            throw new IllegalArgumentException(e);
-        }
+//        } catch (UnsupportedEncodingException e) {
+//            throw new IllegalArgumentException(e);
+//        }
     }
 }

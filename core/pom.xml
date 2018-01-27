@@ -9,14 +9,22 @@
     <parent>
         <artifactId>ktutils-parent</artifactId>
         <groupId>com.kloudtek.ktutils</groupId>
-        <version>1.2-SNAPSHOT</version>
+        <version>1.3-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>ktutils-core</artifactId>
+    <artifactId>ktutils</artifactId>
     <name>KTUtils Core</name>
+    <description>Various utility classes. Except for very rare exceptions (annotation-based validation) this will not require any dependencies beyond the JRE</description>
 
     <dependencies>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.0.0.GA</version>
+            <optional>true</optional>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>

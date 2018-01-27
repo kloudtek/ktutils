@@ -78,7 +78,7 @@ public class Country {
         if (codeToNameMap == null) {
             try {
                 Map<String, String> map = new HashMap<String, String>();
-                final Document document = XmlUtils.parse(Country.class.getResourceAsStream("countrycodes.xml"));
+                final Document document = XmlUtils.parse(Country.class.getResourceAsStream("/countrycodes.xml"));
                 final List<Element> countries = XmlUtils.toElementList(document.getElementsByTagName("ISO_3166-1_Entry"));
                 for (Element country : countries) {
                     String code = country.getElementsByTagName("ISO_3166-1_Alpha-2_Code_element").item(0).getTextContent();
