@@ -41,7 +41,7 @@ public class SortUtilsTest {
         Assert.assertTrue(sortedList.indexOf(eight) > sortedList.indexOf(ten));
     }
 
-    @Test(expectedExceptions = CircularDependencyException.class,expectedExceptionsMessageRegExp = "Circular dependency: 11 -> 2 -> 7 -> 11")
+    @Test(expectedExceptions = CircularDependencyException.class)
     public void testSortCircular() throws Exception {
         // circular dependency  5 -> [ 7 -> 11 -> 2 -> 7 ]
         TSortObject seven = new TSortObject(7);
