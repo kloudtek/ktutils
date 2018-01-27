@@ -78,5 +78,5 @@ public abstract class InMemInputFilterStream extends FilterInputStream {
         return IOUtils.toByteArray(in);
     }
 
-    protected abstract byte[] transform(byte[] data);
+    protected abstract byte[] transform(byte[] data) throws IOException;
 }
