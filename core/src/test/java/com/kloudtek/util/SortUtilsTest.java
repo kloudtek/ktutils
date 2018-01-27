@@ -7,7 +7,7 @@ import java.util.*;
 
 public class SortUtilsTest {
     @Test
-    public void testSortSuccessful() throws Exception {
+    public void testTSortSuccessful() throws Exception {
         TSortObject seven = new TSortObject(7);
         TSortObject five = new TSortObject(5);
         TSortObject three = new TSortObject(3);
@@ -42,7 +42,7 @@ public class SortUtilsTest {
     }
 
     @Test(expectedExceptions = CircularDependencyException.class)
-    public void testSortCircular() throws Exception {
+    public void testTSortCircular() throws Exception {
         // circular dependency  5 -> [ 7 -> 11 -> 2 -> 7 ]
         TSortObject seven = new TSortObject(7);
         TSortObject five = new TSortObject(5);
@@ -82,6 +82,7 @@ public class SortUtilsTest {
         return SortUtils.topologicalSort(list, new TopologicalSortComparator<TSortObject>() {
             @Override
             public SortUtils.TopologicalSortRelationship getRelationship(TSortObject source, TSortObject target) {
+                Assert.assertNotEquals(source,target,"TSort shouldn't compare an object to itself ?!");
                 if (source.dependencies.contains(target)) {
                     return SortUtils.TopologicalSortRelationship.STRONG;
                 } else {

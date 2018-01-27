@@ -76,10 +76,12 @@ public class SortUtils {
         }
         for (Node<X> source : nodes) {
             for (Node<X> target : nodes) {
-                TopologicalSortRelationship dependency = comparator.getRelationship(source.obj, target.obj);
-                if( dependency == TopologicalSortRelationship.STRONG ) {
-                    source.outDependencies.add(target);
-                    target.inDependencies.add(source);
+                if( source != target ) {
+                    TopologicalSortRelationship dependency = comparator.getRelationship(source.obj, target.obj);
+                    if( dependency == TopologicalSortRelationship.STRONG ) {
+                        source.outDependencies.add(target);
+                        target.inDependencies.add(source);
+                    }
                 }
             }
         }
@@ -107,7 +109,6 @@ public class SortUtils {
 
     private static class NodeList<X> extends ArrayList<Node<X>> {
         // this will be used to support weak references
-
         NodeList(int initialCapacity) {
             super(initialCapacity);
         }
