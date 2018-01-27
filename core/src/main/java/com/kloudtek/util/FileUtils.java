@@ -1,12 +1,18 @@
 package com.kloudtek.util;
 
 import com.kloudtek.util.io.IOUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FileUtils {
+    public static final Pattern defaultPathPattern = compilePathSplitPattern(File.separatorChar);
+
     public static void mkdir(File file) throws IOException {
         if( ! file.mkdir() ) {
             throw new IOException("Unable to create directory: "+file.getPath());
@@ -206,6 +212,81 @@ public class FileUtils {
                     }
                 }
             }
+        }
+    }
+
+    public static SplitPath splitFileNameFromParentPath(String fullPath) {
+        return splitFileNameFromParentPath(fullPath,File.separatorChar);
+    }
+
+    public static SplitPath splitFileNameFromParentPath(String fullPath, char fileSeparator) {
+        final Pattern p;
+        if( fileSeparator == File.separatorChar ) {
+            p = defaultPathPattern;
+        } else {
+            p = compilePathSplitPattern(fileSeparator);
+        }
+        Matcher m = p.matcher(fullPath);
+        if( ! m.find() ) {
+            throw new IllegalArgumentException("Path pattern cannot be parsed: "+fullPath);
+        }
+        return new SplitPath(m.group(1),m.group(2));
+    }
+
+    public static Pattern compilePathSplitPattern(char fileSeparator) {
+        return Pattern.compile("(?:(.*)"+(fileSeparator == '\\' ? "\\\\" : fileSeparator)+")?(.*)");
+    }
+
+    public static class SplitPath {
+        private String parentPath;
+        private String filename;
+
+        public SplitPath(@Nullable String parentPath, @NotNull String filename) {
+            this.parentPath = parentPath;
+            this.filename = filename;
+        }
+
+        public String getParentPath() {
+            return parentPath;
+        }
+
+        public void setParentPath(String parentPath) {
+            this.parentPath = parentPath;
+        }
+
+        public String getFilename() {
+            return filename;
+        }
+
+        public void setFilename(String filename) {
+            this.filename = filename;
+        }
+
+        @Override
+        public String toString() {
+            return "SplitPath{" +
+                    "parentPath='" + parentPath + '\'' +
+                    ", filename='" + filename + '\'' +
+                    '}';
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof SplitPath)) return false;
+
+            SplitPath splitPath = (SplitPath) o;
+
+            if (parentPath != null ? !parentPath.equals(splitPath.parentPath) : splitPath.parentPath != null)
+                return false;
+            return filename.equals(splitPath.filename);
+        }
+
+        @Override
+        public int hashCode() {
+            int result = parentPath != null ? parentPath.hashCode() : 0;
+            result = 31 * result + filename.hashCode();
+            return result;
         }
     }
 }
