@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * This filter stream will load all the data in memory to allow transformations to be applied on the full data set, before making it available to the caller
+ * This filter stream will getDataStream all the data in memory to allow transformations to be applied on the full data set, before making it available to the caller
  */
 public abstract class InMemInputFilterStream extends FilterInputStream {
     private ByteArrayInputStream buf;
@@ -19,38 +19,38 @@ public abstract class InMemInputFilterStream extends FilterInputStream {
 
     @Override
     public int read() throws IOException {
-        return load().read();
+        return getDataStream().read();
     }
 
     @Override
     public int read(@NotNull byte[] b) throws IOException {
-        return load().read(b);
+        return getDataStream().read(b);
     }
 
     @Override
     public int read(@NotNull byte[] b, int off, int len) throws IOException {
-        return load().read(b, off, len);
+        return getDataStream().read(b, off, len);
     }
 
     @Override
     public long skip(long n) throws IOException {
-        return load().skip(n);
+        return getDataStream().skip(n);
     }
 
     @Override
     public int available() throws IOException {
-        return load().available();
+        return getDataStream().available();
     }
 
     @Override
     public void close() throws IOException {
-        load().close();
+        getDataStream().close();
     }
 
     @Override
     public synchronized void mark(int readlimit) {
         try {
-            load().mark(readlimit);
+            getDataStream().mark(readlimit);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(),e);
         }
@@ -58,7 +58,7 @@ public abstract class InMemInputFilterStream extends FilterInputStream {
 
     @Override
     public synchronized void reset() throws IOException {
-        load().reset();
+        getDataStream().reset();
     }
 
     @Override
@@ -66,12 +66,16 @@ public abstract class InMemInputFilterStream extends FilterInputStream {
         return true;
     }
 
-    private ByteArrayInputStream load() throws IOException {
+    protected ByteArrayInputStream getDataStream() throws IOException {
         if( buf == null ) {
-            byte[] data = IOUtils.toByteArray(in);
+            byte[] data = load();
             buf = new ByteArrayInputStream(transform(data));
         }
         return buf;
+    }
+
+    protected byte[] load() throws IOException {
+        return IOUtils.toByteArray(in);
     }
 
     protected abstract byte[] transform(byte[] data);
