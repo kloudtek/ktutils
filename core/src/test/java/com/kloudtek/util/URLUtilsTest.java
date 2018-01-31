@@ -10,7 +10,7 @@ import static org.testng.Assert.assertEquals;
 
 public class URLUtilsTest {
     @Test
-    public void testConcat1() {
+    public void testConcat() {
         final String expected = "/fafdsa/fsadfsafdsa";
         assertEquals(URLUtils.concatPaths("/fafdsa/", null, "fsadfsafdsa"), expected);
         assertEquals(URLUtils.concatPaths("/fafdsa/", null, "/fsadfsafdsa"), expected);
@@ -20,5 +20,6 @@ public class URLUtilsTest {
         assertEquals(URLUtils.concatPaths("/fafdsa/", "/fsadfsafdsa"), expected);
         assertEquals(URLUtils.concatPaths("/fafdsa/", "fsadfsafdsa"), expected);
         assertEquals(URLUtils.concatPaths("/fafdsa", "fsadfsafdsa"), expected);
+        assertEquals(URLUtils.concatPaths("foo", "bar"), "foo/bar");
     }
 }

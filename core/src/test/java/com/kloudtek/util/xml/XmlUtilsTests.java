@@ -4,7 +4,7 @@
 
 package com.kloudtek.util.xml;
 
-import org.apache.commons.io.FileUtils;
+import com.kloudtek.util.FileUtils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.w3c.dom.Document;

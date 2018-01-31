@@ -65,7 +65,7 @@ public class URLUtils {
     public static String buildUrl(String baseUrl, String... pathElements) {
         final URLBuilder url = new URLBuilder(baseUrl);
         for (String element : pathElements) {
-            url.addPath(element);
+            url.path(element);
         }
         return url.toString();
     }

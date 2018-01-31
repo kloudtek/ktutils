@@ -28,6 +28,41 @@ public class FileUtilsTest {
         assertEquals(asSet("subdir"),list);
     }
 
+    @Test
+    public void testSplitFileNameFromParentPathUnixNoParent() {
+        assertSplitPath(null,"somepath",FileUtils.splitFileNameFromParentPath("somepath",'/'));
+    }
+
+    @Test
+    public void testSplitFileNameFromParentPathWinNoParent() {
+        assertSplitPath(null,"somepath",FileUtils.splitFileNameFromParentPath("somepath",'\\'));
+    }
+
+    @Test
+    public void testSplitFileNameFromParentPathUnixWithParentRel() {
+        assertSplitPath("foo/bar","baz",FileUtils.splitFileNameFromParentPath("foo/bar/baz",'/'));
+    }
+
+    @Test
+    public void testSplitFileNameFromParentPathWinWithParentRel() {
+        assertSplitPath("foo\\bar","baz",FileUtils.splitFileNameFromParentPath("foo\\bar\\baz",'\\'));
+    }
+
+    @Test
+    public void testSplitFileNameFromParentPathUnixWithParentAbs() {
+        assertSplitPath("/foo/bar","baz",FileUtils.splitFileNameFromParentPath("/foo/bar/baz",'/'));
+    }
+
+    @Test
+    public void testSplitFileNameFromParentPathWinWithParentAbs() {
+        assertSplitPath("\\foo\\bar","baz",FileUtils.splitFileNameFromParentPath("\\foo\\bar\\baz",'\\'));
+    }
+
+    private void assertSplitPath(String path, String name, FileUtils.SplitPath splitPath) {
+        assertEquals(path,splitPath.getParentPath());
+        assertEquals(name,splitPath.getFilename());
+    }
+
     private Set<String> createTmpDirAndListFilenames(boolean recursive, boolean includeFiles, boolean includeDirs) throws IOException {
         TempDir tmpDir = TempDir.createMavenTmpDir("core");
         try {

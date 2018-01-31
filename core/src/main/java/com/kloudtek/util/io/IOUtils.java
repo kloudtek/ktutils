@@ -23,6 +23,13 @@ public class IOUtils {
         return buffer.toByteArray();
     }
 
+    public static byte[] toByteArray(DataGenerator dataGenerator) throws IOException {
+        ByteArrayDataOutputStream buffer = new ByteArrayDataOutputStream();
+        dataGenerator.generateData(buffer);
+        close(buffer);
+        return buffer.toByteArray();
+    }
+
     public static long copy(final InputStream inputStream, final OutputStream outputStream) throws IOException {
         return copy(inputStream, outputStream, DEF_BUFF_SIZE);
     }
@@ -108,5 +115,9 @@ public class IOUtils {
      */
     public static void write(File file, byte[] data) throws IOException {
         FileUtils.write(file,data);
+    }
+
+    public interface DataGenerator {
+        void generateData(OutputStream os) throws IOException;
     }
 }
