@@ -4,9 +4,13 @@
 
 package com.kloudtek.util;
 
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static java.lang.Character.isWhitespace;
 import static java.lang.Character.toTitleCase;
@@ -15,6 +19,7 @@ import static java.lang.Character.toTitleCase;
  * <p>Various string manipulation utility functions</p>
  */
 public class StringUtils {
+    public static Pattern varSubFuncPattern;
     public static final String UNSAFE_URLPATH = " %$&+,/:;=?@<>#%";
 
     public static boolean isEmpty(String txt) {
@@ -160,5 +165,77 @@ public class StringUtils {
         } catch (UnsupportedEncodingException e) {
             throw new UnexpectedException(e);
         }
+    }
+
+    /**
+     * Substitute variables in a string.
+     * @param str String to substitute variables from
+     * @param variables Variables
+     * @return String with variables substituted
+     */
+    public static String substituteVariables( String str, Map<String,String> variables ) throws IllegalArgumentException {
+        synchronized (StringUtils.class) {
+            if( varSubFuncPattern == null ) {
+                varSubFuncPattern = Pattern.compile("([a-zA-Z]*?):(.*)");
+            }
+        }
+        if (str == null) {
+            return null;
+        }
+        StringWriter result = new StringWriter();
+        StringWriter v = null;
+        VarSubState state = VarSubState.NORMAL;
+        for (char c : str.toCharArray()) {
+            switch (state) {
+                case NORMAL:
+                    if (c == '$') {
+                        state = VarSubState.STARTPARSE;
+                        v = new StringWriter();
+                    } else {
+                        result.append(c);
+                    }
+                    break;
+                case STARTPARSE:
+                    if (c == '{') {
+                        state = VarSubState.PARSE;
+                    } else {
+                        if (c != '$') {
+                            result.append('$');
+                        }
+                        result.append(c);
+                        state = VarSubState.NORMAL;
+                    }
+                    break;
+                case PARSE:
+                    if (c == '}') {
+                        result.append(resolveVarSub(v.toString(), variables));
+                        v = null;
+                        state = VarSubState.NORMAL;
+                    } else {
+                        v.append(c);
+                    }
+            }
+        }
+        return result.toString();
+    }
+
+    private static String resolveVarSub(String exp, Map<String, String> provisioningParams) throws IllegalArgumentException {
+        Matcher m = varSubFuncPattern.matcher(exp);
+        if( m.find() ) {
+            String functionName = m.group(0).toLowerCase();
+            String functionParams = m.group(1);
+            if( functionName.equals("p") ) {
+
+            } else {
+                throw new IllegalArgumentException("Invalid variable substitution variable name: "+functionName+" in variable substitution string "+functionName);
+            }
+        } else {
+            String val = provisioningParams.get(exp);
+            return val != null ? val : "";
+        }
+    }
+
+    public enum VarSubState {
+        NORMAL, STARTPARSE, PARSE
     }
 }
