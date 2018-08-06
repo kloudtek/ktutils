@@ -61,9 +61,6 @@ public class TempDir extends File implements Closeable {
             permChange = permChange && tmp.setReadable(true, true);
             permChange = permChange && tmp.setWritable(true, true);
             permChange = permChange && tmp.setExecutable(true, true);
-            if (!permChange) {
-                throw new IOException("Unable to change permissions on temp dir: " + tmp.getPath());
-            }
             return tmp.getPath();
         } catch (IOException e) {
             try {

@@ -37,9 +37,6 @@ public class TempFile extends File implements Closeable {
         permChange = permChange && tmp.setExecutable(false, false);
         permChange = permChange && tmp.setReadable(true, true);
         permChange = permChange && tmp.setWritable(true, true);
-        if (!permChange && !System.getProperty("os.name").toLowerCase().startsWith("windows")) {
-            throw new IOException("Unable to change permissions on temp dir: " + tmp.getPath());
-        }
         return tmp.getPath();
     }
 
