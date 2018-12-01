@@ -4,19 +4,31 @@
 
 package com.kloudtek.util;
 
+import java.util.Iterator;
+import java.util.ServiceLoader;
 import java.util.UUID;
 
 /**
  * UUID factory class.
  */
-public class UUIDFactory {
+public abstract class UUIDFactory {
+    private static UUIDFactory global;
+
+    public abstract UUID create();
+
     /**
-     * Return an UUID (currently this just uses {@link java.util.UUID#randomUUID()} but will be replaced in time with
-     * something better :)
-     *
+     * Return an UUID using a global UUIDFactory loaded through {@link ServiceLoader}
      * @return UUID
      */
     public static UUID generate() {
+        if( global == null ) {
+            Iterator<UUIDFactory> serviceLoader = ServiceLoader.load(UUIDFactory.class).iterator();
+            if( serviceLoader.hasNext() ) {
+                global = serviceLoader.next();
+            } else {
+                global = new UUIDFactoryRandomImpl();
+            }
+        }
         return UUID.randomUUID();
     }
 }
