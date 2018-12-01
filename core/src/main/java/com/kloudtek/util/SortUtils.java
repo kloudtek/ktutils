@@ -17,9 +17,9 @@ public class SortUtils {
         if (objects.isEmpty()) {
             return Collections.emptyList();
         }
-        //  L ← Empty list that will contain the sorted nodes
+        //  L < Empty list that will contain the sorted nodes
         List<Node<X>> sortedList = new ArrayList<Node<X>>();
-        //  S ← Set of all nodes with no outgoing edges
+        //  S < Set of all nodes with no outgoing edges
         NodeList<X> nodes = objectToNodeList(objects, comparator);
         List<Node<X>> edgeNodes = findEdgeNodes(nodes);
         if (edgeNodes.isEmpty()) {
