@@ -17,16 +17,21 @@ public class ReflectionUtils {
             Number.class, Boolean.class, Date.class, Collection.class));
     private static final HashSet<String> OBJ2MAP_METHODBLACKLIST = new HashSet<>(Arrays.asList("getClass"));
 
-
     public static String toString(Method method) {
         return "Method " + method.getDeclaringClass().getName() + "#" + method.getName();
     }
 
     public static Map<String, Object> objectToMap(Object object) throws InvocationTargetException, IllegalAccessException {
+        LinkedList<Object> processed = new LinkedList<>();
+        return objectToMapInternal(object,processed);
+    }
+
+    private static Map<String, Object> objectToMapInternal(Object object, LinkedList<Object> processed) throws IllegalAccessException, InvocationTargetException {
         if (object == null) {
             return null;
         }
-        Map<String, Object> map = new HashMap<String, Object>();
+        processed.add(object);
+        Map<String, Object> map = new HashMap<>();
         for (Method method : object.getClass().getMethods()) {
             final String methodName = method.getName();
             String key = null;
@@ -38,29 +43,63 @@ public class ReflectionUtils {
                 }
                 if (key != null) {
                     Object value = method.invoke(object);
-                    map.put(key, objectToMapConvertObject(value));
+                    if( value instanceof Optional ) {
+                        if( ((Optional) value).isPresent()) {
+                            value = ((Optional) value).get();
+                        } else {
+                            value = null;
+                        }
+                    }
+                    if( value != null ) {
+                        ObjectToMapObjectType type = objectToMapConvertObjectGetType(value, processed);
+                        if( type != null ) {
+                            switch (type) {
+                                case PASSTHROUGH:
+                                    map.put(key, value);
+                                    break;
+                                case OBJECT:
+                                    map.put(key,objectToMapInternal(value, processed));
+                                    break;
+                            }
+                        } else {
+                            map.put(key, null);
+                        }
+                    } else {
+                        map.put(key, null);
+                    }
                 }
             }
         }
         return map;
     }
 
-    private static Object objectToMapConvertObject(Object val) throws InvocationTargetException, IllegalAccessException {
+    private static boolean isSame(LinkedList<Object> processed, Object value) {
+        for (Object p : processed) {
+            if( p == value ) {
+               return true;
+            }
+        }
+        return false;
+    }
+
+    private static ObjectToMapObjectType objectToMapConvertObjectGetType(Object val, LinkedList<Object> processed) {
         if( val == null ) {
             return null;
         }
         Class<?> cl = val.getClass();
         for (Class<?> pt : OBJ2MAP_PASSTHROUGH) {
             if( pt.isAssignableFrom(cl)) {
-                return val;
+                return ObjectToMapObjectType.PASSTHROUGH;
             }
         }
         if (cl.isPrimitive() || cl.isEnum() ) {
-            return val;
-        } else if (val instanceof Optional) {
-            return ((Optional) val).isPresent() ? objectToMapConvertObject(((Optional) val).get()) : null;
+            return ObjectToMapObjectType.PASSTHROUGH;
         } else {
-            return objectToMap(val);
+            if( ! isSame(processed, val) ) {
+                return ObjectToMapObjectType.OBJECT;
+            } else {
+                return ObjectToMapObjectType.PROCESSED;
+            }
         }
     }
 
@@ -120,19 +159,7 @@ public class ReflectionUtils {
     }
 
     public static Field findField(Object obj, String name) {
-        Class<?> cl = obj.getClass();
-        while (cl != null) {
-            try {
-                Field field = cl.getDeclaredField(name);
-                if (!field.isAccessible()) {
-                    field.setAccessible(true);
-                }
-                return field;
-            } catch (NoSuchFieldException e) {
-                cl = cl.getSuperclass();
-            }
-        }
-        throw new IllegalArgumentException("Field " + name + " not found in " + obj.getClass().getName());
+        return findField(obj.getClass(),name);
     }
 
     public static Field findField(Class<?> cl, String name) {
@@ -148,5 +175,9 @@ public class ReflectionUtils {
             }
         }
         throw new IllegalArgumentException("Field " + name + " not found in " + cl.getName());
+    }
+
+    public enum ObjectToMapObjectType {
+        PASSTHROUGH, OBJECT, PROCESSED
     }
 }

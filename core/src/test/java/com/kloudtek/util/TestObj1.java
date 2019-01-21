@@ -6,7 +6,7 @@ public class TestObj1 {
     private String text = "text";
     private String varNull;
     private int nb;
-    private TestObj2 obj2NonNull = new TestObj2();
+    private TestObj2 obj2NonNull = new TestObj2(this);
     private TestObj2 obj2null;
     private Optional<String> optVar = Optional.of("foo");
     private Optional<String> optVarNull = Optional.ofNullable(null);
