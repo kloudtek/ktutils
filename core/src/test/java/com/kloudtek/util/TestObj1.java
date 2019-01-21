@@ -13,6 +13,7 @@ public class TestObj1 {
     private Optional<String> optVar = Optional.of("foo");
     private Optional<String> optVarNull = Optional.ofNullable(null);
     private Map<String,String> map = new HashMap<>();
+    private String[] strarr = new String[] {"one","two"};
 
     public TestObj1() {
         map.put("v1","agh");
@@ -49,5 +50,9 @@ public class TestObj1 {
 
     public Map<String, String> getMap() {
         return map;
+    }
+
+    public String[] getStrarr() {
+        return strarr;
     }
 }

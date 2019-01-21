@@ -23,7 +23,6 @@
         <module>security</module>
         <module>mule</module>
         <module>http</module>
-        <module>json</module>
     </modules>
     <packaging>pom</packaging>
     <description>KloudTek utilities</description>
