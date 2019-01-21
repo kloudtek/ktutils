@@ -1,5 +1,7 @@
 package com.kloudtek.util;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public class TestObj1 {
@@ -10,6 +12,12 @@ public class TestObj1 {
     private TestObj2 obj2null;
     private Optional<String> optVar = Optional.of("foo");
     private Optional<String> optVarNull = Optional.ofNullable(null);
+    private Map<String,String> map = new HashMap<>();
+
+    public TestObj1() {
+        map.put("v1","agh");
+        map.put("v2","ogh");
+    }
 
     public String getText() {
         return text;
@@ -37,5 +45,9 @@ public class TestObj1 {
 
     public String getVarNull() {
         return varNull;
+    }
+
+    public Map<String, String> getMap() {
+        return map;
     }
 }

@@ -14,14 +14,21 @@ import java.util.*;
  */
 public class ReflectionUtils {
     private static final HashSet<Class<?>> OBJ2MAP_PASSTHROUGH = new HashSet<>(Arrays.asList(String.class,
-            Number.class, Boolean.class, Date.class, Collection.class));
+            Number.class, Boolean.class, Date.class, Collection.class, Map.class));
     private static final HashSet<String> OBJ2MAP_METHODBLACKLIST = new HashSet<>(Arrays.asList("getClass"));
 
     public static String toString(Method method) {
         return "Method " + method.getDeclaringClass().getName() + "#" + method.getName();
     }
 
-    public static Map<String, Object> objectToMap(Object object) throws InvocationTargetException, IllegalAccessException {
+    /**
+     * Convert an object into a structure designed to serializable to json
+     * @param object object
+     * @return Json object
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
+    public static Object objectToJson(Object object) throws InvocationTargetException, IllegalAccessException {
         LinkedList<Object> processed = new LinkedList<>();
         return objectToMapInternal(object,processed);
     }
@@ -92,7 +99,7 @@ public class ReflectionUtils {
                 return ObjectToMapObjectType.PASSTHROUGH;
             }
         }
-        if (cl.isPrimitive() || cl.isEnum() ) {
+        if (cl.isPrimitive() || cl.isEnum() || cl.isArray() ) {
             return ObjectToMapObjectType.PASSTHROUGH;
         } else {
             if( ! isSame(processed, val) ) {
