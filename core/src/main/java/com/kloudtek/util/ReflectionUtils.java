@@ -7,13 +7,70 @@ package com.kloudtek.util;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.*;
 
 /**
  * Various reflection related utility functions
  */
 public class ReflectionUtils {
+    private static final HashSet<Class<?>> OBJ2MAP_PASSTHROUGH = new HashSet<>(Arrays.asList(String.class,
+            Number.class, Boolean.class, Date.class, Collection.class));
+    private static final HashSet<String> OBJ2MAP_METHODBLACKLIST = new HashSet<>(Arrays.asList("getClass"));
+
+
     public static String toString(Method method) {
         return "Method " + method.getDeclaringClass().getName() + "#" + method.getName();
+    }
+
+    public static Map<String, Object> objectToMap(Object object) throws InvocationTargetException, IllegalAccessException {
+        if (object == null) {
+            return null;
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        for (Method method : object.getClass().getMethods()) {
+            final String methodName = method.getName();
+            String key = null;
+            if (! OBJ2MAP_METHODBLACKLIST.contains(methodName) && method.getParameters().length == 0 && !method.getReturnType().getName().equals("void")) {
+                if (methodName.startsWith("get") && methodName.length() > 3) {
+                    key = getJBFieldName(methodName, 3);
+                } else if (methodName.startsWith("is") && methodName.length() > 3) {
+                    key = getJBFieldName(methodName, 2);
+                }
+                if (key != null) {
+                    Object value = method.invoke(object);
+                    map.put(key, objectToMapConvertObject(value));
+                }
+            }
+        }
+        return map;
+    }
+
+    private static Object objectToMapConvertObject(Object val) throws InvocationTargetException, IllegalAccessException {
+        if( val == null ) {
+            return null;
+        }
+        Class<?> cl = val.getClass();
+        for (Class<?> pt : OBJ2MAP_PASSTHROUGH) {
+            if( pt.isAssignableFrom(cl)) {
+                return val;
+            }
+        }
+        if (cl.isPrimitive() || cl.isEnum() ) {
+            return val;
+        } else if (val instanceof Optional) {
+            return ((Optional) val).isPresent() ? objectToMapConvertObject(((Optional) val).get()) : null;
+        } else {
+            return objectToMap(val);
+        }
+    }
+
+    private static String getJBFieldName(String methodName, int index) {
+        char c = Character.toLowerCase(methodName.charAt(index));
+        if (methodName.length() > (index + 1)) {
+            return c + methodName.substring(index + 1);
+        } else {
+            return new String(new char[]{c});
+        }
     }
 
     public static String toString(Field field) {
