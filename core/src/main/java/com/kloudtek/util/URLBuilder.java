@@ -16,6 +16,7 @@ public class URLBuilder {
     private String userInfo;
     private final List<Param> parameters = new ArrayList<Param>();
     private String host;
+    private String fragment;
     private int port;
     private StringBuilder path;
     private String ref;
@@ -41,6 +42,13 @@ public class URLBuilder {
             parseQueryParams(u.getQuery());
         }
         ref = u.getFragment();
+        if (ref != null) {
+            int qidx = ref.indexOf("?");
+            if (qidx != -1) {
+                parseQueryParams(ref.substring(qidx+1));
+                ref = ref.substring(0, qidx);
+            }
+        }
     }
 
     private void parseQueryParams(String query) {
@@ -49,7 +57,7 @@ public class URLBuilder {
             String[] kv = tok.nextToken().split("=");
             if (kv.length > 2) {
                 throw new IllegalArgumentException("Invalid URL query params: " + Arrays.toString(kv));
-            } else if( kv.length == 1 ) {
+            } else if (kv.length == 1) {
                 parameters.add(new Param(kv[0], ""));
             } else {
                 parameters.add(new Param(kv[0], kv[1]));
@@ -85,6 +93,11 @@ public class URLBuilder {
      */
     public URLBuilder path(String path) {
         return path(path, false);
+    }
+
+    public URLBuilder fragment(String fragment) {
+        this.fragment = fragment;
+        return this;
     }
 
     /**
@@ -185,7 +198,7 @@ public class URLBuilder {
         return this;
     }
 
-    public URLBuilder setProtocol( String protocol ) {
+    public URLBuilder setProtocol(String protocol) {
         this.protocol = protocol;
         return this;
     }
@@ -233,6 +246,9 @@ public class URLBuilder {
             url.append(':').append(port);
         }
         url.append(path.toString());
+        if (ref != null) {
+            url.append('#').append(ref);
+        }
         if (!parameters.isEmpty()) {
             url.append('?');
             Iterator<Param> i = parameters.iterator();
@@ -243,9 +259,6 @@ public class URLBuilder {
                     url.append("&");
                 }
             }
-        }
-        if( ref != null ) {
-            url.append('#').append(ref);
         }
         return url.toString();
     }

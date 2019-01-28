@@ -28,14 +28,14 @@ public class URLBuilderTest {
     @Test
     public void testBuildUrlWithQueryParams() {
         String url = new URLBuilder("http://site/foo").path("bar").param("key1","val1").param("key2","val2").setUserInfo("bahamut").setRef("boo").toString();
-        Assert.assertEquals(url,"http://bahamut@site/foo/bar?key1=val1&key2=val2#boo");
+        Assert.assertEquals(url,"http://bahamut@site/foo/bar#boo?key1=val1&key2=val2");
     }
 
     @Test
     public void testBuildUrlWithQueryParamsFromRelative() {
         String url = new URLBuilder("foo").path("bar").param("key1","val1").param("key2","val2").setUserInfo("bahamut")
                 .setRef("boo").setHost("mysite").setPort(33).setProtocol("https").toString();
-        Assert.assertEquals(url,"https://bahamut@mysite:33/foo/bar?key1=val1&key2=val2#boo");
+        Assert.assertEquals(url,"https://bahamut@mysite:33/foo/bar#boo?key1=val1&key2=val2");
     }
 
     @Test
@@ -55,5 +55,17 @@ public class URLBuilderTest {
         String url = new URLBuilder("/foo?k=x+x").param("key1","val 1").path("bar?key2=val2&key3=val3").param("key4","val4").path("baz").toString();
         url = new URLBuilder(new URLBuilder("http://boo").path(url).path("gah").param("bla","ble").toString()).toString();
         Assert.assertEquals(url,"http://boo/foo/bar/baz/gah?k=x+x&key1=val+1&key2=val2&key3=val3&key4=val4&bla=ble");
+    }
+
+    @Test
+    public void testBuildWithFragment() {
+        String url = new URLBuilder("http://boo/lok#rev?qq=rr").path("xoy").param("groo","obp").toString();
+        Assert.assertEquals(url,"http://boo/lok/xoy#rev?qq=rr&groo=obp");
+    }
+
+    @Test
+    public void testBuildWithFragmentInterMarkNoQParam() {
+        String url = new URLBuilder("http://boo/lok#rev?").path("xoy").param("groo","obp").toString();
+        Assert.assertEquals(url,"http://boo/lok/xoy#rev?groo=obp");
     }
 }
