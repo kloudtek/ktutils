@@ -37,6 +37,9 @@ public class JsonUtils {
         }
         Class<?> objCl = object.getClass();
         if (objCl.isArray()) {
+            if( objCl.getName().equals("[B") ) {
+                return StringUtils.base64Encode((byte[]) object);
+            }
             ArrayList<Object> newArr = new ArrayList<>();
             for (Object o : (Object[]) object) {
                 if (isNotProcessed(processed, o)) {
@@ -75,10 +78,8 @@ public class JsonUtils {
                         value = deOptionalize(value);
                         if (isNotProcessed(processed, value)) {
                             objMap.put(key, toJsonObject(value, parseJsonString, processed));
-                            System.out.println();
                         }
                     } catch (InvocationTargetException | IllegalAccessException e) {
-                        System.out.println();
                         //
                     }
                 }

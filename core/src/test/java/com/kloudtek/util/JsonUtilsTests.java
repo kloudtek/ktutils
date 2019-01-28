@@ -19,6 +19,8 @@ public class JsonUtilsTests {
         expected.put("optVarNull", null);
         expected.put("obj2null", null);
         expected.put("strarr", Arrays.asList("one", "two"));
+        expected.put("binary", StringUtils.base64Encode(TestObj1.BINARYDATA));
+//        expected.put("stream", StringUtils.base64Encode(TestObj1.BINARYDATA));
         HashMap<String, Object> expectedSubMap = new HashMap<>();
         expectedSubMap.put("var1", false);
         expectedSubMap.put("var2", "ccc");

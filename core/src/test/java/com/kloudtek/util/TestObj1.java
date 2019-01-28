@@ -1,10 +1,14 @@
 package com.kloudtek.util;
 
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 public class TestObj1 {
+    public static final String BINARYDATA_STR = "binarydata";
+    public static final byte[] BINARYDATA = BINARYDATA_STR.getBytes(StandardCharsets.UTF_8);
     private String text = "text";
     private String varNull;
     private int nb;
@@ -14,6 +18,7 @@ public class TestObj1 {
     private Optional<String> optVarNull = Optional.ofNullable(null);
     private Map<String,String> map = new HashMap<>();
     private String[] strarr = new String[] {"one","two"};
+    private byte[] binary = BINARYDATA;
 
     public TestObj1() {
         map.put("v1","agh");
@@ -54,5 +59,9 @@ public class TestObj1 {
 
     public String[] getStrarr() {
         return strarr;
+    }
+
+    public byte[] getBinary() {
+        return binary;
     }
 }
