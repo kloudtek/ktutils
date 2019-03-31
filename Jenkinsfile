@@ -1,3 +1,3 @@
 @Library('kloudtek-pipelinelib') _
 
-mavenRelease()
+mavenRelease('--debug')
