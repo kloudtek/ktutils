@@ -239,7 +239,7 @@
 
     <profiles>
         <profile>
-            <id>release</id>
+            <id>continuousintegration</id>
             <build>
                 <plugins>
                     <plugin>
