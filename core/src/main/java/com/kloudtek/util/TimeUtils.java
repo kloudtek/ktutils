@@ -4,11 +4,17 @@
 
 package com.kloudtek.util;
 
-import java.text.DateFormatSymbols;
 import java.text.ParseException;
-import java.util.Calendar;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.format.TextStyle;
+import java.time.temporal.ChronoField;
+import java.time.temporal.IsoFields;
+import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.WeekFields;
 import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.Locale;
 
 /**
  * Created by yannick on 23/10/2014.
@@ -64,32 +70,63 @@ public class TimeUtils {
     }
 
     /**
+     * Get the week and year, based on the last day of the week
+     *
+     * @param date Date
+     * @return Week and Year
+     */
+    public static WeekAndYear getWeekAndYear(LocalDate date) {
+        LocalDate lastDayOfWeek = getLastDayOfWeek(date);
+        return new WeekAndYear(lastDayOfWeek.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR), lastDayOfWeek.get(IsoFields.WEEK_BASED_YEAR));
+    }
+
+    public static DayOfWeek getFirstDayOfWeek() {
+        return WeekFields.of(Locale.getDefault()).getFirstDayOfWeek();
+    }
+
+    public static DayOfWeek getLastDayOfWeek() {
+        return DayOfWeek.of(((getFirstDayOfWeek().getValue() + 5) % DayOfWeek.values().length) + 1);
+    }
+
+    public static LocalDate getLastDayOfWeek(WeekAndYear weekAndYear) {
+        return getLastDayOfWeek(weekAndYear.getWeek(), weekAndYear.getYear());
+    }
+
+    public static LocalDate getLastDayOfWeek(int week, int year) {
+        return LocalDate.of(year, 2, 1).with(IsoFields.WEEK_OF_WEEK_BASED_YEAR, week).with(ChronoField.DAY_OF_WEEK, getLastDayOfWeek().getValue());
+    }
+
+    public static LocalDate getFirstDayOfWeek(LocalDate date) {
+        return date.with(TemporalAdjusters.previousOrSame(getFirstDayOfWeek()));
+    }
+
+    public static LocalDate getLastDayOfWeek(LocalDate date) {
+        return date.with(TemporalAdjusters.nextOrSame(getLastDayOfWeek()));
+    }
+
+    public static String toString(Month month) {
+        return month.getDisplayName(TextStyle.SHORT, Locale.getDefault());
+    }
+
+    /**
      * Generates a string that indicates the start and end date of a week in a human friendly format (without repeating year and/or month when applicable)
      *
      * @param date Date in the week (week is considered to start sunday and end saturday
      * @return Date range string
      */
-    public static String getWeekDateRange(Date date) {
-        DateFormatSymbols dateFormatSymbols = new DateFormatSymbols();
-        GregorianCalendar c = new GregorianCalendar();
-        c.setTime(date);
-        int i = c.get(Calendar.DAY_OF_WEEK) - c.getFirstDayOfWeek();
-        c.add(Calendar.DATE, -i);
-        int startDay = c.get(Calendar.DAY_OF_MONTH);
-        int startMonth = c.get(Calendar.MONTH);
-        int startYear = c.get(Calendar.YEAR);
-        c.add(Calendar.DATE, 6);
-        int endDay = c.get(Calendar.DAY_OF_MONTH);
-        int endMonth = c.get(Calendar.MONTH);
-        int endYear = c.get(Calendar.YEAR);
-        String[] shortMonths = dateFormatSymbols.getShortMonths();
-        String startMonthName = shortMonths[startMonth];
-        if (startMonth == endMonth) {
-            return startDay + " to " + endDay + " " + startMonthName + " " + startYear;
-        } else if (startYear == endYear) {
-            return startDay + " " + startMonthName + " to " + endDay + " " + shortMonths[endMonth] + " " + startYear;
+    public static String getWeekDateRange(LocalDate date) {
+        LocalDate firstDayOfWeek = getFirstDayOfWeek(date);
+        LocalDate lastDayOfWeek = getLastDayOfWeek(date);
+        if (firstDayOfWeek.getMonth() == lastDayOfWeek.getMonth()) {
+            return firstDayOfWeek.getDayOfMonth() + " to " + lastDayOfWeek.getDayOfMonth() + " " +
+                    toString(firstDayOfWeek.getMonth()) + " " + firstDayOfWeek.getYear();
+        } else if (firstDayOfWeek.getYear() == lastDayOfWeek.getYear()) {
+            return firstDayOfWeek.getDayOfMonth() + " " + toString(firstDayOfWeek.getMonth()) + " to " +
+                    lastDayOfWeek.getDayOfMonth() + " " + toString(lastDayOfWeek.getMonth()) + " " + lastDayOfWeek.getYear();
         } else {
-            return startDay + " " + startMonthName + " " + startYear + " to " + endDay + " " + shortMonths[endMonth] + " " + endYear;
+            return firstDayOfWeek.getDayOfMonth() + " " + toString(firstDayOfWeek.getMonth()) + " " +
+                    firstDayOfWeek.getYear() + " to " + lastDayOfWeek.getDayOfMonth() + " " +
+                    toString(lastDayOfWeek.getMonth()) + " " + lastDayOfWeek.getYear();
         }
     }
 }
