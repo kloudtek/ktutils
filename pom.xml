@@ -7,8 +7,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.kloudtek.ktutils</groupId>
-    <artifactId>ktutils-parent</artifactId>
+    <groupId>com.kloudtek.aeon-commons</groupId>
+    <artifactId>aeon-commons-parent</artifactId>
     <version>1.3-SNAPSHOT</version>
     <name>KTUtils Parent</name>
     <modules>
@@ -25,26 +25,26 @@
         <module>http</module>
     </modules>
     <packaging>pom</packaging>
-    <description>KloudTek utilities</description>
-    <url>https://github.com/Kloudtek/ktutils</url>
+    <description>Aeon Commons</description>
+    <url>https://gitlab.com/aeontronix/oss/aeon-commons</url>
     <organization>
-        <name>Kloudtek</name>
-        <url>http://www.kloudtek.com</url>
+        <name>Aeontronix</name>
+        <url>http://www.aeontronix.com</url>
     </organization>
     <developers>
         <developer>
             <name>Dev Team</name>
-            <organization>Kloudtek</organization>
+            <organization>Aeontronix</organization>
         </developer>
     </developers>
     <issueManagement>
         <system>Github</system>
-        <url>https://github.com/Kloudtek/ktutils/issues</url>
+        <url>https://gitlab.com/aeontronix/oss/aeon-commons/issues</url>
     </issueManagement>
     <scm>
-        <url>scm:git:git@github.com:Kloudtek/ktutils.git</url>
-        <connection>scm:git:git@github.com:Kloudtek/ktutils.git</connection>
-        <developerConnection>scm:git:git@github.com:Kloudtek/ktutils.git</developerConnection>
+        <url>https://gitlab.com/aeontronix/oss/aeon-commons</url>
+        <connection>scm:git:https://gitlab.com/aeontronix/oss/aeon-commons.git</connection>
+        <developerConnection>scm:git:git@gitlab.com:aeontronix/oss/aeon-commons.git</developerConnection>
     </scm>
     <licenses>
         <license>

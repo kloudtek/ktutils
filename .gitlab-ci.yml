@@ -1,0 +1,3 @@
+include:
+  - project: 'aeontronix/templates/gitlab-pipelines'
+    file: 'maven-oss-lib.yml'
