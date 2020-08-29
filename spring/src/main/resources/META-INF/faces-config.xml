@@ -10,14 +10,14 @@
               version="2.0">
     <application>
         <system-event-listener>
-            <system-event-listener-class>com.aeontronix.common.spring.SpringJSFViewScopeRegistrationListener
+            <system-event-listener-class>com.aeontronix.commons.spring.SpringJSFViewScopeRegistrationListener
             </system-event-listener-class>
             <system-event-class>javax.faces.event.PostConstructViewMapEvent</system-event-class>
             <source-class>javax.faces.component.UIViewRoot</source-class>
         </system-event-listener>
 
         <system-event-listener>
-            <system-event-listener-class>com.aeontronix.common.spring.SpringJSFViewScopeRegistrationListener
+            <system-event-listener-class>com.aeontronix.commons.spring.SpringJSFViewScopeRegistrationListener
             </system-event-listener-class>
             <system-event-class>javax.faces.event.PreDestroyViewMapEvent</system-event-class>
             <source-class>javax.faces.component.UIViewRoot</source-class>

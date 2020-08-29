@@ -9,7 +9,7 @@
         <property name="scopes">
             <map>
                 <entry key="view">
-                    <bean class="com.aeontronix.common.spring.SpringJSFViewScope"/>
+                    <bean class="com.aeontronix.commons.spring.SpringJSFViewScope"/>
                 </entry>
             </map>
         </property>
